@@ -1,8 +1,12 @@
 package models
 
+import "github.com/diablovocado/declutr/internal/crypto"
+
 type RegisterRequest struct {
-	Email string `json:"email"`
-	EncryptedMasterKey string `json:"encryptedMasterKey"`
+	Email       string               `json:"email"`
+	SRPVerifier string               `json:"srpVerifier"`
+	SRPSalt     string               `json:"srpSalt"`
+	MVK         crypto.EncryptedMVK  `json:"mvk"`
 }
 
 type RegisterResponse struct {
