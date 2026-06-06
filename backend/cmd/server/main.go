@@ -22,7 +22,16 @@ func main() {
 	}
 
 	http.HandleFunc("/health", health.Handler)
-	http.HandleFunc("/api/v1/auth/register", auth.RegisterHandler(authService))
+
+	http.HandleFunc(
+		"/api/v1/auth/register",
+		auth.RegisterHandler(authService),
+	)
+
+	http.HandleFunc(
+		"/api/v1/auth/login/start",
+		auth.LoginStartHandler(authService),
+	)
 
 	log.Println("Declutr Backend Running on :8080")
 
