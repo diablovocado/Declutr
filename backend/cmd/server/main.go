@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/diablovocado/declutr/internal/auth"
+	"github.com/diablovocado/declutr/internal/auth/srp"
 	"github.com/diablovocado/declutr/internal/database"
 	"github.com/diablovocado/declutr/internal/health"
 	"github.com/diablovocado/declutr/internal/repository"
@@ -18,7 +19,8 @@ func main() {
 	}
 
 	authService := &auth.Service{
-		UserRepo: userRepo,
+		UserRepo:    userRepo,
+		Challenges: srp.NewChallengeStore(),
 	}
 
 	http.HandleFunc("/health", health.Handler)

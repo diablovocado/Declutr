@@ -9,11 +9,14 @@ package auth
 	"github.com/diablovocado/declutr/internal/crypto"
 	"github.com/diablovocado/declutr/internal/models"
 	"github.com/diablovocado/declutr/internal/repository"
+	"github.com/diablovocado/declutr/internal/auth/srp"
+	
 )
 
 
 type Service struct {
-	UserRepo repository.UserRepository
+    UserRepo repository.UserRepository
+    Challenges *srp.ChallengeStore
 }
 
 func (s *Service) Register(req authmodels.RegisterRequest) (string, error) {

@@ -2,11 +2,15 @@ package srp
 
 import "time"
 
+type ChallengeID string
+
 type Challenge struct {
-        UserID string
+	ID ChallengeID
 
-        ServerSecret string
-        ServerPublicKey string
+	UserID string
 
-        CreatedAt time.Time
+	ServerSecret string
+	ServerPublicKey string
+
+	CreatedAt time.Time
 }
