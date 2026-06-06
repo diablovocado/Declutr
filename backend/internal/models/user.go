@@ -3,9 +3,15 @@ package models
 import "time"
 
 type User struct {
-	ID                 string    `json:"id"`
-	Email              string    `json:"email"`
-	EncryptedMasterKey string    `json:"encryptedMasterKey"`
-	CreatedAt          time.Time `json:"createdAt"`
-	UpdatedAt          time.Time `json:"updatedAt"`
+	ID                     string
+	EmailHash             string
+	SRPVerifier           string
+	SRPSalt               string
+
+	EncryptedMVKCiphertext string
+	EncryptedMVKNonce      string
+	EncryptedMVKVersion    int
+
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
