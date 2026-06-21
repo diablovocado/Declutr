@@ -19,7 +19,7 @@ func main() {
 	}
 
 	authService := &auth.Service{
-		UserRepo:    userRepo,
+		UserRepo:   userRepo,
 		Challenges: srp.NewChallengeStore(),
 	}
 
@@ -33,6 +33,11 @@ func main() {
 	http.HandleFunc(
 		"/api/v1/auth/login/start",
 		auth.LoginStartHandler(authService),
+	)
+
+	http.HandleFunc(
+		"/api/v1/auth/login/finish",
+		auth.LoginFinishHandler(authService),
 	)
 
 	log.Println("Declutr Backend Running on :8080")
