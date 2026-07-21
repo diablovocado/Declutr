@@ -41,9 +41,22 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Authentication UI & Onboarding Experience (Issue #003)**:
+  - Created complete authentication user interface for Web and Mobile following zero-trust design guidelines.
+  - Implemented client-side Zod validation schemas (`loginSchema`, `registerSchema`, `forgotPasswordSchema`, `resetPasswordSchema`) integrated with React Hook Form.
+  - Built reusable auth components: `PasswordStrengthMeter`, `AuthCardLayout`, `SocialAuthButtons`.
+  - Created complete Next.js App Router auth pages:
+    - `/welcome` (Hero onboarding, product description, primary/secondary CTAs, zero-knowledge privacy statement)
+    - `/login` (Email, password, show/hide toggle, remember device, social & passkey placeholders)
+    - `/register` (Name, email, password, confirm password, password strength meter, terms acceptance)
+    - `/forgot-password` (Passphrase recovery email dispatch)
+    - `/reset-password` (New passphrase setup with strength validation)
+    - `/verify-email` (6-digit code entry with resend timer)
+    - `/magic-link-waiting` (Animated polling state UI)
+    - `/auth-error` (SRP challenge proof failure view with retry actions)
 - **Application Shell & Navigation Foundation (Issue #002)**:
   - Built responsive multi-device application shell (`AppShell`) with Desktop Sidebar, Top Navigation, Tablet Collapsible Sidebar, and Mobile Bottom Navigation bar.
-  - Configured global application providers in `frontend/shared/providers/`: `ThemeProvider`, `QueryProvider` (TanStack Query), `ToastProvider`, `ModalProvider`, `SessionProvider`, and composite `AppProviders`.
+  - Configured global application providers in `frontend/shared/providers/`.
   - Built reusable `PageShell` page template component with breadcrumbs, title, subtitle, and actions header.
   - Implemented application route structure with clean placeholder pages (`/dashboard`, `/vault`, `/search`, `/collections`, `/ai`, `/persona`, `/security`, `/settings`).
   - Added loading framework skeleton (`loading.tsx`), custom 404 page (`not-found.tsx`), and error boundary fallback (`error.tsx`).

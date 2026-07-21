@@ -19,6 +19,7 @@ This document tracks the comprehensive roadmap and action items to complete the 
 ---
 
 ## 🔒 Phase 1: Authentication & Identity Foundation
+- [x] Build Authentication UI & Onboarding Experience (Welcome, Sign In, Register, Forgot Password, Reset Password, Verify Email, Magic Link, Auth Error views)
 - [x] Implement user email hashing (Argon2id) before persistence
 - [x] Define SRP-6a domain types and protocol state models
 - [x] Implement single-use SRP challenge generation & expiration validation
