@@ -41,6 +41,14 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Relationship Discovery Engine (Issue #015)**:
+  - Created PostgreSQL database migration `database/migrations/011_create_knowledge_graph_tables.sql` (`graph_nodes`, `graph_edges`, `graph_edge_evidence`, `graph_versions`).
+  - Implemented Domain models for `GraphNode`, `GraphEdge`, `EdgeEvidence`, `RelationshipType` (`MENTIONS`, `RELATED_TO`, `LOCATED_AT`, etc.).
+  - Built `MockRelationshipDiscoverer` generating high-confidence relational edges based on entities found in the document.
+  - Built `GraphDiscoveryWorker` to integrate with the Processing Engine orchestration queue.
+  - Added REST API endpoints (`/api/v1/graph/relationships/:nodeId`).
+  - Created Web UI Component (`frontend/features/graph/components/relationship-panel.tsx`) featuring Relationship lists and detailed Edge Evidence viewers.
+  - Created Mobile UI Component (`RelationshipViewer.tsx`) for native display of graph edges.
 - **Entity Extraction & Knowledge Foundation (Issue #014)**:
   - Created PostgreSQL database migration `database/migrations/010_create_entity_extraction_tables.sql` (`entity_types`, `entities`, `entity_aliases`, `entity_occurrences`).
   - Implemented Domain models for `Entity`, `EntityType`, `EntityOccurrence`.
