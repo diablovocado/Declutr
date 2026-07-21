@@ -41,6 +41,14 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Universal Content Extraction Engine (Issue #012)**:
+  - Created PostgreSQL database migration `database/migrations/008_create_content_extraction_tables.sql` (`extracted_documents`, `document_sections`, `document_blocks`, `document_versions`).
+  - Implemented Domain models for the Normalized Document Model (`Document`, `Block`, `Section`, `Version`).
+  - Built extensible `ExtractorRegistry` with `TextExtractor` (Markdown, TXT) and `StubDocumentExtractor` for PDFs/DOCX.
+  - Built `ContentExtractionWorker` to integrate with the Processing Engine orchestration queue.
+  - Added REST API endpoints (`/api/v1/content/:assetId`, `/history`, `/refresh`).
+  - Created Web UI Component (`frontend/features/extraction/components/document-viewer.tsx`) to natively render extracted text blocks and headings.
+  - Created Mobile UI Component (`ContentPreview.tsx`) for native React Native display of content blocks.
 - **Metadata Extraction Engine (Issue #011)**:
   - Created PostgreSQL database migration `database/migrations/007_create_metadata_tables.sql` (`asset_metadata`, `asset_properties`, `asset_exif`, `metadata_versions`).
   - Implemented Domain models for `AssetMetadata`, `AssetProperties`, `AssetExif`, and `CompleteMetadata`.
