@@ -252,3 +252,16 @@ Entities are deduplicated and resolved to a Canonical Name. For example, the ter
 
 ### Security Boundaries
 Entities are strictly bound to the `vault_id`. Deduplication and canonical resolution happen *within* a user's vault, ensuring no cross-pollination of private knowledge graph data between users.
+
+---
+
+## 🕸️ Relationship Discovery & Knowledge Graph
+
+The Relationship Discovery Engine completes Phase 4 by inferring strictly relational connections between nodes (Assets, Entities, Collections).
+
+### Edge & Evidence Architecture
+The `graph_edges` table models typed relationships between a `source_node_id` and a `target_node_id` (e.g., `BELONGS_TO`, `MENTIONS`, `RELATED_TO`). 
+Every single edge must include a corresponding entry in the `graph_edge_evidence` table explaining *why* the relationship was inferred (e.g., "Document explicitly mentions Google LLC in the AI Summary"), alongside a computed `confidence_score` and `strength`.
+
+### Graph Incremental Updates
+The background `GraphDiscoveryWorker` builds edges incrementally as new entities are detected or metadata changes, avoiding expensive full-graph rebuilds. All operations are strictly bound by the `vault_id` boundary.

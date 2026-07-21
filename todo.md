@@ -71,11 +71,10 @@ This document tracks the comprehensive roadmap and action items to complete the 
 
 ## 🔗 Phase 4: AI Context, Intent & Relationships
 - [x] AI Analysis & Understanding Engine (Provider Abstraction, Prompt Manager, Structured JSON Output)
-- [ ] Database Schema: Relational tables
+- [x] Database Schema: Relational tables
   - Add tables for `relationships`
 - [x] Entity Extraction: Parser targeting dates, locations, merchants, transaction values, and names
-- [ ] Intent-Aware Organization Engine:
-  - Probabilistic classification of files into Category vs. Intent vs. Context
+- [x] Relationship Discovery Engine:
   - Direct relationship modeling: `RELATED_TO`, `PART_OF`, `MENTIONS`, `SAME_EVENT`, `SAME_LOCATION`
 - [ ] User Feedback loop:
   - API endpoint `POST /v1/feedback/verify` to confirm or correct AI-generated metadata/tags
