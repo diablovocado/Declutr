@@ -30,7 +30,7 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - `POST /api/v1/auth/register`
   - `POST /api/v1/auth/login/start`
   - `POST /api/v1/auth/login/finish`
-- [ ] Implement JWT Session rotation and Refresh token flow
+- [x] Implement JWT Session rotation and Refresh token flow
 - [x] Web Client Integration (Next.js):
   - Integrate client-side SRP calculation & payload exchange (`AuthService`, TanStack Query mutations)
   - Connect login and registration forms to Go SRP backend APIs

@@ -41,6 +41,11 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Session Management & Authentication Persistence (Issue #006)**:
+  - Created PostgreSQL database migration `database/migrations/002_create_sessions_table.sql` (`user_sessions` table with indexes on `user_id`, `refresh_token_hash`, and `expires_at`).
+  - Implemented session domain entity `UserSession` (`backend/modules/auth/domain/session.go`) with `IsActive()` expiration and revocation checkers.
+  - Added unit test suite `session_test.go` covering active, expired, and revoked session states.
+  - Enhanced `SessionProvider` (`frontend/shared/providers/session-provider.tsx`) with session persistence (survives page refreshes), status tracking (`loading`, `authenticated`, `unauthenticated`, `refreshing`), and `logout` / `logoutAll` handlers.
 - **Authentication Integration (Issue #005)**:
   - Created typed API service client `AuthService` (`frontend/features/auth/services/auth-service.ts`) encapsulating `register`, `loginStart`, and `loginFinish` endpoints.
   - Connected Next.js authentication forms (`/login`, `/register`) to backend SRP APIs using TanStack React Query `useMutation`.
