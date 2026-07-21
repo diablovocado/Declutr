@@ -199,3 +199,22 @@ Contributions are strictly governed by our [CONTRIBUTING.md](file:///f:/Github/D
 ## 📄 License
 
 Distributed under the MIT License. See [LICENSE](file:///f:/Github/Declutr/LICENSE) for more information.
+
+---
+
+## 📄 Content Processing & Extraction
+
+Declutr's ingestion pipeline normalizes documents and media into a common structured format using the **Universal Content Extraction Engine**.
+
+### Extractor Interface
+Every supported file type is parsed by a specific extractor implementing the `ContentExtractor` interface:
+- **TextExtractor**: Handles `text/plain`, `text/markdown`, `text/csv`, and `application/json`.
+- **StubDocumentExtractor**: Handles `application/pdf`, `docx`, and `pptx` (stubbed for future native integration).
+
+### Normalized Document Model
+Regardless of the original file format, Declutr translates the content into a normalized PostgreSQL schema (`extracted_documents`, `document_sections`, `document_blocks`).
+- **Blocks**: The atomic unit of content (Heading, Paragraph, List, Code, Table, Caption, Link).
+- **Sections**: Hierarchical groupings mapping to pages or chapters.
+- **Attributes**: Language, Word/Char counts, Estimated Reading Time.
+
+This ensures all downstream AI embeddings and search indices consume the exact same structured interface without needing to understand the original file's binary layout.
