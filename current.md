@@ -41,6 +41,11 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Vault Workspace Foundation (Issue #008)**:
+  - Created PostgreSQL database migration `database/migrations/004_create_vaults_table.sql` (`vaults` and `vault_settings` tables with owner_id foreign keys).
+  - Built backend `Vault` domain model (`backend/modules/vault/domain/vault.go`) and unit tests (`application/vault_test.go`).
+  - Implemented `VaultService` client (`frontend/features/vault/services/vault-service.ts`) managing default vault creation ("My Life Vault") and workspace metadata updates.
+  - Enhanced Vault Overview view (`/vault`) with storage usage card, digital asset counters, collection counters, and premium zero-knowledge empty state.
 - **User Onboarding, Profile & Preferences (Issue #007)**:
   - Created PostgreSQL database migration `database/migrations/003_create_user_profiles_and_preferences.sql` (`user_profiles` and `user_preferences` tables).
   - Implemented client-side Zod validation schemas (`profileSchema`, `preferencesSchema`) in `frontend/features/user/schemas/profile-schema.ts`.

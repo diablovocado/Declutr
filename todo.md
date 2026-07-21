@@ -43,6 +43,7 @@ This document tracks the comprehensive roadmap and action items to complete the 
 ---
 
 ## 📦 Phase 2: Cryptographic Vaults & Direct Ingestion
+- [x] Vault Workspace Foundation (Default "My Life Vault" creation, `vaults` database table, `VaultService`, Vault overview UI)
 - [ ] Database Schema: Vaults and Digital Items
   - Implement migration for `vaults`, `digital_items`, and `item_versions` tables
   - Add Row-Level Security (RLS) policies on PostgreSQL for user-isolation
