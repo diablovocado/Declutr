@@ -41,6 +41,14 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Content Processing Engine & Background Jobs (Issue #010)**:
+  - Created PostgreSQL database migration `database/migrations/006_create_processing_tables.sql` (`processing_jobs`, `processing_workers`, `processing_events`, `processing_attempts`).
+  - Implemented Domain models for `Job`, `Worker`, and lifecycle `Event`s with state machine statuses (Queued, Running, Failed, Retrying, etc.).
+  - Built orchestration Engine (`backend/modules/processing/application/engine.go`), `JobScheduler`, and `RetryManager` with exponential backoff calculation.
+  - Built `WorkerManager` to track worker node health, capabilities, and dynamic allocation.
+  - Added REST API endpoints (`/api/v1/processing/jobs`, `/api/v1/processing/stats`, `/api/v1/processing/retry`) mapped in `transport/api.go`.
+  - Created Web UI Processing Dashboard (`frontend/features/processing/components/processing-dashboard.tsx`) with real-time stats and `JobQueue` view.
+  - Created Mobile UI component `ProcessingStatusCard.tsx` for tracking background processing on native devices.
 - **Content Ingestion & Upload Pipeline (Issue #009)**:
   - Created PostgreSQL database migration `database/migrations/005_create_assets_and_ingestion_tables.sql` (`assets` and `upload_jobs` tables with status indexes).
   - Built storage provider abstraction layer `StorageProvider` (`backend/shared/storage/storage.go`) supporting S3, Cloudflare R2, and local file storage providers.
