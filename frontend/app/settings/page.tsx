@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Settings, User, Moon, Sparkles, Lock, Bell, Shield, Save } from "lucide-react";
+import { Settings, User, Moon, Sparkles, Lock, Bell, Save } from "lucide-react";
 import { PageShell } from "../../shared/components/layout/page-shell";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../shared/components/ui/card";
 import { Button } from "../../shared/components/ui/button";
 import { Input, Textarea } from "../../shared/components/ui/input";
-import { Tabs } from "../../shared/components/ui/tabs";
 import { useTheme } from "../../shared/providers/theme-provider";
 import { useToast } from "../../shared/providers/toast-provider";
 import { ProfileService, UserProfile, UserPreferences } from "../../features/user/services/profile-service";
+import { cn } from "../../shared/utils/cn";
 
 export default function SettingsPage() {
   const { theme, setTheme } = useTheme();
@@ -57,6 +57,14 @@ export default function SettingsPage() {
     });
   };
 
+  const tabsList = [
+    { id: "general", label: "General & Profile", icon: User },
+    { id: "appearance", label: "Appearance", icon: Moon },
+    { id: "ai", label: "AI Behavior", icon: Sparkles },
+    { id: "privacy", label: "Privacy Mode", icon: Lock },
+    { id: "notifications", label: "Notifications", icon: Bell },
+  ];
+
   return (
     <PageShell
       title="Application Settings"
@@ -68,17 +76,28 @@ export default function SettingsPage() {
         </Button>
       }
     >
-      <Tabs
-        activeTab={activeTab}
-        onChange={setActiveTab}
-        tabs={[
-          { id: "general", label: "General & Profile", icon: User },
-          { id: "appearance", label: "Appearance", icon: Moon },
-          { id: "ai", label: "AI Behavior", icon: Sparkles },
-          { id: "privacy", label: "Privacy Mode", icon: Lock },
-          { id: "notifications", label: "Notifications", icon: Bell },
-        ]}
-      />
+      {/* Settings Navigation Tabs */}
+      <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-slate-900 border border-slate-800 w-fit">
+        {tabsList.map((t) => {
+          const Icon = t.icon;
+          const active = activeTab === t.id;
+          return (
+            <button
+              key={t.id}
+              onClick={() => setActiveTab(t.id)}
+              className={cn(
+                "flex items-center gap-2 rounded-lg px-3.5 py-1.5 text-xs font-semibold transition-all duration-150",
+                active
+                  ? "bg-slate-800 text-emerald-400 shadow-sm border border-slate-700"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+              )}
+            >
+              <Icon className={cn("h-3.5 w-3.5", active ? "text-emerald-400" : "text-slate-400")} />
+              {t.label}
+            </button>
+          );
+        })}
+      </div>
 
       <div className="mt-6 max-w-3xl space-y-6">
         {/* General Tab */}
