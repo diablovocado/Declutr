@@ -11,20 +11,23 @@ import (
 
 	"github.com/google/uuid"
 
-	embeddingApp "github.com/diablovocado/declutr/modules/embedding/application"
-	embeddingDomain "github.com/diablovocado/declutr/modules/embedding/domain"
-	"github.com/diablovocado/declutr/modules/search/domain"
-	"github.com/diablovocado/declutr/modules/search/repository"
+	"github.com/diablovocado/declutr/internal/search/domain"
+	"github.com/diablovocado/declutr/internal/search/repository"
 )
+
+// VectorEmbedder generates query vector embeddings
+type VectorEmbedder interface {
+	GenerateQueryVector(ctx context.Context, vaultID, text string) ([]float32, error)
+}
 
 // SearchService orchestrates hybrid search queries, parsing, planning, fusion, and statistics
 type SearchService struct {
 	repo         repository.SearchRepository
-	embeddingSvc *embeddingApp.EmbeddingService
+	embeddingSvc VectorEmbedder
 }
 
 // NewSearchService creates a new SearchService
-func NewSearchService(repo repository.SearchRepository, embeddingSvc *embeddingApp.EmbeddingService) *SearchService {
+func NewSearchService(repo repository.SearchRepository, embeddingSvc VectorEmbedder) *SearchService {
 	return &SearchService{
 		repo:         repo,
 		embeddingSvc: embeddingSvc,
@@ -183,17 +186,11 @@ func (s *SearchService) ExecuteSearch(ctx context.Context, req *domain.SearchQue
 	}
 
 	// Generate Query Vector Embedding via Embedding Engine if vector strategy active
-	var queryVector embeddingDomain.Vector
+	var queryVector []float32
 	if s.embeddingSvc != nil {
-		qEmb, err := s.embeddingSvc.GenerateEmbedding(ctx, &embeddingDomain.StructuredRepresentationInput{
-			SourceType: embeddingDomain.SourceDocument,
-			SourceID:   "query-" + uuid.New().String()[:8],
-			VaultID:    req.VaultID,
-			Title:      req.QueryText,
-			Summary:    req.QueryText,
-		}, nil)
-		if err == nil && qEmb != nil {
-			queryVector = qEmb.VectorData
+		qVec, err := s.embeddingSvc.GenerateQueryVector(ctx, req.VaultID, req.QueryText)
+		if err == nil && len(qVec) > 0 {
+			queryVector = qVec
 		}
 	}
 
@@ -400,7 +397,7 @@ func computeKeywordScore(query string, item *repository.IndexableItem, pq *domai
 	return score
 }
 
-func computeVectorScore(queryVec embeddingDomain.Vector, item *repository.IndexableItem) float64 {
+func computeVectorScore(queryVec []float32, item *repository.IndexableItem) float64 {
 	if len(queryVec) == 0 {
 		return 0.70 // default neutral baseline vector score
 	}

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/notification/domain"
+	"github.com/diablovocado/declutr/internal/notification/domain"
 )
 
 // NotificationEventEngine subscribes to domain events and dispatches notifications

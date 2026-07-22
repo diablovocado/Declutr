@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/workflow/domain"
+	"github.com/diablovocado/declutr/internal/workflow/domain"
 )
 
 // WorkflowExecutionEngine orchestrates asynchronous trigger handling, rule evaluation, and action execution

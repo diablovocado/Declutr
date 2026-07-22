@@ -8,8 +8,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/notification/domain"
-	"github.com/diablovocado/declutr/modules/notification/repository"
+	"github.com/diablovocado/declutr/internal/notification/domain"
+	"github.com/diablovocado/declutr/internal/notification/repository"
 )
 
 // NotificationService manages proactive notification lifecycle, deduplication, priority scoring, actions, and digests

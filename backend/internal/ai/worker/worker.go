@@ -4,15 +4,18 @@ import (
 	"context"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/ai/application"
-	processingDomain "github.com/diablovocado/declutr/modules/processing/domain"
+	processingDomain "github.com/diablovocado/declutr/internal/processing/domain"
 )
 
-type AIAnalysisWorker struct {
-	service application.AIAnalysisService
+type AIAnalysisService interface {
+	AnalyzeDocument(ctx context.Context, documentID, assetID, extractedText string) (interface{}, error)
 }
 
-func NewAIAnalysisWorker(service application.AIAnalysisService) *AIAnalysisWorker {
+type AIAnalysisWorker struct {
+	service AIAnalysisService
+}
+
+func NewAIAnalysisWorker(service AIAnalysisService) *AIAnalysisWorker {
 	return &AIAnalysisWorker{
 		service: service,
 	}

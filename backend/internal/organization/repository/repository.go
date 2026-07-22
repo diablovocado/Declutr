@@ -6,8 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/organization/domain"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/internal/organization/domain"
 )
 
 // OrganizationRepository defines persistence operations for enterprise tenancy.

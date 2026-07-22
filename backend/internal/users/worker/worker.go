@@ -4,8 +4,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/persona/application"
-	processingDomain "github.com/diablovocado/declutr/modules/processing/domain"
+	"github.com/diablovocado/declutr/internal/users/application"
+	processingDomain "github.com/diablovocado/declutr/internal/processing/domain"
 )
 
 // PersonaWorker processes persona learning jobs from the pipeline

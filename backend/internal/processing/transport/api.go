@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/diablovocado/declutr/modules/processing/application"
+	"github.com/diablovocado/declutr/internal/processing/application"
 )
 
 type API struct {

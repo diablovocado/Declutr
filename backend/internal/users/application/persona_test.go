@@ -3,9 +3,9 @@ package application_test
 import (
 	"testing"
 
-	"github.com/diablovocado/declutr/modules/persona/application"
-	"github.com/diablovocado/declutr/modules/persona/domain"
-	"github.com/diablovocado/declutr/modules/persona/repository"
+	"github.com/diablovocado/declutr/internal/users/application"
+	"github.com/diablovocado/declutr/internal/users/domain"
+	"github.com/diablovocado/declutr/internal/users/repository"
 )
 
 func newTestService() *application.PersonaService {

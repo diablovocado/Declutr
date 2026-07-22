@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/notification/application"
-	"github.com/diablovocado/declutr/modules/notification/domain"
+	"github.com/diablovocado/declutr/internal/notification/application"
+	"github.com/diablovocado/declutr/internal/notification/domain"
 )
 
 // NotificationAPI handles HTTP endpoints for the Notification Center & Proactive Intelligence

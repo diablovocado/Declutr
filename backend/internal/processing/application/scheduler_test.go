@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/processing/domain"
+	"github.com/diablovocado/declutr/internal/processing/domain"
 )
 
 // Mock DeadLetterQueue

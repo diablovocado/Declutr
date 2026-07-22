@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/processing/domain"
-	"github.com/diablovocado/declutr/modules/processing/repository"
+	"github.com/diablovocado/declutr/internal/processing/domain"
+	"github.com/diablovocado/declutr/internal/processing/repository"
 )
 
 type ProcessingEngine interface {

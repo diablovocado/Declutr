@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/persona/application"
-	"github.com/diablovocado/declutr/modules/persona/domain"
+	"github.com/diablovocado/declutr/internal/users/application"
+	"github.com/diablovocado/declutr/internal/users/domain"
 )
 
 // PersonaAPI handles HTTP requests for the Reverse Persona Engine

@@ -3,7 +3,7 @@ package providers
 import (
 	"context"
 
-	"github.com/diablovocado/declutr/modules/ai/domain"
+	"github.com/diablovocado/declutr/internal/ai/domain"
 )
 
 type LLMProvider interface {

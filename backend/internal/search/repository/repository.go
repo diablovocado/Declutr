@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/search/domain"
+	"github.com/diablovocado/declutr/internal/search/domain"
 )
 
 // IndexableItem represents an item in the search index

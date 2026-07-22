@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/workflow/domain"
+	"github.com/diablovocado/declutr/internal/workflow/domain"
 )
 
 // WorkflowRepository defines persistence contract for workflows, runs, and execution logs

@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/workflow/domain"
-	"github.com/diablovocado/declutr/modules/workflow/repository"
+	"github.com/diablovocado/declutr/internal/workflow/domain"
+	"github.com/diablovocado/declutr/internal/workflow/repository"
 )
 
 // WorkflowService handles workflow lifecycle management, rule building, and execution orchestration

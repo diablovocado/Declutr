@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/copilot/domain"
+	"github.com/diablovocado/declutr/internal/ai/domain"
 )
 
 // CopilotRepository defines persistence methods for RAG conversations and messages

@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/extension/application"
-	"github.com/diablovocado/declutr/modules/extension/domain"
+	"github.com/diablovocado/declutr/internal/settings/application"
+	"github.com/diablovocado/declutr/internal/settings/domain"
 )
 
 // ExtensionAPI handles HTTP REST endpoints for extension ecosystem & marketplace.

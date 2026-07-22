@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/auth/application"
-	"github.com/diablovocado/declutr/modules/auth/transport/models"
+	"github.com/diablovocado/declutr/internal/auth/application"
+	"github.com/diablovocado/declutr/internal/auth/transport/models"
 )
 
 func LoginStartHandler(service *application.Service) http.HandlerFunc {

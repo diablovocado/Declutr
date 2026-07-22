@@ -3,7 +3,7 @@ package repository
 import (
 	"database/sql"
 
-	"github.com/diablovocado/declutr/modules/auth/domain"
+	"github.com/diablovocado/declutr/internal/auth/domain"
 )
 
 type PostgresUserRepository struct {

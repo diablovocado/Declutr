@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/workflow/application"
-	"github.com/diablovocado/declutr/modules/workflow/domain"
+	"github.com/diablovocado/declutr/internal/workflow/application"
+	"github.com/diablovocado/declutr/internal/workflow/domain"
 )
 
 // WorkflowAPI handles HTTP endpoints for the Workflow Automation Engine

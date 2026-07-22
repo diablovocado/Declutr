@@ -5,10 +5,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/auth/domain"
-	"github.com/diablovocado/declutr/modules/auth/repository"
-	"github.com/diablovocado/declutr/modules/auth/transport/models"
-	"github.com/diablovocado/declutr/shared/crypto"
+	"github.com/diablovocado/declutr/internal/auth/domain"
+	"github.com/diablovocado/declutr/internal/auth/repository"
+	"github.com/diablovocado/declutr/internal/auth/transport/models"
+	"github.com/diablovocado/declutr/utils"
 )
 
 type Service struct {
@@ -23,7 +23,7 @@ func (s *Service) Register(req models.RegisterRequest) (string, error) {
 	user := domain.User{
 		ID: id,
 
-		EmailHash: crypto.HashEmail(req.Email),
+		EmailHash: utils.HashEmail(req.Email),
 
 		SRPVerifier: req.SRPVerifier,
 		SRPSalt:     req.SRPSalt,

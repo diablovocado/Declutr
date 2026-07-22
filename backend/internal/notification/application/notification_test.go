@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/diablovocado/declutr/modules/notification/application"
-	"github.com/diablovocado/declutr/modules/notification/domain"
-	"github.com/diablovocado/declutr/modules/notification/repository"
+	"github.com/diablovocado/declutr/internal/notification/application"
+	"github.com/diablovocado/declutr/internal/notification/domain"
+	"github.com/diablovocado/declutr/internal/notification/repository"
 )
 
 const testVaultID = "vault-test-001"

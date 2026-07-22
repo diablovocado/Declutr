@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/diablovocado/declutr/modules/auth/repository"
+	"github.com/diablovocado/declutr/internal/auth/repository"
 )
 
 type contextKey string

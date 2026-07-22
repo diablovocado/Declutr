@@ -6,10 +6,10 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	orgApp "github.com/diablovocado/declutr/modules/organization/application"
-	"github.com/diablovocado/declutr/modules/organization/domain"
-	orgRepo "github.com/diablovocado/declutr/modules/organization/repository"
-	"github.com/diablovocado/declutr/shared/middleware"
+	orgApp "github.com/diablovocado/declutr/internal/organization/application"
+	"github.com/diablovocado/declutr/internal/organization/domain"
+	orgRepo "github.com/diablovocado/declutr/internal/organization/repository"
+	"github.com/diablovocado/declutr/middleware"
 )
 
 func TestOrganizationCreationAndMembership(t *testing.T) {

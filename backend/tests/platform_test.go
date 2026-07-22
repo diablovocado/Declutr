@@ -9,27 +9,27 @@ import (
 
 	"github.com/diablovocado/declutr/pkg/health"
 	"github.com/diablovocado/declutr/shared/cache"
-	"github.com/diablovocado/declutr/shared/middleware"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/middleware"
+	"github.com/diablovocado/declutr/utils"
 	"github.com/diablovocado/declutr/shared/ratelimit"
 	"github.com/diablovocado/declutr/shared/resilience"
 	"github.com/diablovocado/declutr/shared/supervisor"
 )
 
 func TestStructuredLoggerAndTracing(t *testing.T) {
-	logger := observability.InitLogger("test-service", nil)
+	logger := utils.InitLogger("test-service", nil)
 	ctx := context.Background()
 
 	// Test logging with correlation IDs
-	ctx = context.WithValue(ctx, observability.RequestIDKey, "req-1234")
-	ctx = context.WithValue(ctx, observability.CorrelationIDKey, "corr-5678")
+	ctx = context.WithValue(ctx, utils.RequestIDKey, "req-1234")
+	ctx = context.WithValue(ctx, utils.CorrelationIDKey, "corr-5678")
 
 	logger.Info(ctx, "Testing structured log entry", map[string]interface{}{
 		"component": "platform_test",
 	})
 
 	// Test distributed tracer
-	tracer := observability.GetTracer()
+	tracer := utils.GetTracer()
 	ctx, span := tracer.StartSpan(ctx, "TestPipelineSpan")
 	time.Sleep(10 * time.Millisecond)
 	tracer.EndSpan(span)

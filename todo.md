@@ -5,6 +5,15 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🏁 Issue #041 — Complete First End-to-End User Journey
+- [x] Sign Up ➔ Login ➔ Create Vault ➔ Dashboard ➔ Upload Files ➔ Processing Pipeline ➔ View AI Analysis ➔ Natural Search ➔ Chat with AI
+- [x] Connected Web pages (`frontend/app/`): Landing, Register, Login, Vault, Dashboard, Search, Copilot, File Detail
+- [x] Connected Mobile screens (`mobile/app/`): Login, Register, Vault, Dashboard, Search
+- [x] Connected Backend APIs (`/api/v1/auth`, `/vaults`, `/files`, `/processing`, `/search`, `/copilot`)
+- [x] Processing Pipeline visualization (`Validate` ➔ `Store` ➔ `Queue` ➔ `Extract Text` ➔ `OCR` ➔ `Metadata` ➔ `Summary` ➔ `Entities` ➔ `Embeddings` ➔ `Search` ➔ `Ready`)
+- [x] End-to-End Automated Test Suite (`backend/tests/e2e_journey_test.go`)
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
 ---
 
 ## 🛠️ Phase 0: Project Setup & Synchronization

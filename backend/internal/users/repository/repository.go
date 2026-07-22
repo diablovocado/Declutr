@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/persona/domain"
+	"github.com/diablovocado/declutr/internal/users/domain"
 )
 
 // PersonaRepository defines all data operations for the persona engine

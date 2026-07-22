@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/diablovocado/declutr/modules/workflow/application"
-	"github.com/diablovocado/declutr/modules/workflow/domain"
-	"github.com/diablovocado/declutr/modules/workflow/repository"
+	"github.com/diablovocado/declutr/internal/workflow/application"
+	"github.com/diablovocado/declutr/internal/workflow/domain"
+	"github.com/diablovocado/declutr/internal/workflow/repository"
 )
 
 const testVaultID = "vault-test-001"

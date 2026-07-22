@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/vault/domain"
+	"github.com/diablovocado/declutr/internal/vault/domain"
 )
 
 func TestVaultDomainDefaults(t *testing.T) {

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/diablovocado/declutr/modules/search/application"
-	"github.com/diablovocado/declutr/modules/search/domain"
+	"github.com/diablovocado/declutr/internal/search/application"
+	"github.com/diablovocado/declutr/internal/search/domain"
 )
 
 // SearchAPI handles HTTP requests for the Hybrid Knowledge Search Engine

@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/extension/domain"
+	"github.com/diablovocado/declutr/internal/settings/domain"
 )
 
 type ExtensionRepository interface {

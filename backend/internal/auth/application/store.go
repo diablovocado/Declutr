@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/auth/domain"
+	"github.com/diablovocado/declutr/internal/auth/domain"
 )
 
 type ChallengeStore struct {

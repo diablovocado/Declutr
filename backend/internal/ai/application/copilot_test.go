@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/diablovocado/declutr/modules/copilot/application"
-	"github.com/diablovocado/declutr/modules/copilot/domain"
-	"github.com/diablovocado/declutr/modules/copilot/repository"
+	"github.com/diablovocado/declutr/internal/ai/application"
+	"github.com/diablovocado/declutr/internal/ai/domain"
+	"github.com/diablovocado/declutr/internal/ai/repository"
 )
 
 const testVaultID = "vault-test-001"

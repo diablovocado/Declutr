@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/auth/domain"
-	"github.com/diablovocado/declutr/modules/auth/transport/models"
+	"github.com/diablovocado/declutr/internal/auth/domain"
+	"github.com/diablovocado/declutr/internal/auth/transport/models"
 )
 
 func (s *Service) LoginFinish(

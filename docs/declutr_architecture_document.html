@@ -106,6 +106,7 @@
   </div>
   <div class="section-label">Overview</div>
   <a href="#overview">Introduction</a>
+  <a href="#user-journey">End-to-End User Journey</a>
   <a href="#architecture">Architecture</a>
   <a href="#structure">Folder Structure</a>
   <div class="section-label">Backend</div>
@@ -158,6 +159,24 @@
       <tr><td>Storage</td><td>Cloudflare R2 / S3-compatible</td></tr>
       <tr><td>Auth</td><td>SRP (Secure Remote Password) — zero-knowledge</td></tr>
     </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ USER JOURNEY -->
+  <section id="user-journey">
+    <h2>Complete First End-to-End User Journey</h2>
+    <p class="subtitle">Unified workflow connecting account registration, vault setup, file ingestion, processing pipeline, AI analysis, natural search, and grounded chat.</p>
+
+    <div class="card" style="background:#13151f; border-color:#2a2d3a; margin-bottom:24px;">
+      <div class="card-title" style="color:#10b981; font-size:16px;">User Flow Pipeline Architecture</div>
+      <p style="font-family:var(--mono); font-size:13px; color:#a5b4fc; margin-top:8px;">
+        Landing Page ➔ Register ➔ Login ➔ Create Vault ➔ Dashboard ➔ Upload File ➔ Ingestion Pipeline ➔ View AI Analysis ➔ Natural Search ➔ AI Copilot Chat
+      </p>
+    </div>
+
+    <h3>Ingestion & Processing Stages</h3>
+    <pre>
+Validate File ➔ Store ➔ Queue ➔ Extract Text ➔ OCR (if needed) ➔ Metadata Extraction ➔ AI Summary ➔ Entity Extraction ➔ Vector Embeddings (512-dim) ➔ Search Indexing ➔ Ready
+    </pre>
   </section>
 
   <!-- ═══════════════════════════════════════════════ ARCHITECTURE -->

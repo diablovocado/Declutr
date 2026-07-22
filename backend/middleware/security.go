@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/utils"
 )
 
 // statusResponseWriter wraps http.ResponseWriter to capture status code.
@@ -47,7 +47,7 @@ func RequestObservability(next http.Handler) http.Handler {
 
 		reqID := r.Header.Get("X-Request-ID")
 		if reqID == "" {
-			reqID = observability.GenerateID(12)
+			reqID = utils.GenerateID(12)
 		}
 
 		corrID := r.Header.Get("X-Correlation-ID")
@@ -58,13 +58,13 @@ func RequestObservability(next http.Handler) http.Handler {
 		vaultID := r.Header.Get("X-Vault-ID")
 
 		ctx := r.Context()
-		ctx = context.WithValue(ctx, observability.RequestIDKey, reqID)
-		ctx = context.WithValue(ctx, observability.CorrelationIDKey, corrID)
+		ctx = context.WithValue(ctx, utils.RequestIDKey, reqID)
+		ctx = context.WithValue(ctx, utils.CorrelationIDKey, corrID)
 		if vaultID != "" {
-			ctx = context.WithValue(ctx, observability.VaultIDKey, vaultID)
+			ctx = context.WithValue(ctx, utils.VaultIDKey, vaultID)
 		}
 
-		tracer := observability.GetTracer()
+		tracer := utils.GetTracer()
 		ctx, span := tracer.StartSpan(ctx, r.Method+" "+r.URL.Path)
 
 		w.Header().Set("X-Request-ID", reqID)
@@ -76,9 +76,9 @@ func RequestObservability(next http.Handler) http.Handler {
 		tracer.EndSpan(span)
 		latency := time.Since(start).Milliseconds()
 
-		observability.GetMetricsRegistry().RecordRequest(srw.statusCode, latency)
+		utils.GetMetricsRegistry().RecordRequest(srw.statusCode, latency)
 
-		observability.GetLogger().Info(ctx, "HTTP Request", map[string]interface{}{
+		utils.GetLogger().Info(ctx, "HTTP Request", map[string]interface{}{
 			"path":        r.URL.Path,
 			"method":      r.Method,
 			"status_code": srw.statusCode,

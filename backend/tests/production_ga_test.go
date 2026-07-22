@@ -5,20 +5,20 @@ import (
 	"testing"
 	"time"
 
-	devApp "github.com/diablovocado/declutr/modules/developer/application"
-	devDomain "github.com/diablovocado/declutr/modules/developer/domain"
-	devRepo "github.com/diablovocado/declutr/modules/developer/repository"
+	devApp "github.com/diablovocado/declutr/internal/settings/application"
+	devDomain "github.com/diablovocado/declutr/internal/settings/domain"
+	devRepo "github.com/diablovocado/declutr/internal/settings/repository"
 
-	extApp "github.com/diablovocado/declutr/modules/extension/application"
-	extDomain "github.com/diablovocado/declutr/modules/extension/domain"
-	extRepo "github.com/diablovocado/declutr/modules/extension/repository"
+	extApp "github.com/diablovocado/declutr/internal/settings/application"
+	extDomain "github.com/diablovocado/declutr/internal/settings/domain"
+	extRepo "github.com/diablovocado/declutr/internal/settings/repository"
 
-	orgApp "github.com/diablovocado/declutr/modules/organization/application"
-	orgDomain "github.com/diablovocado/declutr/modules/organization/domain"
-	orgRepo "github.com/diablovocado/declutr/modules/organization/repository"
+	orgApp "github.com/diablovocado/declutr/internal/organization/application"
+	orgDomain "github.com/diablovocado/declutr/internal/organization/domain"
+	orgRepo "github.com/diablovocado/declutr/internal/organization/repository"
 
 	"github.com/diablovocado/declutr/shared/cache"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/utils"
 	"github.com/diablovocado/declutr/shared/ratelimit"
 	"github.com/diablovocado/declutr/shared/resilience"
 )
@@ -27,7 +27,7 @@ func TestGAProductionSmokeTest(t *testing.T) {
 	ctx := context.Background()
 
 	// 1. Observability Audit
-	logger := observability.InitLogger("ga-test", nil)
+	logger := utils.InitLogger("ga-test", nil)
 	logger.Info(ctx, "Starting GA v1.0.0 Production Integration Smoke Test", map[string]interface{}{"status": "GA_LAUNCH", "version": "1.0.0"})
 
 	// 2. Cache Verification

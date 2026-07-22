@@ -8,10 +8,10 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/copilot/domain"
-	"github.com/diablovocado/declutr/modules/copilot/repository"
-	searchApp "github.com/diablovocado/declutr/modules/search/application"
-	searchDomain "github.com/diablovocado/declutr/modules/search/domain"
+	"github.com/diablovocado/declutr/internal/ai/domain"
+	"github.com/diablovocado/declutr/internal/ai/repository"
+	searchApp "github.com/diablovocado/declutr/internal/search/application"
+	searchDomain "github.com/diablovocado/declutr/internal/search/domain"
 )
 
 // CopilotService manages grounded RAG conversations and question answering

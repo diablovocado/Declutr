@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	agentApp "github.com/diablovocado/declutr/modules/agent/application"
-	agentDomain "github.com/diablovocado/declutr/modules/agent/domain"
-	agentRepo "github.com/diablovocado/declutr/modules/agent/repository"
+	agentApp "github.com/diablovocado/declutr/internal/agent/application"
+	agentDomain "github.com/diablovocado/declutr/internal/agent/domain"
+	agentRepo "github.com/diablovocado/declutr/internal/agent/repository"
 )
 
 func TestAutonomousAgentGoalAndPlanDecomposition(t *testing.T) {

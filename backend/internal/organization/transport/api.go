@@ -4,9 +4,9 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/modules/organization/application"
-	"github.com/diablovocado/declutr/modules/organization/domain"
-	"github.com/diablovocado/declutr/shared/middleware"
+	"github.com/diablovocado/declutr/internal/organization/application"
+	"github.com/diablovocado/declutr/internal/organization/domain"
+	"github.com/diablovocado/declutr/middleware"
 )
 
 // OrganizationAPI handles HTTP REST endpoints for multi-tenant enterprise administration.

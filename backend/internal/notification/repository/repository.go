@@ -5,7 +5,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/notification/domain"
+	"github.com/diablovocado/declutr/internal/notification/domain"
 )
 
 // NotificationRepository defines persistence contract for notifications, preferences, and digests

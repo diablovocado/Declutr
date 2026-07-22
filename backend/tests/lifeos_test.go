@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	lifeApp "github.com/diablovocado/declutr/modules/lifeos/application"
-	lifeRepo "github.com/diablovocado/declutr/modules/lifeos/repository"
+	lifeApp "github.com/diablovocado/declutr/internal/lifeos/application"
+	lifeRepo "github.com/diablovocado/declutr/internal/lifeos/repository"
 )
 
 func TestLifeOSUnifiedDashboardAndProjectHub(t *testing.T) {

@@ -6,9 +6,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	devApp "github.com/diablovocado/declutr/modules/developer/application"
-	"github.com/diablovocado/declutr/modules/developer/domain"
-	devRepo "github.com/diablovocado/declutr/modules/developer/repository"
+	devApp "github.com/diablovocado/declutr/internal/settings/application"
+	"github.com/diablovocado/declutr/internal/settings/domain"
+	devRepo "github.com/diablovocado/declutr/internal/settings/repository"
 	"github.com/diablovocado/declutr/sdks/go"
 )
 

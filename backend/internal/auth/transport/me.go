@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/diablovocado/declutr/shared/middleware"
+	"github.com/diablovocado/declutr/middleware"
 )
 
 func MeHandler() http.Handler {

@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	multiApp "github.com/diablovocado/declutr/modules/multiagent/application"
-	multiDomain "github.com/diablovocado/declutr/modules/multiagent/domain"
-	multiRepo "github.com/diablovocado/declutr/modules/multiagent/repository"
+	multiApp "github.com/diablovocado/declutr/internal/multiagent/application"
+	multiDomain "github.com/diablovocado/declutr/internal/multiagent/domain"
+	multiRepo "github.com/diablovocado/declutr/internal/multiagent/repository"
 )
 
 func TestMultiAgentCoordinatorOrchestration(t *testing.T) {

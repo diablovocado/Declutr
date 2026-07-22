@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/file/domain"
+	"github.com/diablovocado/declutr/internal/files/domain"
 )
 
 func TestAssetStatusStateTransitions(t *testing.T) {

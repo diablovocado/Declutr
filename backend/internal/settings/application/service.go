@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/extension/domain"
-	"github.com/diablovocado/declutr/modules/extension/repository"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/internal/settings/domain"
+	"github.com/diablovocado/declutr/internal/settings/repository"
+	"github.com/diablovocado/declutr/utils"
 )
 
 // ExtensionService manages extensions, capability registry, marketplace, and lifecycle.
@@ -45,7 +45,7 @@ func (s *ExtensionService) InstallExtension(ctx context.Context, userID string, 
 	}
 
 	inst := &domain.ExtensionInstallation{
-		ID:                  "inst-" + observability.GenerateID(8),
+		ID:                  "inst-" + utils.GenerateID(8),
 		ExtensionID:         ext.ID,
 		UserID:              userID,
 		InstalledVersion:    ext.Manifest.Version,
@@ -113,7 +113,7 @@ func (s *ExtensionService) PublishExtensionVersion(ctx context.Context, manifest
 	_ = s.repo.SaveExtension(ctx, ext)
 
 	ver := &domain.ExtensionVersion{
-		ID:           "ver-" + observability.GenerateID(8),
+		ID:           "ver-" + utils.GenerateID(8),
 		ExtensionID:  manifest.ID,
 		Version:      manifest.Version,
 		Manifest:     manifest,
@@ -130,7 +130,7 @@ func (s *ExtensionService) PublishExtensionVersion(ctx context.Context, manifest
 
 func (s *ExtensionService) AddReview(ctx context.Context, userID string, userName string, extID string, rating int, comment string) (*domain.ExtensionReview, error) {
 	review := &domain.ExtensionReview{
-		ID:          "rev-" + observability.GenerateID(8),
+		ID:          "rev-" + utils.GenerateID(8),
 		ExtensionID: extID,
 		UserID:      userID,
 		UserName:    userName,

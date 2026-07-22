@@ -81,6 +81,23 @@ Declutr/
 
 ---
 
+## 🚀 Getting Started — Complete End-to-End User Journey
+
+A new user can experience the complete Declutr workflow in under 2 minutes:
+
+1. **Sign Up (`/register`)**: Create an account with zero-knowledge Secure Remote Password (SRP-6a) authentication. Your master passphrase never leaves your browser.
+2. **Login (`/login`)**: Perform mutual zero-knowledge proof verification. The unwrapped Master Vault Key decrypts your active session in local memory.
+3. **Create Vault (`/vault`)**: Initialize your root zero-knowledge workspace container ("My Life Vault").
+4. **Dashboard (`/dashboard`)**: Monitor active vault storage, processing pipeline status, recent searches, and recent AI chats.
+5. **Upload Files (`/upload` / `UploadModal`)**: Drag and drop documents, PDFs, or receipts.
+6. **Watch Processing Progress**: Real-time pipeline stage telemetry:
+   `Validate` ➔ `Store` ➔ `Queue` ➔ `Extract Text` ➔ `OCR` ➔ `Metadata` ➔ `AI Summary` ➔ `Entities` ➔ `Embeddings` ➔ `Search Indexing` ➔ `Ready`
+7. **View AI Analysis (`/files/[id]`)**: Inspect extracted text, metadata tags, executive summary, and extracted entities.
+8. **Search Naturally (`/search`)**: Use natural language queries like *"Tax form 2025"* or *"Doctor prescription"*. The hybrid search engine fuses keyword FTS + pgvector 512-dim embeddings.
+9. **Chat with AI (`/copilot`)**: Ask natural questions like *"What is this document?"*, *"Summarize this"*, or *"What dates are mentioned?"*. Receive grounded answers with exact source citations.
+
+---
+
 ## Quick Start (10–15 Minutes Onboarding)
 
 ### Prerequisites

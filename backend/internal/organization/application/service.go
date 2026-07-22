@@ -6,9 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/organization/domain"
-	"github.com/diablovocado/declutr/modules/organization/repository"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/internal/organization/domain"
+	"github.com/diablovocado/declutr/internal/organization/repository"
+	"github.com/diablovocado/declutr/utils"
 )
 
 // OrganizationService manages tenancy, workspaces, membership, roles, and enterprise governance.
@@ -21,7 +21,7 @@ func NewOrganizationService(repo repository.OrganizationRepository) *Organizatio
 }
 
 func (s *OrganizationService) CreateOrganization(ctx context.Context, ownerID string, req domain.CreateOrganizationRequest) (*domain.Organization, error) {
-	orgID := "org-" + observability.GenerateID(8)
+	orgID := "org-" + utils.GenerateID(8)
 	now := time.Now().UTC()
 
 	tz := req.TimeZone
@@ -51,7 +51,7 @@ func (s *OrganizationService) CreateOrganization(ctx context.Context, ownerID st
 
 	// Add Owner member
 	ownerMember := &domain.OrganizationMember{
-		ID:             "mem-" + observability.GenerateID(8),
+		ID:             "mem-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		UserID:         ownerID,
 		RoleID:         "role-owner-" + orgID,
@@ -64,7 +64,7 @@ func (s *OrganizationService) CreateOrganization(ctx context.Context, ownerID st
 
 	// Create Default Organization Workspace
 	ws := &domain.Workspace{
-		ID:             "ws-" + observability.GenerateID(8),
+		ID:             "ws-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		VaultID:        "vault-org-" + orgID,
 		Name:           req.Name + " General Workspace",
@@ -93,9 +93,9 @@ func (s *OrganizationService) UpdateSettings(ctx context.Context, orgID string, 
 
 func (s *OrganizationService) InviteMember(ctx context.Context, orgID string, email string, roleID string) (*domain.OrganizationMember, error) {
 	member := &domain.OrganizationMember{
-		ID:             "mem-" + observability.GenerateID(8),
+		ID:             "mem-" + utils.GenerateID(8),
 		OrganizationID: orgID,
-		UserID:         "usr-" + observability.GenerateID(8),
+		UserID:         "usr-" + utils.GenerateID(8),
 		Email:          email,
 		Name:           strings.Split(email, "@")[0],
 		RoleID:         roleID,
@@ -135,9 +135,9 @@ func (s *OrganizationService) TransferOwnership(ctx context.Context, orgID strin
 
 func (s *OrganizationService) CreateWorkspace(ctx context.Context, orgID string, name string, wsType domain.WorkspaceType, dept string) (*domain.Workspace, error) {
 	ws := &domain.Workspace{
-		ID:             "ws-" + observability.GenerateID(8),
+		ID:             "ws-" + utils.GenerateID(8),
 		OrganizationID: orgID,
-		VaultID:        "vault-" + observability.GenerateID(8),
+		VaultID:        "vault-" + utils.GenerateID(8),
 		Name:           name,
 		Type:           wsType,
 		Department:     dept,
@@ -157,7 +157,7 @@ func (s *OrganizationService) ListWorkspaces(ctx context.Context, orgID string) 
 
 func (s *OrganizationService) CreateRole(ctx context.Context, orgID string, name string, desc string, perms []string) (*domain.OrganizationRole, error) {
 	role := &domain.OrganizationRole{
-		ID:             "role-" + observability.GenerateID(8),
+		ID:             "role-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		Name:           name,
 		Description:    desc,
@@ -178,7 +178,7 @@ func (s *OrganizationService) ListRoles(ctx context.Context, orgID string) ([]do
 
 func (s *OrganizationService) CreateGroup(ctx context.Context, orgID string, name string, groupType string, memberUserIDs []string) (*domain.OrganizationGroup, error) {
 	group := &domain.OrganizationGroup{
-		ID:             "grp-" + observability.GenerateID(8),
+		ID:             "grp-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		Name:           name,
 		Type:           groupType,
@@ -198,7 +198,7 @@ func (s *OrganizationService) ListGroups(ctx context.Context, orgID string) ([]d
 
 func (s *OrganizationService) SetPolicy(ctx context.Context, orgID string, policyType domain.PolicyType, enabled bool, rules map[string]interface{}) (*domain.OrganizationPolicy, error) {
 	policy := &domain.OrganizationPolicy{
-		ID:             "pol-" + observability.GenerateID(8),
+		ID:             "pol-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		Type:           policyType,
 		IsEnabled:      enabled,
@@ -218,7 +218,7 @@ func (s *OrganizationService) ListPolicies(ctx context.Context, orgID string) ([
 
 func (s *OrganizationService) ConfigureSSO(ctx context.Context, orgID string, provider string, issuer string, clientID string) (*domain.SSOConfig, error) {
 	cfg := &domain.SSOConfig{
-		ID:             "sso-" + observability.GenerateID(8),
+		ID:             "sso-" + utils.GenerateID(8),
 		OrganizationID: orgID,
 		ProviderType:   provider,
 		IsEnabled:      true,

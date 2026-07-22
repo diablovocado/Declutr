@@ -6,7 +6,7 @@ import (
 	"runtime/debug"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/extension/domain"
+	"github.com/diablovocado/declutr/internal/settings/domain"
 )
 
 // SandboxConfig defines resource quota boundaries.

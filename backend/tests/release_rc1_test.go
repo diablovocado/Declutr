@@ -5,21 +5,21 @@ import (
 	"testing"
 	"time"
 
-	devApp "github.com/diablovocado/declutr/modules/developer/application"
-	devDomain "github.com/diablovocado/declutr/modules/developer/domain"
-	devRepo "github.com/diablovocado/declutr/modules/developer/repository"
+	devApp "github.com/diablovocado/declutr/internal/settings/application"
+	devDomain "github.com/diablovocado/declutr/internal/settings/domain"
+	devRepo "github.com/diablovocado/declutr/internal/settings/repository"
 
-	extApp "github.com/diablovocado/declutr/modules/extension/application"
-	extDomain "github.com/diablovocado/declutr/modules/extension/domain"
-	extRepo "github.com/diablovocado/declutr/modules/extension/repository"
+	extApp "github.com/diablovocado/declutr/internal/settings/application"
+	extDomain "github.com/diablovocado/declutr/internal/settings/domain"
+	extRepo "github.com/diablovocado/declutr/internal/settings/repository"
 
-	orgApp "github.com/diablovocado/declutr/modules/organization/application"
-	orgDomain "github.com/diablovocado/declutr/modules/organization/domain"
-	orgRepo "github.com/diablovocado/declutr/modules/organization/repository"
+	orgApp "github.com/diablovocado/declutr/internal/organization/application"
+	orgDomain "github.com/diablovocado/declutr/internal/organization/domain"
+	orgRepo "github.com/diablovocado/declutr/internal/organization/repository"
 
 	"github.com/diablovocado/declutr/shared/cache"
-	"github.com/diablovocado/declutr/shared/middleware"
-	"github.com/diablovocado/declutr/shared/observability"
+	"github.com/diablovocado/declutr/middleware"
+	"github.com/diablovocado/declutr/utils"
 	"github.com/diablovocado/declutr/shared/ratelimit"
 	"github.com/diablovocado/declutr/shared/resilience"
 )
@@ -28,7 +28,7 @@ func TestRC1EndToEndSystemValidation(t *testing.T) {
 	ctx := context.Background()
 
 	// 1. Observability & Logging Audit
-	logger := observability.InitLogger("rc1-test", nil)
+	logger := utils.InitLogger("rc1-test", nil)
 	logger.Info(ctx, "Starting RC1 Master System Integration Test", map[string]interface{}{"version": "1.0.0-rc1"})
 
 	// 2. Cache Abstraction Layer Audit

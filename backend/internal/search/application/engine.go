@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/search/domain"
+	"github.com/diablovocado/declutr/internal/search/domain"
 )
 
 // HybridSearchEngine orchestrates unified knowledge retrieval across all vault sources

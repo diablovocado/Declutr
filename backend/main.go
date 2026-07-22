@@ -1,11 +1,9 @@
 package main
 
 import (
-	"context"
 	"log"
-	"net/http"
 	"os"
-	"time"
+	"os/exec"
 )
 
 func main() {
@@ -14,34 +12,12 @@ func main() {
 		port = "8080"
 	}
 
-	log.Printf("Starting Declutr Life Operating System (LifeOS) on port %s...", port)
-
-	mux := http.NewServeMux()
-
-	// Health check endpoint
-	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status":"ok","version":"v2.0.0"}`))
-	})
-
-	// API v1 router
-	mux.HandleFunc("/api/v1/health", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"status":"healthy","service":"declutr-backend"}`))
-	})
-
-	server := &http.Server{
-		Addr:         ":" + port,
-		Handler:      mux,
-		ReadTimeout:  15 * time.Second,
-		WriteTimeout: 15 * time.Second,
-		IdleTimeout:  60 * time.Second,
-	}
-
-	log.Printf("Declutr Backend listening on http://localhost:%s", port)
-	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-		log.Fatalf("Server error: %v", err)
+	log.Printf("Launching Declutr Main Server on port %s...", port)
+	cmd := exec.Command("go", "run", "cmd/main.go")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	cmd.Env = os.Environ()
+	if err := cmd.Run(); err != nil {
+		log.Fatalf("Failed to run cmd/main.go: %v", err)
 	}
 }

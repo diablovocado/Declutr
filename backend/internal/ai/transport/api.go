@@ -6,8 +6,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/diablovocado/declutr/modules/copilot/application"
-	"github.com/diablovocado/declutr/modules/copilot/domain"
+	"github.com/diablovocado/declutr/internal/ai/application"
+	"github.com/diablovocado/declutr/internal/ai/domain"
 )
 
 // CopilotAPI handles HTTP endpoints for Declutr AI Copilot

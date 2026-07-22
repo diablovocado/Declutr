@@ -5,16 +5,16 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/auth/domain"
-	"github.com/diablovocado/declutr/modules/auth/transport/models"
-	"github.com/diablovocado/declutr/shared/crypto"
+	"github.com/diablovocado/declutr/internal/auth/domain"
+	"github.com/diablovocado/declutr/internal/auth/transport/models"
+	"github.com/diablovocado/declutr/utils"
 )
 
 func (s *Service) LoginStart(
 	req models.LoginStartRequest,
 ) (*models.LoginStartResponse, error) {
 
-	emailHash := crypto.HashEmail(req.Email)
+	emailHash := utils.HashEmail(req.Email)
 
 	user, err := s.UserRepo.GetUserByEmailHash(emailHash)
 	if err != nil {

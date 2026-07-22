@@ -9,8 +9,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/diablovocado/declutr/modules/persona/domain"
-	"github.com/diablovocado/declutr/modules/persona/repository"
+	"github.com/diablovocado/declutr/internal/users/domain"
+	"github.com/diablovocado/declutr/internal/users/repository"
 )
 
 // PersonaService is the core learning and recommendation engine

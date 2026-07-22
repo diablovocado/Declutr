@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	predApp "github.com/diablovocado/declutr/modules/predictive/application"
-	predDomain "github.com/diablovocado/declutr/modules/predictive/domain"
-	predRepo "github.com/diablovocado/declutr/modules/predictive/repository"
+	predApp "github.com/diablovocado/declutr/internal/predictive/application"
+	predDomain "github.com/diablovocado/declutr/internal/predictive/domain"
+	predRepo "github.com/diablovocado/declutr/internal/predictive/repository"
 )
 
 func TestPredictiveEngineAndRecommendationPlanner(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/diablovocado/declutr/modules/copilot/domain"
+	"github.com/diablovocado/declutr/internal/ai/domain"
 )
 
 // GroundedRAGEngine orchestrates the full RAG pipeline (Retrieval + Grounded Prompting + Streaming + Citations)

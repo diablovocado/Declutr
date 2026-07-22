@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	extApp "github.com/diablovocado/declutr/modules/extension/application"
-	"github.com/diablovocado/declutr/modules/extension/domain"
-	extRepo "github.com/diablovocado/declutr/modules/extension/repository"
+	extApp "github.com/diablovocado/declutr/internal/settings/application"
+	"github.com/diablovocado/declutr/internal/settings/domain"
+	extRepo "github.com/diablovocado/declutr/internal/settings/repository"
 )
 
 func TestExtensionInstallationAndLifecycle(t *testing.T) {
