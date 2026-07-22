@@ -29,6 +29,16 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Context-Aware Workspace & Intelligent Navigation (Issue #045)**:
+  - Transformed Declutr into a context-aware workspace inspired by Cursor IDE, Arc Browser, Notion, Linear, Raycast, and Apple Photos.
+  - Implemented `WorkspaceContextProvider` (`workspace-context-provider.tsx`) managing `activeVault`, `activeCollection`, `activeProject`, `activeDocument`, `activeChat`, `activeSearch`, and `recentContexts` stack with one-click return.
+  - Built persistent `ContextBar` (`context-bar.tsx`) with interactive breadcrumbs (`Home > Vault > Collection > Project > Document`), active AI Context badge, Quick Smart Actions dropdown (Summarize, Extract Metadata, Search Similar, Share, Move), and Context Switcher trigger (`⌘J`).
+  - Built `SmartSidebar` (`smart-sidebar.tsx`) adaptively surfacing context-relevant items (Related Documents, Linked Collections, Related AI Chats, Suggested Actions).
+  - Built `ContextSwitcherModal` (`context-switcher-modal.tsx`) accessible via `⌘J` / `⌘Shift+P` enabling sub-100ms context switching.
+  - Auto-synchronized active document/collection context into AI Copilot chat (`/copilot`) without requiring manual selection.
+  - Created Mobile Context Sheet (`mobile_context_sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Context-Aware Workspace & Intelligent Navigation" section.
+
 - **Universal Command Palette & Keyboard-First Productivity (Issue #044)**:
   - Built a Raycast/Linear-inspired Spotlight Universal Command Palette (`command-palette.tsx`) listening to `⌘K` / `Ctrl+K` registered globally across all pages.
   - Implemented fast sub-100ms fuzzy search indexing covering Navigation (`/dashboard`, `/vault`, `/search`, `/copilot`, `/lifeos`, `/design-system`), Actions (Upload File, Scan Document, Ask AI, Toggle Theme, Export Vault), AI Natural Commands ("Summarize latest document", "Find 2025 tax form"), and Recent Assets.

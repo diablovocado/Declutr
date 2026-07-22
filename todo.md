@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🧭 Issue #045 — Context-Aware Workspace & Intelligent Navigation
+- [x] Global Workspace Context Provider (`workspace-context-provider.tsx`) tracking active vault, collection, project, document, chat, search, and recent contexts stack
+- [x] Persistent Context Bar (`context-bar.tsx`) displaying interactive breadcrumb path (`Home > Vault > Collection > Project > Document`), active AI context badge, Quick Smart Actions dropdown, and Context Switcher trigger (`⌘J`)
+- [x] Smart Adaptive Sidebar (`smart-sidebar.tsx`) adaptively surfacing related files, linked collections, related AI chats, and contextual suggestions
+- [x] Fast Context Switcher modal (`context-switcher-modal.tsx`) accessible via `⌘J` / `⌘Shift+P`
+- [x] AI Copilot context auto-synchronization (`/copilot`) pre-populating active document/collection context
+- [x] Mobile Context Sheet bottom-modal (`mobile_context_sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## ⚡ Issue #044 — Universal Command Palette & Keyboard-First Productivity
 - [x] Raycast/Linear-inspired Spotlight Universal Command Palette (`command-palette.tsx`) listening to `⌘K` / `Ctrl+K` registered globally
 - [x] Fast sub-100ms fuzzy search indexing Navigation (`/dashboard`, `/vault`, `/search`, `/copilot`, `/lifeos`), Actions, AI Natural Commands, and Recent Assets

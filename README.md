@@ -81,6 +81,21 @@ Declutr/
 
 ---
 
+## 🧭 Context-Aware Workspace & Intelligent Navigation (Issue #045)
+
+Declutr automatically tracks, surfs, and adapts to your active working context across every page:
+
+| Feature | Description |
+|---|---|
+| 🌐 **Workspace Context Provider** | Global React context managing `activeVault`, `activeCollection`, `activeProject`, `activeDocument`, `activeChat`, `activeSearch`, and `recentContexts` stack |
+| 📍 **Persistent Context Bar** | Header bar displaying interactive breadcrumbs (`Home > Vault > Collection > Project > Document`), active AI context badge, quick smart actions, and context switcher trigger |
+| ⚡ **Context Switcher (`⌘J`)** | Sub-100ms workspace switcher modal enabling one-click switching between vaults, collections, projects, recent files, and saved searches |
+| 🤖 **AI Context Auto-Sync** | Automatically pre-populates active document/collection context into AI Copilot chat without manual re-selection |
+| 🧩 **Smart Adaptive Sidebar** | Dynamically surfaces related files, linked collections, related AI chats, and contextual suggestions |
+| 📱 **Mobile Context Sheet** | React Native Expo context sheet (`mobile_context_sheet.tsx`) allowing mobile context switching |
+
+---
+
 ## ⚡ Command Palette & Keyboard Productivity (Issue #044)
 
 Declutr features a Raycast/Linear-inspired Spotlight Universal Command Palette (`⌘K` / `Ctrl+K`) for keyboard-first navigation:
