@@ -1020,6 +1020,47 @@ Declutr's Offline-First Synchronization Engine enables seamless offline usabilit
 | `POST` | `/api/v1/sync/register-device` | Register device for sync state tracking |
 | `GET` | `/api/v1/sync/stats` | Vault sync engine metrics summary |
 
+---
+
+## 🔌 Integration Platform & Connector Framework
+
+Declutr's Integration Platform provides a reusable, secure, modular Connector SDK allowing external services to integrate independently without touching core application logic.
+
+> **Architecture**: `Connector Registry` → `Authentication Provider` → `Connector Runtime` → `Sync Engine` → `Event Bus` → `Workflow Engine` → `AI Processing Pipeline`
+
+### Connector SDK & Reference Connectors
+
+- **Connector SDK Contract**: `Initialize()`, `Authenticate()`, `Validate()`, `Sync()`, `Import()`, `Export()`, `Webhook()`, `HealthCheck()`, `Disconnect()`.
+- **Reference Implementations**: Google Drive (`GoogleDriveConnector`) & WebDAV (`WebDAVConnector`).
+- **Auth Modes**: `OAUTH2`, `OAUTH_PKCE`, `API_KEY`, `PERSONAL_ACCESS_TOKEN`, `SERVICE_ACCOUNT`.
+- **Connector Marketplace**: Google Drive, Dropbox, Notion, GitHub, AWS S3 / Cloudflare R2, WebDAV / Nextcloud.
+
+### Database Schema (Migration 026)
+
+| Table | Purpose |
+|---|---|
+| `connectors` | Installed connector instances, types, status, and enabled states |
+| `connector_configs` | Sync directions (`IMPORT_ONLY`, `EXPORT_ONLY`, `BIDIRECTIONAL`), intervals, folders |
+| `connector_credentials` | Encrypted authentication credentials and token expiration times |
+| `connector_sync_jobs` | Import/export execution jobs, items processed, and byte counts |
+| `connector_webhooks` | Inbound webhook payload events log |
+| `connector_logs` | Execution and audit log items |
+| `connector_health` | Health check probing latency and diagnostic status |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/integrations` | List marketplace and installed connectors |
+| `POST` | `/api/v1/integrations/install` | Install connector from marketplace |
+| `POST` | `/api/v1/integrations/configure` | Configure sync settings and authentication credentials |
+| `POST` | `/api/v1/integrations/enable` | Enable or disable installed connector |
+| `POST` | `/api/v1/integrations/sync` | Trigger manual sync or import job |
+| `GET` | `/api/v1/integrations/status` | Get health check probing result |
+| `GET` | `/api/v1/integrations/logs` | Get connector execution logs |
+| `POST` | `/api/v1/integrations/webhooks` | Ingest inbound webhook event payload |
+
+
 
 
 

@@ -193,6 +193,16 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - 7 REST API endpoints (push, pull, status, conflicts, resolve, register-device, stats)
   - Web UI: SyncCenterComponent, ConflictResolverComponent, SyncQueueViewerComponent, `/sync` page route
   - Mobile UI: OfflineBanner, SyncStatus, ConflictResolver
+- [x] Integration Platform & Connector Framework:
+  - Database migration `026_create_integration_tables.sql` (7 tables: connectors, connector_configs, connector_credentials, connector_sync_jobs, connector_webhooks, connector_logs, connector_health)
+  - Connector SDK (`Initialize`, `Authenticate`, `Validate`, `Sync`, `Import`, `Export`, `Webhook`, `HealthCheck`, `Disconnect`)
+  - Reference Connector Implementations (`GoogleDriveConnector` & `WebDAVConnector`)
+  - Connector Marketplace (Google Drive, Dropbox, Notion, GitHub, AWS S3, WebDAV / Nextcloud)
+  - Authentication Modes (OAuth 2.0, OAuth PKCE, API Keys, PAT, Service Accounts)
+  - Inbound Webhook Ingestion & Event Bus Publishing
+  - 8 REST API endpoints (integrations, install, configure, enable, sync, status, logs, webhooks)
+  - Web UI: IntegrationMarketplaceComponent, InstalledConnectorsComponent, ConnectorLogsComponent, `/integrations` page route
+  - Mobile UI: ConnectedServices, ConnectorCard, SyncTrigger
   - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)

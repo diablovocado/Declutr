@@ -25,6 +25,9 @@ import (
 	insightsApp "github.com/diablovocado/declutr/modules/insights/application"
 	insightsRepository "github.com/diablovocado/declutr/modules/insights/repository"
 	insightsTransport "github.com/diablovocado/declutr/modules/insights/transport"
+	integrationsApp "github.com/diablovocado/declutr/modules/integrations/application"
+	integrationsRepository "github.com/diablovocado/declutr/modules/integrations/repository"
+	integrationsTransport "github.com/diablovocado/declutr/modules/integrations/transport"
 	memoryApp "github.com/diablovocado/declutr/modules/memory/application"
 	memoryRepository "github.com/diablovocado/declutr/modules/memory/repository"
 	memoryTransport "github.com/diablovocado/declutr/modules/memory/transport"
@@ -407,6 +410,23 @@ func main() {
 	http.HandleFunc("/api/v1/sync/resolve", syncAPI.ResolveConflict)
 	http.HandleFunc("/api/v1/sync/register-device", syncAPI.RegisterDevice)
 	http.HandleFunc("/api/v1/sync/stats", syncAPI.GetStats)
+
+	// Integration Platform & Connector Framework Module initialization
+	// Pipeline: Connector Registry → Authentication Provider → Connector Runtime → Sync Engine → Event Bus → Workflow Engine → AI Pipeline
+	integrationRepo := integrationsRepository.NewInMemoryIntegrationRepository()
+	integrationSvc := integrationsApp.NewIntegrationService(integrationRepo)
+	connectorRuntime := integrationsApp.NewConnectorRuntime(integrationSvc)
+	_ = connectorRuntime // available for background health probing
+	integrationAPI := integrationsTransport.NewIntegrationAPI(integrationSvc)
+
+	http.HandleFunc("/api/v1/integrations", integrationAPI.ListIntegrations)
+	http.HandleFunc("/api/v1/integrations/install", integrationAPI.InstallConnector)
+	http.HandleFunc("/api/v1/integrations/configure", integrationAPI.ConfigureConnector)
+	http.HandleFunc("/api/v1/integrations/enable", integrationAPI.ToggleConnector)
+	http.HandleFunc("/api/v1/integrations/sync", integrationAPI.TriggerSync)
+	http.HandleFunc("/api/v1/integrations/status", integrationAPI.GetStatus)
+	http.HandleFunc("/api/v1/integrations/logs", integrationAPI.GetLogs)
+	http.HandleFunc("/api/v1/integrations/webhooks", integrationAPI.ProcessWebhook)
 
 	log.Println("Declutr Backend Running on :8080")
 

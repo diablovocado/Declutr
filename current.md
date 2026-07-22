@@ -41,6 +41,15 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Integration Platform & Connector Framework (Issue #030)**:
+  - Created PostgreSQL database migration `database/migrations/026_create_integration_tables.sql` (`connectors`, `connector_configs`, `connector_credentials`, `connector_sync_jobs`, `connector_webhooks`, `connector_logs`, `connector_health`).
+  - Implemented `ConnectorSDK` interface (`Initialize`, `Authenticate`, `Validate`, `Sync`, `Import`, `Export`, `Webhook`, `HealthCheck`, `Disconnect`) with reference implementations for Google Drive (`GoogleDriveConnector`) & WebDAV (`WebDAVConnector`).
+  - Built `ConnectorRuntime` & `IntegrationService` managing credential encryption/decryption, connector marketplace (Google Drive, Dropbox, Notion, GitHub, S3, WebDAV), inbound webhook ingestion with Event Bus publishing, manual sync triggering, and health diagnostic probing.
+  - Added 8 REST API endpoints (`GET /integrations`, `POST /integrations/install`, `POST /integrations/configure`, `POST /integrations/enable`, `POST /integrations/sync`, `GET /integrations/status`, `GET /integrations/logs`, `POST /integrations/webhooks`).
+  - Created Web UI module (`frontend/features/integrations/components/`) featuring `IntegrationMarketplaceComponent`, `InstalledConnectorsComponent`, `ConnectorLogsComponent`, and Next.js page route (`/integrations`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/integrations/components/`): `ConnectedServices.tsx`, `ConnectorCard.tsx`, `SyncTrigger.tsx`.
+  - Added comprehensive Go test suite (`integrations_test.go`) — 6/6 tests passing: Marketplace & Install, Config & Auth, Sync & Import Pipeline, Inbound Webhook Processing, Health Check Probe, Enable/Disable.
+
 - **Offline-First Sync Engine & Conflict Resolution (Issue #029)**:
   - Created PostgreSQL database migration `database/migrations/025_create_sync_tables.sql` (`sync_queue`, `sync_events`, `sync_conflicts`, `sync_sessions`, `device_state`, `sync_statistics`, `offline_operations`).
   - Implemented domain models for `SyncQueueItem`, `SyncEvent`, `SyncConflict`, `DeviceState`, `SyncStats`, `PushChangesRequest`, `PullChangesRequest`, `ResolveConflictRequest`, `RegisterDeviceRequest`.
