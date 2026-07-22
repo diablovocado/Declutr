@@ -40,6 +40,9 @@ import (
 	securityApp "github.com/diablovocado/declutr/modules/security/application"
 	securityRepository "github.com/diablovocado/declutr/modules/security/repository"
 	securityTransport "github.com/diablovocado/declutr/modules/security/transport"
+	syncApp "github.com/diablovocado/declutr/modules/sync/application"
+	syncRepository "github.com/diablovocado/declutr/modules/sync/repository"
+	syncTransport "github.com/diablovocado/declutr/modules/sync/transport"
 	versioningApp "github.com/diablovocado/declutr/modules/versioning/application"
 	versioningRepository "github.com/diablovocado/declutr/modules/versioning/repository"
 	versioningTransport "github.com/diablovocado/declutr/modules/versioning/transport"
@@ -388,6 +391,22 @@ func main() {
 	http.HandleFunc("/api/v1/security/devices/trust", securityAPI.SetDeviceTrust)
 	http.HandleFunc("/api/v1/security/risk", securityAPI.GetRiskAssessment)
 	http.HandleFunc("/api/v1/security/recommendations", securityAPI.GetRecommendations)
+
+	// Offline-First Sync Engine & Conflict Resolution Module initialization
+	// Pipeline: Local Database → Change Tracker → Sync Queue → Sync Engine → Conflict Resolver → Server → Acknowledgement → Local Merge
+	syncRepo := syncRepository.NewInMemorySyncRepository()
+	syncSvc := syncApp.NewSyncService(syncRepo)
+	syncEngine := syncApp.NewSyncEngine(syncSvc)
+	_ = syncEngine // available for background queue flushing
+	syncAPI := syncTransport.NewSyncAPI(syncSvc)
+
+	http.HandleFunc("/api/v1/sync/push", syncAPI.PushChanges)
+	http.HandleFunc("/api/v1/sync/pull", syncAPI.PullChanges)
+	http.HandleFunc("/api/v1/sync/status", syncAPI.GetStatus)
+	http.HandleFunc("/api/v1/sync/conflicts", syncAPI.ListConflicts)
+	http.HandleFunc("/api/v1/sync/resolve", syncAPI.ResolveConflict)
+	http.HandleFunc("/api/v1/sync/register-device", syncAPI.RegisterDevice)
+	http.HandleFunc("/api/v1/sync/stats", syncAPI.GetStats)
 
 	log.Println("Declutr Backend Running on :8080")
 

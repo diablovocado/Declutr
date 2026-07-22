@@ -41,6 +41,16 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Offline-First Sync Engine & Conflict Resolution (Issue #029)**:
+  - Created PostgreSQL database migration `database/migrations/025_create_sync_tables.sql` (`sync_queue`, `sync_events`, `sync_conflicts`, `sync_sessions`, `device_state`, `sync_statistics`, `offline_operations`).
+  - Implemented domain models for `SyncQueueItem`, `SyncEvent`, `SyncConflict`, `DeviceState`, `SyncStats`, `PushChangesRequest`, `PullChangesRequest`, `ResolveConflictRequest`, `RegisterDeviceRequest`.
+  - Built `ConflictResolver` & `SyncEngine` with 3-way non-overlapping field-level merge (`MergeFieldLevel`) and `LAST_WRITE_WINS` strategies, offline change tracking, queue flushing on network reconnection, and per-device sequence checkpointing.
+  - Built `SyncService` handling bidirectional push batches, pull delta streams, device registration, and sync statistics.
+  - Added 7 REST API endpoints (`POST /sync/push`, `POST /sync/pull`, `GET /sync/status`, `GET /sync/conflicts`, `POST /sync/resolve`, `POST /sync/register-device`, `GET /sync/stats`).
+  - Created Web UI module (`frontend/features/sync/components/`) featuring `SyncCenterComponent`, `ConflictResolverComponent`, `SyncQueueViewerComponent`, and Next.js page route (`/sync`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/sync/components/`): `OfflineBanner.tsx`, `SyncStatus.tsx`, `ConflictResolver.tsx`.
+  - Added comprehensive Go test suite (`sync_test.go`) — 6/6 tests passing: Push Changes & Queue, Pull Changes Delta, Conflict Resolution, Device Registration, Resume Interrupted Sync, Sync Stats.
+
 - **Security Center, Audit Hub & Trust Platform (Issue #028)**:
   - Created PostgreSQL database migration `database/migrations/024_create_security_tables.sql` (`security_events`, `security_scores`, `device_registry`, `trusted_devices`, `audit_events`, `risk_assessments`, `security_recommendations`).
   - Implemented domain models for `SecurityDashboard`, `SecurityScore`, `Device`, `ActiveSession`, `AuditEvent`, `RiskAssessment`, `SecurityRecommendation`, `TerminateSessionRequest`, `TrustDeviceRequest`.

@@ -982,6 +982,45 @@ Declutr's Security Center ("Trust Center") provides a centralized hub for monito
 | `GET` | `/api/v1/security/risk` | Get latest risk assessment and signals |
 | `GET` | `/api/v1/security/recommendations` | List active security posture recommendations |
 
+---
+
+## 🔄 Offline-First Sync Engine & Conflict Resolution
+
+Declutr's Offline-First Synchronization Engine enables seamless offline usability across Web, Mobile, and Desktop platforms. All local mutations are tracked in a local queue and automatically synchronized and merged once connectivity is restored.
+
+> **Architecture**: `Local Database` → `Change Tracker` → `Sync Queue` → `Sync Engine` → `Conflict Resolver` → `Server` → `Acknowledgement` → `Local Merge`
+
+### Offline & Sync Principles
+
+- **Offline Usability**: Viewing assets, local index search, metadata editing, note creation, tagging, collections, workflow execution (subset), AI request queuing, and resilient upload resuming.
+- **Conflict Strategies**: `LAST_WRITE_WINS` (configurable), `FIELD_LEVEL_MERGE` (3-way non-overlapping field merge), `VERSION_BASED_MERGE`, `MANUAL_RESOLUTION` with side-by-side conflict preview.
+- **Queue States**: `QUEUED`, `UPLOADING`, `DOWNLOADING`, `RETRY`, `PAUSED`, `COMPLETED`, `FAILED`, `CANCELLED`.
+
+### Database Schema (Migration 025)
+
+| Table | Purpose |
+|---|---|
+| `sync_queue` | Client offline mutation queue records and retry error states |
+| `sync_events` | Append-only sequence log of synchronized vault changes |
+| `sync_conflicts` | Detected concurrent edit conflicts and resolution payloads |
+| `sync_sessions` | Sync session connection and stream tracking |
+| `device_state` | Per-device sync sequence checkpoints and online flags |
+| `sync_statistics` | Vault sync engine metrics summary |
+| `offline_operations` | Client recorded offline operations audit log |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/v1/sync/push` | Push local change batch from client to server |
+| `POST` | `/api/v1/sync/pull` | Pull remote server changes since sequence checkpoint |
+| `GET` | `/api/v1/sync/status` | Get device sync status and pending queue length |
+| `GET` | `/api/v1/sync/conflicts` | List active unresolved sync conflicts |
+| `POST` | `/api/v1/sync/resolve` | Resolve conflict (accept local, remote, or field merge) |
+| `POST` | `/api/v1/sync/register-device` | Register device for sync state tracking |
+| `GET` | `/api/v1/sync/stats` | Vault sync engine metrics summary |
+
+
 
 
 

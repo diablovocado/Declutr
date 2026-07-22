@@ -184,6 +184,15 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - 8 REST API endpoints (dashboard, audit, sessions, terminate, devices, trust, risk, recommendations)
   - Web UI: SecurityDashboardComponent, AuditViewerComponent, SessionDeviceManagerComponent, `/security` page route
   - Mobile UI: SecurityOverview, SessionList, AuditSummary
+- [x] Offline-First Sync Engine & Conflict Resolution:
+  - Database migration `025_create_sync_tables.sql` (7 tables: sync_queue, sync_events, sync_conflicts, sync_sessions, device_state, sync_statistics, offline_operations)
+  - Change Tracker & Queue Engine with statuses (QUEUED, UPLOADING, DOWNLOADING, RETRY, PAUSED, COMPLETED, FAILED, CANCELLED)
+  - Conflict Resolver supporting Last Write Wins & 3-way Field-Level Merge (`MergeFieldLevel`)
+  - Bidirectional Push/Pull delta streaming with per-device sequence checkpointing
+  - Resume interrupted sync sessions on network reconnection
+  - 7 REST API endpoints (push, pull, status, conflicts, resolve, register-device, stats)
+  - Web UI: SyncCenterComponent, ConflictResolverComponent, SyncQueueViewerComponent, `/sync` page route
+  - Mobile UI: OfflineBanner, SyncStatus, ConflictResolver
   - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)
