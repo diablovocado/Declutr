@@ -22,6 +22,9 @@ import (
 	memoryApp "github.com/diablovocado/declutr/modules/memory/application"
 	memoryRepository "github.com/diablovocado/declutr/modules/memory/repository"
 	memoryTransport "github.com/diablovocado/declutr/modules/memory/transport"
+	notificationApp "github.com/diablovocado/declutr/modules/notification/application"
+	notificationRepository "github.com/diablovocado/declutr/modules/notification/repository"
+	notificationTransport "github.com/diablovocado/declutr/modules/notification/transport"
 	personaApp "github.com/diablovocado/declutr/modules/persona/application"
 	personaRepository "github.com/diablovocado/declutr/modules/persona/repository"
 	personaTransport "github.com/diablovocado/declutr/modules/persona/transport"
@@ -257,6 +260,28 @@ func main() {
 	http.HandleFunc("/api/v1/workflows/run", workflowAPI.RunWorkflow)
 	http.HandleFunc("/api/v1/workflows/history", workflowAPI.GetHistory)
 	http.HandleFunc("/api/v1/workflows/stats", workflowAPI.GetStats)
+
+	// Notification Center & Proactive Intelligence Module initialization
+	// Pipeline: Domain Event → Notification Rules → Priority Engine → Delivery Scheduler → Notification Center → User Action
+	notificationRepo := notificationRepository.NewInMemoryNotificationRepository()
+	notificationSvc := notificationApp.NewNotificationService(notificationRepo)
+	notificationEngine := notificationApp.NewNotificationEventEngine(notificationSvc)
+	_ = notificationEngine // available for domain event subscription
+	notificationAPI := notificationTransport.NewNotificationAPI(notificationSvc)
+
+	http.HandleFunc("/api/v1/notifications", notificationAPI.ListNotifications)
+	http.HandleFunc("/api/v1/notifications/read", notificationAPI.MarkRead)
+	http.HandleFunc("/api/v1/notifications/dismiss", notificationAPI.DismissNotification)
+	http.HandleFunc("/api/v1/notifications/action", notificationAPI.ExecuteAction)
+	http.HandleFunc("/api/v1/notifications/digests", notificationAPI.GetDigests)
+	http.HandleFunc("/api/v1/notifications/preferences", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut {
+			notificationAPI.UpdatePreferences(w, r)
+		} else {
+			notificationAPI.GetPreferences(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/notifications/stats", notificationAPI.GetStats)
 
 	log.Println("Declutr Backend Running on :8080")
 

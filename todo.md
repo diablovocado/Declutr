@@ -135,6 +135,16 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - 8 REST API endpoints (workflows CRUD, toggle, manual run, history, stats)
   - Web UI: WorkflowDashboard, VisualRuleBuilder, ExecutionHistory, `/workflows` page route
   - Mobile UI: WorkflowList, WorkflowDetails, ExecutionHistory
+- [x] Notification Center & Proactive Intelligence:
+  - Database migration `020_create_notification_tables.sql` (6 tables: notifications, notification_rules, notification_preferences, notification_delivery, notification_history, digest_reports)
+  - 10 Notification Categories (INFORMATION, SUCCESS, WARNING, CRITICAL, REMINDER, RECOMMENDATION, AI_INSIGHT, WORKFLOW, SECURITY, SYSTEM)
+  - Dynamic PriorityEngine (LOW, MEDIUM, HIGH, URGENT)
+  - Actionable alerts (Open Asset, View Context, Run Workflow, Retry Job, Dismiss, Pin, Archive, Snooze)
+  - Proactive Digest Generator (Daily Intelligence Summaries & Weekly Recaps)
+  - Deduplication engine & Preference channels manager (In-App, Email, Push, Desktop)
+  - 7 REST API endpoints (notifications, mark read, dismiss, action, digests, preferences, stats)
+  - Web UI: NotificationCenter, DigestView, NotificationPreferencesView, `/notifications` page route
+  - Mobile UI: NotificationList, NotificationDetail, NotificationPreferences
   - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)

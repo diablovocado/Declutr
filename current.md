@@ -41,6 +41,16 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Notification Center & Proactive Intelligence (Issue #024)**:
+  - Created PostgreSQL database migration `database/migrations/020_create_notification_tables.sql` (`notifications`, `notification_rules`, `notification_preferences`, `notification_delivery`, `notification_history`, `digest_reports`).
+  - Implemented domain models for `Notification`, `NotificationPreferences`, `DigestReport`, `NotificationStats`, `MarkReadRequest`, `ActionRequest`.
+  - Built `PriorityEngine` dynamically calculating priority levels (`LOW`, `MEDIUM`, `HIGH`, `URGENT`) across 10 notification categories.
+  - Built `NotificationService` implementing event subscription, deduplication, priority scoring, read/dismiss status, actionable button execution, and digest generation.
+  - Added 7 REST API endpoints (`GET /notifications`, `POST /notifications/read`, `POST /notifications/dismiss`, `POST /notifications/action`, `GET /notifications/digests`, `GET/PUT /notifications/preferences`, `GET /notifications/stats`).
+  - Created Web UI module (`frontend/features/notification/components/`) featuring `NotificationCenter`, `DigestView`, `NotificationPreferencesView`, and Next.js page route (`/notifications`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/notification/components/`): `NotificationList.tsx`, `NotificationDetail.tsx`, `NotificationPreferences.tsx`.
+  - Added comprehensive Go test suite (`notification_test.go`) — 6/6 tests passing: Notification Generation, Priority Engine, Mark Read & Dismiss, Deduplication, Digest Generation, Preferences Update.
+
 - **Workflow Automation & Intelligent Actions Engine (Issue #023)**:
   - Created PostgreSQL database migration `database/migrations/019_create_workflow_tables.sql` (`workflows`, `workflow_triggers`, `workflow_conditions`, `workflow_actions`, `workflow_runs`, `workflow_logs`, `workflow_history`).
   - Implemented domain models for `Workflow`, `WorkflowTrigger`, `WorkflowCondition`, `WorkflowAction`, `WorkflowRun`, `WorkflowLog`, `WorkflowStats`, `RunWorkflowRequest`, `ToggleWorkflowRequest`.

@@ -783,6 +783,44 @@ Declutr's Workflow Automation Engine allows users to construct intelligent, even
 | `GET` | `/api/v1/workflows/history` | Get run history and step logs |
 | `GET` | `/api/v1/workflows/stats` | Vault workflow observability metrics (success rate, avg duration) |
 
+---
+
+## 🔔 Notification Center & Proactive Intelligence
+
+Declutr's Notification Center & Proactive Intelligence system delivers contextual, explainable, and actionable alerts to users across expirations, workflows, security events, AI insights, and memory discoveries.
+
+> **Architecture**: `Domain Event` → `Notification Rules` → `Priority Engine` → `Delivery Scheduler` → `Notification Center` → `User Action`
+
+### Priority Engine & Actionable Alerts
+
+- **Priority Levels**: `LOW`, `MEDIUM`, `HIGH`, `URGENT` calculated dynamically using event type, importance, urgency, and recency.
+- **Actionable Buttons**: Open Asset, View Context, Run Workflow, Retry Job, Dismiss, Pin, Archive, Snooze.
+- **Proactive Digests**: Automated Daily Summaries and Weekly Recaps tracking knowledge growth, new memories, document expirations, and workflow activity.
+
+### Database Schema (Migration 020)
+
+| Table | Purpose |
+|---|---|
+| `notifications` | Core notification alerts, types, priority levels, read/dismiss status |
+| `notification_rules` | Custom alert rules matching domain event triggers |
+| `notification_preferences` | Vault channel settings (`IN_APP`, `EMAIL`, `PUSH`, `DESKTOP`) and digest frequency |
+| `notification_delivery` | Log of channel delivery states |
+| `notification_history` | Audit log of user interactions (`READ`, `DISMISSED`, `ACTIONED`, `SNOOZED`) |
+| `digest_reports` | Daily and Weekly proactive intelligence summary reports |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/notifications` | List notifications for vault (filtered by status, priority) |
+| `POST` | `/api/v1/notifications/read` | Mark specific notification(s) or all as read |
+| `POST` | `/api/v1/notifications/dismiss` | Dismiss a notification |
+| `POST` | `/api/v1/notifications/action` | Execute actionable notification step |
+| `GET` | `/api/v1/notifications/digests` | Get Daily and Weekly digest reports |
+| `GET` / `PUT` | `/api/v1/notifications/preferences` | Get / update channel preferences and digest frequency |
+| `GET` | `/api/v1/notifications/stats` | Vault notification stats (unread count, urgent count, read rate) |
+
+
 
 
 
