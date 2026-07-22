@@ -1060,6 +1060,52 @@ Declutr's Integration Platform provides a reusable, secure, modular Connector SD
 | `GET` | `/api/v1/integrations/logs` | Get connector execution logs |
 | `POST` | `/api/v1/integrations/webhooks` | Ingest inbound webhook event payload |
 
+---
+
+## ⚡ Production Hardening, Observability & Performance Platform
+
+Declutr's Production Hardening & Observability Platform prepares the codebase for enterprise real-world deployments supporting millions of assets, heavy AI workloads, and thousands of concurrent users.
+
+> **Observability Architecture**: `Structured Logs` → `Correlation Context` → `Distributed Spans` → `Prometheus Metrics` → `Diagnostic Probes` → `Worker Supervisors` → `Web Admin Console`
+
+### Platform Features & Components
+
+- **Structured Logging**: Context-correlated JSON logging (`RequestID`, `CorrelationID`, `UserID`, `VaultID`, `SessionID`, `TraceID`, `SpanID`, latency, status, error code) with automatic secret redaction (`backend/shared/observability/observability.go`).
+- **Distributed Tracing & Metrics**: OpenTelemetry/Prometheus metrics exporter (`/metrics`) tracking API throughput QPS, average latency, queue depth, upload duration, AI processing duration, and cache hit rates.
+- **Cache Abstraction Layer**: Thread-safe `InMemoryCache` with 30s background TTL eviction and Redis Cluster driver support (`backend/shared/cache/cache.go`).
+- **Token-Bucket Rate Limiter**: Multi-tier policies enforcing Global, Per-User, Per-IP, AI, Upload, and API limits (`backend/shared/ratelimit/ratelimit.go`).
+- **Worker Pool Supervisor**: Self-healing supervisor monitoring Queue, Workflow, Sync, AI, and Connector worker pools with panic recovery and automatic backoff restarts (`backend/shared/supervisor/supervisor.go`).
+- **Fault Resilience**: Circuit Breakers (`backend/shared/resilience/resilience.go`) protecting AI and storage providers, retry policies with exponential backoff, and graceful HTTP server shutdown (`SIGINT`/`SIGTERM`).
+- **Diagnostic Probes**: `/health`, `/ready`, `/live`, `/version`, `/metrics`, and `/api/v1/admin/*` status APIs.
+- **Web Admin Console**: Next.js dashboard route (`/admin`) with live System Health Matrix, Performance Telemetry, Worker Pool Overview, and Distributed Trace Log Stream (`frontend/app/admin/page.tsx`).
+- **Infrastructure & Deployment**: Multi-stage `Dockerfile.backend` & `Dockerfile.frontend`, `docker-compose.yml`, Kubernetes manifests, Helm chart (`infrastructure/helm/declutr/`), GitHub Actions CI pipeline (`.github/workflows/ci.yml`), `.env.production.example`, and Prometheus monitoring config.
+
+### Database Schema (Migration 027)
+
+| Table | Purpose |
+|---|---|
+| `system_metrics` | Partitioned metrics log stream for system throughput and latency telemetry |
+| `health_checks` | Diagnostic health status audit history |
+| `worker_status` | Background worker execution state, restart counts, and error tracking |
+| `rate_limit_events` | Audit log of rate-limited request identifiers and policy types |
+| `cache_statistics` | Periodic snapshots of cache hit counts, misses, and hit rates |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/health` / `/api/v1/health` | Complete 8-subsystem diagnostic health matrix |
+| `GET` | `/ready` / `/api/v1/ready` | Kubernetes readiness probe |
+| `GET` | `/live` / `/api/v1/live` | Kubernetes liveness probe |
+| `GET` | `/version` / `/api/v1/version` | Engine version, environment, git commit metadata |
+| `GET` | `/metrics` / `/api/v1/metrics` | Prometheus metrics text stream & JSON snapshot |
+| `GET` | `/api/v1/admin/status` | Admin status overview |
+| `GET` | `/api/v1/admin/metrics` | Admin metrics telemetry |
+| `GET` | `/api/v1/admin/workers` | Background worker supervisor status and active queue depth |
+| `GET` | `/api/v1/admin/cache` | Cache hit rate, items count, and driver stats |
+| `GET` | `/api/v1/admin/traces` | Distributed trace spans log |
+
+
 
 
 

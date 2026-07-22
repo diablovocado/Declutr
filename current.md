@@ -41,6 +41,23 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Production Hardening, Observability & Performance Platform (Issue #031)**:
+  - Created PostgreSQL database migration `database/migrations/027_production_hardening.sql` (`system_metrics`, `health_checks`, `worker_status`, `rate_limit_events`, `cache_statistics`, composite performance indexes, table partitioning strategy).
+  - Implemented structured JSON logger with context correlation (`RequestID`, `CorrelationID`, `UserID`, `VaultID`, `SessionID`, `TraceID`, `SpanID`, latency, error code) and automatic secret redaction (`backend/shared/observability/observability.go`).
+  - Implemented distributed tracing span context propagator and Prometheus/OpenTelemetry metrics engine (`declutr_http_requests_total`, `declutr_http_latency_average_ms`, `declutr_cache_hit_rate`, `declutr_storage_usage_bytes`, `declutr_queue_depth`).
+  - Built unified Cache Abstraction Layer (`backend/shared/cache/cache.go`) supporting thread-safe InMemory with TTL eviction and Redis Cluster driver fallback, plus specialized typed cache managers for Search, Metadata, and Contexts.
+  - Built token bucket rate limiter (`backend/shared/ratelimit/ratelimit.go`) enforcing Global, Per-User, Per-IP, AI, Upload, and API limits.
+  - Built background worker Supervisor (`backend/shared/supervisor/supervisor.go`) monitoring Queue, Workflow, Sync, AI, and Connector worker pools with panic recovery and auto-restarts.
+  - Built Fault Resilience system (`backend/shared/resilience/resilience.go`) with Circuit Breakers, Retry policies with exponential backoff, and HTTP graceful shutdown handling OS signals (`SIGINT`, `SIGTERM`).
+  - Built Centralized Configuration manager (`backend/shared/config/config.go`) supporting environment variables, secrets management, and dynamic feature flags.
+  - Built Security Middleware (`backend/shared/middleware/security.go`) attaching HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, CORS, and request tracing headers.
+  - Built Diagnostic Probes (`backend/pkg/health/handler.go`) exposing `/health`, `/ready`, `/live`, `/version`, `/metrics`, and internal Admin API endpoints (`/api/v1/admin/*`).
+  - Created Web Admin Console (`frontend/app/admin/page.tsx`, `frontend/features/admin/components/`) featuring `SystemStatusComponent`, `PerformanceDashboardComponent`, `QueueOverviewComponent`, and `ErrorLogViewerComponent`.
+  - Created Mobile UI component (`frontend/declutr-mobile/features/admin/components/SystemStatusCard.tsx`).
+  - Created Production Infrastructure & CI/CD Assets: Multi-stage `Dockerfile.backend` and `Dockerfile.frontend`, `docker-compose.yml`, Kubernetes manifests (`deployment.yaml`, `service.yaml`, `configmap.yaml`, `ingress.yaml`, `hpa.yaml`), Helm chart (`infrastructure/helm/declutr/`), GitHub Actions CI pipeline (`.github/workflows/ci.yml`), `.env.production.example`, and Prometheus monitoring config (`infrastructure/monitoring/prometheus.yml`).
+  - Added comprehensive Go test suite (`backend/tests/platform_test.go`) covering logger, metrics, tracing, cache, rate limiter, supervisor, circuit breaker, health probes, and security headers.
+  - Created Production Documentation suite (`docs/production/`): `production_architecture.md`, `deployment_guide.md`, `scaling_strategy.md`, `monitoring_guide.md`, `disaster_recovery.md`, `performance_tuning.md`.
+
 - **Integration Platform & Connector Framework (Issue #030)**:
   - Created PostgreSQL database migration `database/migrations/026_create_integration_tables.sql` (`connectors`, `connector_configs`, `connector_credentials`, `connector_sync_jobs`, `connector_webhooks`, `connector_logs`, `connector_health`).
   - Implemented `ConnectorSDK` interface (`Initialize`, `Authenticate`, `Validate`, `Sync`, `Import`, `Export`, `Webhook`, `HealthCheck`, `Disconnect`) with reference implementations for Google Drive (`GoogleDriveConnector`) & WebDAV (`WebDAVConnector`).

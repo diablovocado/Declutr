@@ -1,0 +1,30 @@
+# Multi-Stage Production Dockerfile for Declutr Backend (Go)
+FROM golang:1.22-alpine AS builder
+
+WORKDIR /app
+
+# Copy dependency files
+COPY go.mod go.sum ./
+RUN go mod download
+
+# Copy source code
+COPY . .
+
+# Build static release binary
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-w -s" -o declutr-server ./cmd/server/main.go
+
+# Production Minimal Stage
+FROM alpine:3.19 AS runner
+
+WORKDIR /app
+RUN apk --no-cache add ca-certificates tzdata
+
+# Create non-root system user
+RUN addgroup -S declutr && adduser -S declutr -G declutr
+USER declutr
+
+COPY --from=builder /app/declutr-server .
+
+EXPOSE 8080
+
+ENTRYPOINT ["./declutr-server"]
