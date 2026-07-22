@@ -41,6 +41,17 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Knowledge Insights & Timeline Engine (Issue #021)**:
+  - Created PostgreSQL database migration `database/migrations/017_create_timeline_and_insights_tables.sql` (`timeline_events`, `timeline_groups`, `knowledge_insights`, `insight_history`, `insight_preferences`, `milestones`).
+  - Implemented domain models for `TimelineEvent`, `TimelineGroup`, `KnowledgeInsight`, `Milestone`, `InsightStats`, `InsightPreferences`, `TimelineFilter`.
+  - Built `TimelineEngine` automatically generating chronological event streams for Travel, Education, Medical, Financial, Projects, Legal, Purchases, Subscriptions, and Custom Contexts.
+  - Built `InsightEngine` & `PatternDetector` proactively scanning vault knowledge to identify Upcoming Expirations (Passport, Visa, Insurance), Recurring Expenses, Top Visited Places, Important/Missing Docs, and Knowledge Growth.
+  - Built `MilestoneDetector` tracking passport expirations, visa completions, tax filings, medical completions, and project milestones.
+  - Added 8 REST API endpoints (`GET /insights/timeline`, `GET /insights`, `GET /insights/milestones`, `POST /insights/dismiss`, `POST /insights/refresh`, `GET /insights/stats`, `GET/PUT /insights/preferences`).
+  - Created Web UI module (`frontend/features/insights/components/`) featuring `TimelineView`, `InsightDashboard`, `MilestoneCards`, `ActivityFeed`, and Next.js page route (`/insights`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/insights/components/`): `TimelineView.tsx`, `InsightsDashboard.tsx`, `MilestoneCards.tsx`, `ActivityFeed.tsx`.
+  - Added comprehensive Go test suite (`insights_test.go`) — 6/6 tests passing: Timeline Generation, Insight Detection, Milestone Tracking, Pattern Recognition, Incremental Refresh, Insight Stats.
+
 - **Hybrid Knowledge Search Engine (Issue #020)**:
   - Created PostgreSQL database migration `database/migrations/016_create_search_tables.sql` (`search_history`, `saved_searches`, `search_statistics`, `search_preferences`, `search_index_versions`).
   - Implemented domain models for `ParsedQuery`, `SearchPlan`, `SearchQueryRequest`, `SearchResultItem`, `SearchQueryResponse`, `SavedSearch`, `SearchHistoryItem`, `SearchStats`, `SearchPreferences`, `RankingWeights`, `SearchFilters`.

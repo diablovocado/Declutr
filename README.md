@@ -620,5 +620,74 @@ Every search result explains **why** it matched:
 | `GET` | `/api/v1/search/stats` | Get search engine metrics & top queries |
 | `GET` / `PUT` | `/api/v1/search/preferences` | Get / update vault ranking weights |
 
+---
+
+## 📈 Knowledge Insights & Timeline Intelligence Engine
+
+Declutr's Knowledge Insights & Timeline Engine proactively organizes and presents a user's digital life without waiting for manual searches. It transforms static stored documents into living chronological timelines, milestone alerts, and proactive pattern insights.
+
+> **Architecture**: `Assets` → `Metadata` → `Entities` → `Relationships` → `Contexts` → `Memory` → `Hybrid Search` → **`Knowledge Insights Engine`** → `Timeline & Insights`
+
+### Timeline Engine
+Automatically organizes vault documents and activities into chronological timelines across 10 categories:
+- ✈️ **Travel Events** (`Japan Vacation 2025 Flight Booking`)
+- 🎓 **Education Events** (`PhD Thesis Chapter 4 Finalized`)
+- 🏥 **Medical History** (`Cardiology Visit with Dr. Sharma`)
+- 💼 **Financial & Tax Events** (`Annual Tax Return 2024 Filed`)
+- 📁 **Projects, Legal, Purchases, Subscriptions & Custom Contexts**
+
+### Proactive Insights & Pattern Detection
+The engine background scanner continuously evaluates vault knowledge to generate actionable insights:
+- **Upcoming Expirations**: Passport, Visa, Insurance renewal warnings
+- **Recurring Expenses**: 30-day medication cycles, monthly subscriptions
+- **Frequent Places**: Top referenced travel destinations (`Tokyo, Japan`)
+- **Important & Missing Documents**: Document completeness checks
+- **Trending Interests & Knowledge Growth**: Interest evolution analytics
+
+### Milestone Detection
+Tracks critical life, medical, travel, and project milestones:
+- `US Passport Renewal Due` (`UPCOMING`)
+- `Tax Return Filing 2024` (`COMPLETED`)
+- `PhD Thesis Final Submission` (`PENDING`)
+
+### Complete Insight Explainability
+Every proactive insight provides explicit rationale and supporting evidence:
+```json
+{
+  "insightId": "ins-001",
+  "insightType": "EXPIRATION_WARNING",
+  "title": "Passport Renewal Needed Soon",
+  "summary": "Your US Passport expires in 65 days. Renewal recommended before upcoming travel.",
+  "whyGenerated": "Passport expiration date detected in document 'Japanese Visa & Passport Scan' (expires Sep 2025).",
+  "evidence": ["Asset: Japanese Visa & Passport Scan", "Expiration Date: 2025-09-25"],
+  "importance": 0.95,
+  "confidence": 0.98
+}
+```
+
+### Database Schema (Migration 017)
+
+| Table | Purpose |
+|---|---|
+| `timeline_events` | Core chronological event feed across life, projects, travel, medical |
+| `timeline_groups` | Sequence groups linking related timeline events into context streams |
+| `knowledge_insights` | Proactive automated insights with evidence and dismissal state |
+| `insight_history` | Audit log of generated, dismissed, and actioned insights |
+| `insight_preferences` | Per-vault enabled insight types and min confidence settings |
+| `milestones` | Detected major milestones with status and due dates |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/insights/timeline` | Get chronological timeline events (filtered by `eventType`) |
+| `GET` | `/api/v1/insights` | Get active non-dismissed proactive insights |
+| `GET` | `/api/v1/insights/milestones` | Get detected vault milestones |
+| `POST` | `/api/v1/insights/dismiss` | Dismiss an insight by `insightId` |
+| `POST` | `/api/v1/insights/refresh` | Trigger incremental background intelligence refresh |
+| `GET` | `/api/v1/insights/stats` | Vault insight and timeline metrics |
+| `GET` / `PUT` | `/api/v1/insights/preferences` | Get / update insight preferences |
+
+
 
 

@@ -13,6 +13,9 @@ import (
 	embeddingApp "github.com/diablovocado/declutr/modules/embedding/application"
 	embeddingRepository "github.com/diablovocado/declutr/modules/embedding/repository"
 	embeddingTransport "github.com/diablovocado/declutr/modules/embedding/transport"
+	insightsApp "github.com/diablovocado/declutr/modules/insights/application"
+	insightsRepository "github.com/diablovocado/declutr/modules/insights/repository"
+	insightsTransport "github.com/diablovocado/declutr/modules/insights/transport"
 	memoryApp "github.com/diablovocado/declutr/modules/memory/application"
 	memoryRepository "github.com/diablovocado/declutr/modules/memory/repository"
 	memoryTransport "github.com/diablovocado/declutr/modules/memory/transport"
@@ -171,6 +174,28 @@ func main() {
 			searchAPI.UpdatePreferences(w, r)
 		} else {
 			searchAPI.GetPreferences(w, r)
+		}
+	})
+
+	// Knowledge Insights & Timeline Engine Module initialization
+	// Pipeline: Assets → Metadata → Entities → Relationships → Contexts → Memory → Search → Knowledge Insights
+	insightsRepo := insightsRepository.NewInMemoryInsightsRepository()
+	insightsSvc := insightsApp.NewInsightsService(insightsRepo)
+	insightsEngine := insightsApp.NewKnowledgeInsightsEngine(insightsSvc)
+	_ = insightsEngine // available for background processing
+	insightsAPI := insightsTransport.NewInsightsAPI(insightsSvc)
+
+	http.HandleFunc("/api/v1/insights/timeline", insightsAPI.GetTimeline)
+	http.HandleFunc("/api/v1/insights", insightsAPI.GetInsights)
+	http.HandleFunc("/api/v1/insights/milestones", insightsAPI.GetMilestones)
+	http.HandleFunc("/api/v1/insights/dismiss", insightsAPI.DismissInsight)
+	http.HandleFunc("/api/v1/insights/refresh", insightsAPI.RefreshInsights)
+	http.HandleFunc("/api/v1/insights/stats", insightsAPI.GetStats)
+	http.HandleFunc("/api/v1/insights/preferences", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut {
+			insightsAPI.UpdatePreferences(w, r)
+		} else {
+			insightsAPI.GetPreferences(w, r)
 		}
 	})
 

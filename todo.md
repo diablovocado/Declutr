@@ -109,7 +109,16 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - 8 REST API endpoints (query, saved searches, history, suggestions, stats, preferences)
   - Web UI: GlobalSearch, SearchResults, AdvancedFilters, SavedSearches, `/search` page route
   - Mobile UI: GlobalSearch, SearchResults, SearchFilters, SavedSearches
-  - 7/7 Go tests passing
+- [x] Knowledge Insights & Timeline Engine:
+  - Database migration `017_create_timeline_and_insights_tables.sql` (6 tables: timeline_events, timeline_groups, knowledge_insights, insight_history, insight_preferences, milestones)
+  - TimelineEngine generating chronological event streams for Travel, Education, Medical, Financial, Projects, Legal, Purchases, Subscriptions, and Custom Contexts
+  - InsightEngine & PatternDetector proactively identifying Expiration Warnings, Recurring Expenses, Top Places, Important/Missing Docs, and Knowledge Growth
+  - MilestoneDetector tracking passport expirations, visa completions, tax filings, medical completions, and project milestones
+  - Complete explainability (Why generated, evidence rationale, confidence)
+  - 8 REST API endpoints (timeline, insights, milestones, dismiss, refresh, stats, preferences)
+  - Web UI: TimelineView, InsightDashboard, MilestoneCards, ActivityFeed, `/insights` page route
+  - Mobile UI: TimelineView, InsightsDashboard, MilestoneCards, ActivityFeed
+  - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)
   - [x] Build personalization profile with time-based recency decay (exponential: `e^(−λ × days)`)
