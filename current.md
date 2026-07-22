@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Universal Command Palette & Keyboard-First Productivity (Issue #044)**:
+  - Built a Raycast/Linear-inspired Spotlight Universal Command Palette (`command-palette.tsx`) listening to `⌘K` / `Ctrl+K` registered globally across all pages.
+  - Implemented fast sub-100ms fuzzy search indexing covering Navigation (`/dashboard`, `/vault`, `/search`, `/copilot`, `/lifeos`, `/design-system`), Actions (Upload File, Scan Document, Ask AI, Toggle Theme, Export Vault), AI Natural Commands ("Summarize latest document", "Find 2025 tax form"), and Recent Assets.
+  - Implemented keyboard-first navigation with Arrow key highlights, `Enter` selection, `Esc` dismissal, and ARIA dialog accessibility attributes (`role="dialog"`).
+  - Built Keyboard Shortcuts Cheat-Sheet dialog (`shortcuts-modal.tsx`) openable via `⌘/`.
+  - Added Spotlight Command Palette trigger pill (`⌘K Search or type command...`) in top navigation header.
+  - Created Mobile Command Sheet bottom-modal (`mobile_command_sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Command Palette & Keyboard Productivity" section.
+
 - **Home Dashboard, Daily Feed & Personal Intelligence Hub (Issue #043)**:
   - Transformed the home dashboard (`/dashboard`) into a calm, high-retention Personal Intelligence Hub inspired by Linear, Notion Home, Arc Browser, Apple Photos, Readwise, and Raycast.
   - Built a modular widget system in `frontend/features/dashboard/components/`:

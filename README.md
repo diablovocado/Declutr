@@ -81,6 +81,23 @@ Declutr/
 
 ---
 
+## ⚡ Command Palette & Keyboard Productivity (Issue #044)
+
+Declutr features a Raycast/Linear-inspired Spotlight Universal Command Palette (`⌘K` / `Ctrl+K`) for keyboard-first navigation:
+
+| Hotkey | Capability & Action |
+|---|---|
+| ⌨️ **`⌘K` / `Ctrl+K`** | Open Universal Command Palette Spotlight from any screen |
+| ⬆️⬇️ **Arrow Keys** | Highlight and navigate search results cleanly in sub-100ms fuzzy index |
+| ↵ **Enter Key** | Instantly execute command, open file, navigate page, or trigger action |
+| 📁 **`⌘U` / `Ctrl+U`** | Open Quick Upload Memory modal |
+| 🤖 **`⌘⇧A` / `Ctrl+Shift+A`** | Jump directly to AI Copilot Chat workspace |
+| ❓ **`⌘/` / `Ctrl+/`** | Display Keyboard Shortcuts Cheat-Sheet dialog |
+| ❌ **`Esc`** | Dismiss command palette, dialogs, or active modals |
+| 📱 **Mobile Sheet** | Mobile Quick Action Bottom-Sheet modal on React Native Expo |
+
+---
+
 ## 🌟 Dashboard & Personal Intelligence Hub (Issue #043)
 
 Declutr's Home Dashboard (`/dashboard`) is a living Personal Intelligence Hub designed for daily user retention and calm clarity:

@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## ⚡ Issue #044 — Universal Command Palette & Keyboard-First Productivity
+- [x] Raycast/Linear-inspired Spotlight Universal Command Palette (`command-palette.tsx`) listening to `⌘K` / `Ctrl+K` registered globally
+- [x] Fast sub-100ms fuzzy search indexing Navigation (`/dashboard`, `/vault`, `/search`, `/copilot`, `/lifeos`), Actions, AI Natural Commands, and Recent Assets
+- [x] Full keyboard navigation (Arrow keys, `Enter`, `Esc`), focus management, and ARIA dialog accessibility attributes
+- [x] Keyboard Shortcuts Cheat-Sheet dialog (`shortcuts-modal.tsx`) openable via `⌘/`
+- [x] Spotlight trigger pill (`⌘K Search or type command...`) in top navigation header
+- [x] Mobile Command Sheet bottom-modal (`mobile_command_sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🌟 Issue #043 — Home Dashboard, Daily Feed & Personal Intelligence Hub
 - [x] Modular Dashboard Widget system (`greeting-header.tsx`, `quick-actions-bar.tsx`, `smart-search-hero.tsx`, `ai-insights-widget.tsx`, `continue-working-widget.tsx`, `daily-activity-feed.tsx`, `pinned-content-widget.tsx`, `dashboard-customizer.tsx`, `onboarding-walkthrough.tsx`)
 - [x] Personalized time-of-day greeting, quick action pills, smart natural search bar with `⌘K`, and AI insights recommendations
