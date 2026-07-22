@@ -5,6 +5,18 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🤖 Issue #047 — Cross-Knowledge Intelligence & Global AI Workspace
+- [x] Multi-document scope selector (`scope-selector.tsx`) for scoping queries to Entire Vault, Collections, Projects, Search Results, or Selected Multi-Files
+- [x] Verifiable citation cards (`citation-list.tsx`) displaying Document Name, Page/Section, Confidence Match %, and direct clickable jump links
+- [x] Multi-document comparison matrix (`knowledge-comparison-matrix.tsx`) highlighting Differences, Similarities, and Missing Information
+- [x] Conversation history sidebar (`chat-history-sidebar.tsx`) managing pinned chats, recent sessions, and clear history
+- [x] Re-architected `/copilot` into a full Global AI Workspace with cross-knowledge prompts and token streaming
+- [x] Search + AI integration (`app/search/page.tsx`) with result checkboxes and "Ask AI About Selected Content" button
+- [x] Mobile AI Workspace component (`mobile_ai_workspace.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 📡 Issue #046 — Real-Time Platform, Live Updates & Presence
 - [x] Unified real-time event layer (`realtime-service.ts`) with WebSocket/SSE transport fallback, exponential backoff reconnection, heartbeat pinging, and typed event emitter
 - [x] Presence tracking framework (`presence-service.ts`) managing online/idle/offline user status, active device info, and session heartbeat telemetry

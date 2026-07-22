@@ -81,6 +81,21 @@ Declutr/
 
 ---
 
+## 🤖 Cross-Knowledge Intelligence & Global AI Workspace (Issue #047)
+
+Declutr's Global AI Workspace transforms single-document AI into a multi-file cross-knowledge reasoning engine:
+
+| Component | Technical Capability |
+|---|---|
+| 🌐 **Multi-Doc Scope Selector** | Scope selection between Entire Vault, Collections, Projects, Search Results, or Selected Multi-Files (`scope-selector.tsx`) |
+| 🛡️ **Verifiable Citations** | Citation cards displaying Document Name, Page/Section, Confidence Match % (96%), and direct jump links (`citation-list.tsx`) |
+| 📊 **Knowledge Comparison Matrix** | Multi-document matrix highlighting Differences, Similarities, and Missing Information across files (`knowledge-comparison-matrix.tsx`) |
+| 💬 **Chat History & Pinned Sessions** | Session history sidebar managing pinned conversations, search chats, and clear history (`chat-history-sidebar.tsx`) |
+| 🔍 **Search + AI Integration** | Multi-select search results with one-click "Ask AI About Selected Content (N files)" redirection |
+| 📱 **Mobile AI Workspace** | React Native Expo copilot component (`mobile_ai_workspace.tsx`) with scope selection and citations |
+
+---
+
 ## 📡 Real-Time Platform, Live Updates & Presence (Issue #046)
 
 Declutr's unified real-time event layer eliminates page refreshes and delivers zero-latency state synchronization:

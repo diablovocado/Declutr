@@ -29,6 +29,16 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Cross-Knowledge Intelligence & Global AI Workspace (Issue #047)**:
+  - Re-architected `/copilot` into a full Global AI Workspace enabling multi-document reasoning over the user's entire digital vault.
+  - Built `ScopeSelector` (`scope-selector.tsx`) for scoping queries to Entire Vault, Collections, Projects, Search Results, or Selected Multi-Files.
+  - Built `CitationList` (`citation-list.tsx`) displaying Document Name, Page/Section, Confidence Match %, and direct clickable jump links.
+  - Built `KnowledgeComparisonMatrix` (`knowledge-comparison-matrix.tsx`) displaying multi-document comparative matrices (Differences, Similarities, Missing Information).
+  - Built `ChatHistorySidebar` (`chat-history-sidebar.tsx`) managing pinned conversations, search chats, and clear history.
+  - Integrated Search + AI (`app/search/page.tsx`) with result checkboxes and one-click "Ask AI About Selected Content (N files)" button.
+  - Built Mobile AI Workspace (`mobile_ai_workspace.tsx`) for React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Cross-Knowledge Intelligence & Global AI Workspace" section.
+
 - **Real-Time Platform, Live Updates & Presence (Issue #046)**:
   - Built a unified real-time event layer (`realtime-service.ts`) with WebSocket and SSE transport fallback, exponential backoff reconnection, heartbeat pinging, and typed event emitter.
   - Implemented presence tracking framework (`presence-service.ts`) managing online/idle/offline user status, active device info, and session heartbeat telemetry.

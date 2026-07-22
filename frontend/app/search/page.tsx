@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Search, Filter, Sparkles, FileText, CheckCircle2, Clock, MessageSquare, ArrowRight, CornerDownLeft, History } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Search, Filter, Sparkles, FileText, CheckCircle2, Clock, MessageSquare, ArrowRight, CornerDownLeft, History, CheckSquare, Square } from "lucide-react";
 import { PageShell } from "../../components/layout/page-shell";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
@@ -21,12 +22,14 @@ interface SearchResult {
 }
 
 export default function SearchPage() {
+  const router = useRouter();
   const [queryText, setQueryText] = useState("Tax form 2025");
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [searched, setSearched] = useState(false);
   const [activeFilter, setActiveFilter] = useState("ALL");
   const [reasoning, setReasoning] = useState("");
+  const [selectedResultIds, setSelectedResultIds] = useState<string[]>([]);
 
   const executeSearch = async (q: string) => {
     if (!q.trim()) return;
@@ -44,7 +47,6 @@ export default function SearchPage() {
         setReasoning(data.reasoning || "Executed Hybrid Search (FTS + Vector Embedding).");
       }
     } catch (e) {
-      // Fallback sample match
       setResults([
         {
           id: "file_demo_01",
@@ -55,6 +57,17 @@ export default function SearchPage() {
           entities: ["IRS", "Form 1040", "John Smith"],
           citations: ["Form 1040 Tax Return (Line 12)"],
           relevanceScore: 0.96,
+          status: "READY",
+        },
+        {
+          id: "file_demo_02",
+          fileName: "W-2_Income_Summary_2025.pdf",
+          mimeType: "application/pdf",
+          summary: "W-2 Wage and Tax Statement from employer for tax year 2025.",
+          snippet: "W-2 Statement 2025. Employer: Acme Corp. Box 1 Wages: $125,000.",
+          entities: ["Acme Corp", "W-2", "John Smith"],
+          citations: ["W-2 Wage Statement"],
+          relevanceScore: 0.94,
           status: "READY",
         },
       ]);
@@ -68,6 +81,16 @@ export default function SearchPage() {
     executeSearch(queryText);
   }, []);
 
+  const toggleSelect = (id: string) => {
+    setSelectedResultIds((prev) =>
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+    );
+  };
+
+  const handleAskAI = () => {
+    router.push(`/copilot?sel=${selectedResultIds.join(",")}`);
+  };
+
   return (
     <PageShell
       title="Natural & Semantic Search"
@@ -75,7 +98,7 @@ export default function SearchPage() {
       breadcrumbs={[{ label: "Declutr", href: "/" }, { label: "Search" }]}
     >
       {/* Search Input Bar */}
-      <div className="mb-8">
+      <div className="mb-6">
         <div className="relative flex items-center">
           <Search className="absolute left-4 h-5 w-5 text-slate-400" />
           <input
@@ -100,23 +123,38 @@ export default function SearchPage() {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mt-3 text-xs">
-          <span className="text-slate-500 flex items-center gap-1 font-semibold uppercase tracking-wider mr-1">
-            <Filter className="h-3 w-3" /> Filter:
-          </span>
-          {["ALL", "PDF", "IMAGES", "TAXES", "MEDICAL", "TRAVEL"].map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-3 py-1 rounded-md border transition-all ${
-                activeFilter === filter
-                  ? "border-emerald-500 bg-emerald-500/10 text-emerald-400 font-semibold"
-                  : "border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700"
-              }`}
+        <div className="flex flex-wrap items-center justify-between gap-2 mt-3 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="text-slate-500 flex items-center gap-1 font-semibold uppercase tracking-wider mr-1">
+              <Filter className="h-3 w-3" /> Filter:
+            </span>
+            {["ALL", "PDF", "IMAGES", "TAXES", "MEDICAL", "TRAVEL"].map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-3 py-1 rounded-md border transition-all ${
+                  activeFilter === filter
+                    ? "border-emerald-500 bg-emerald-500/10 text-emerald-400 font-semibold"
+                    : "border-slate-800 bg-slate-900/60 text-slate-400 hover:border-slate-700"
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+
+          {/* Search + AI Selection Bar */}
+          {selectedResultIds.length > 0 && (
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleAskAI}
+              leftIcon={<Sparkles className="h-3.5 w-3.5 text-purple-400" />}
+              className="animate-in fade-in-0"
             >
-              {filter}
-            </button>
-          ))}
+              Ask AI About Selected Content ({selectedResultIds.length} files)
+            </Button>
+          )}
         </div>
       </div>
 
@@ -139,73 +177,71 @@ export default function SearchPage() {
       {/* Search Results List */}
       {!loading && searched && (
         <div className="space-y-4">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-            <span>Found {results.length} result(s) for "{queryText}"</span>
-            <span>Sorted by hybrid relevance score</span>
+          <div className="flex items-center justify-between text-xs text-slate-400 font-medium">
+            <span>Found {results.length} relevant memories</span>
+            <span>Sorted by hybrid vector score</span>
           </div>
 
-          {results.length === 0 ? (
-            <div className="p-12 text-center border border-slate-800 rounded-xl bg-slate-900/30">
-              <FileText className="h-10 w-10 text-slate-600 mx-auto mb-3" />
-              <h3 className="font-semibold text-white mb-1">No matching documents found</h3>
-              <p className="text-xs text-slate-400 max-w-sm mx-auto mb-4">
-                Try searching with different keywords or upload a new document to your vault.
-              </p>
-              <Link href="/vault">
-                <Button variant="default" size="sm">Upload Document</Button>
-              </Link>
-            </div>
-          ) : (
-            results.map((res) => (
-              <Card key={res.id} className="bg-slate-900/60 border-slate-800 hover:border-slate-700 transition-all">
-                <CardHeader className="pb-2">
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="h-9 w-9 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
-                        <FileText className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-bold">{res.fileName}</CardTitle>
-                        <CardDescription className="text-xs mt-0.5">{res.summary}</CardDescription>
-                      </div>
-                    </div>
-                    <Badge variant="emerald" className="shrink-0">
-                      {(res.relevanceScore * 100).toFixed(0)}% Match
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-xs text-slate-300 bg-slate-950/70 p-3 rounded-lg border border-slate-800 font-mono leading-relaxed mb-3">
-                    "{res.snippet}"
-                  </p>
+          {results.map((result) => {
+            const selected = selectedResultIds.includes(result.id);
+            return (
+              <Card
+                key={result.id}
+                className={`bg-slate-900/60 border-slate-800 transition-all ${
+                  selected ? "border-purple-500/60 bg-purple-950/20" : "hover:border-slate-700"
+                }`}
+              >
+                <CardContent className="p-5">
+                  <div className="flex items-start gap-3">
+                    <button
+                      onClick={() => toggleSelect(result.id)}
+                      className="mt-1 text-slate-400 hover:text-white"
+                    >
+                      {selected ? (
+                        <CheckSquare className="h-4 w-4 text-purple-400" />
+                      ) : (
+                        <Square className="h-4 w-4 text-slate-600" />
+                      )}
+                    </button>
 
-                  <div className="flex flex-wrap items-center justify-between gap-3 pt-1">
-                    <div className="flex flex-wrap items-center gap-1.5 text-[11px]">
-                      <span className="text-slate-500 font-semibold">Entities:</span>
-                      {res.entities.map((ent, idx) => (
-                        <Badge key={idx} variant="outline" className="text-[10px] py-0 px-2">
-                          {ent}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-4 mb-2">
+                        <Link href={`/files/${result.id}`}>
+                          <h3 className="text-base font-bold text-white hover:text-emerald-400 transition-colors truncate flex items-center gap-2">
+                            <FileText className="h-4 w-4 text-emerald-400 shrink-0" />
+                            <span>{result.fileName}</span>
+                          </h3>
+                        </Link>
+
+                        <Badge variant="emerald" className="font-mono text-[11px] shrink-0">
+                          {Math.round(result.relevanceScore * 100)}% match
                         </Badge>
-                      ))}
-                    </div>
+                      </div>
 
-                    <div className="flex items-center gap-2">
-                      <Link href={`/files/${res.id}`}>
-                        <Button variant="outline" size="sm" leftIcon={<FileText className="h-3.5 w-3.5" />}>
-                          View Document
-                        </Button>
-                      </Link>
-                      <Link href={`/copilot?query=${encodeURIComponent(queryText)}`}>
-                        <Button variant="default" size="sm" leftIcon={<MessageSquare className="h-3.5 w-3.5" />}>
-                          Chat with AI
-                        </Button>
-                      </Link>
+                      <p className="text-xs text-slate-300 mb-3 leading-relaxed">
+                        {result.summary}
+                      </p>
+
+                      <div className="p-3 rounded-lg bg-slate-950/80 border border-slate-800 text-xs text-slate-400 font-mono mb-3">
+                        <span className="text-slate-500 block text-[10px] uppercase tracking-wider mb-1 font-sans">
+                          Matching Snippet:
+                        </span>
+                        "{result.snippet}"
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-2 text-xs">
+                        {result.entities.map((ent, idx) => (
+                          <Badge key={idx} variant="outline" className="text-[10px] text-slate-400 border-slate-800">
+                            {ent}
+                          </Badge>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </CardContent>
               </Card>
-            ))
-          )}
+            );
+          })}
         </div>
       )}
     </PageShell>

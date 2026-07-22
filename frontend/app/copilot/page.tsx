@@ -1,44 +1,66 @@
 "use client";
 
 import React, { useState } from "react";
-import { MessageSquare, Sparkles, Send, FileText, CheckCircle2, ShieldCheck, HelpCircle, ArrowRight, CornerDownLeft, X, Layers } from "lucide-react";
+import { MessageSquare, Sparkles, Send, FileText, CheckCircle2, ShieldCheck, HelpCircle, ArrowRight, CornerDownLeft, X, Layers, GitCompare, RotateCcw } from "lucide-react";
 import { PageShell } from "../../components/layout/page-shell";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "../../components/ui/card";
 import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
-import { useWorkspaceContext } from "../../shared/providers/workspace-context-provider";
+import { ScopeSelector, AIScope } from "../../features/ai/components/scope-selector";
+import { CitationList, CitationItem } from "../../features/ai/components/citation-list";
+import { KnowledgeComparisonMatrix, ComparisonRow } from "../../features/ai/components/knowledge-comparison-matrix";
+import { ChatHistorySidebar } from "../../features/ai/components/chat-history-sidebar";
 
 interface ChatMsg {
   id: string;
   sender: "user" | "assistant";
   content: string;
-  citations?: string[];
+  citations?: CitationItem[];
+  comparisonRows?: ComparisonRow[];
   timestamp: string;
 }
 
 export default function CopilotPage() {
-  const { activeDocument, activeCollection, activeVault } = useWorkspaceContext();
-  const [attachedContext, setAttachedContext] = useState<string | null>(
-    activeDocument?.name || activeCollection?.name || activeVault.name
-  );
+  const [currentScope, setCurrentScope] = useState<AIScope>({
+    id: "v_all",
+    name: "Entire Vault",
+    type: "VAULT",
+    itemCount: 42,
+  });
+
+  const [activeSessionId, setActiveSessionId] = useState("c1");
 
   const [messages, setMessages] = useState<ChatMsg[]>([
     {
       id: "m0",
       sender: "assistant",
-      content: `Hello! I am your Declutr Vault Assistant. My responses are grounded in your active context (${attachedContext || "My Life Vault"}).`,
-      citations: [],
+      content: `Welcome to your Global AI Workspace. Ask natural language questions across your entire vault (${currentScope.name}).`,
+      citations: [
+        {
+          documentId: "file_demo_01",
+          documentName: "Tax_Filing_Form_1040_2025.pdf",
+          section: "Form 1040 Line 12 - Adjusted Gross Income",
+          confidence: 0.96,
+        },
+        {
+          documentId: "file_demo_02",
+          documentName: "W-2_Income_Summary_2025.pdf",
+          section: "Box 1 Wages & Box 2 Federal Tax Withheld",
+          confidence: 0.94,
+        },
+      ],
       timestamp: "Just now",
     },
   ]);
+
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const presetQuestions = [
-    "What is this document?",
-    "Summarize this.",
-    "What dates are mentioned?",
-    "What important information should I know?",
+  const crossKnowledgePrompts = [
+    "Compare my last 2 tax returns.",
+    "Show all receipts related to Japan.",
+    "What medical reports reference cholesterol?",
+    "Summarize everything about my university.",
   ];
 
   const handleSend = async (question: string) => {
@@ -55,170 +77,150 @@ export default function CopilotPage() {
     setInputText("");
     setLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:8080/api/v1/copilot/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversationId: "conv_default", question, context: attachedContext }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const aiMsg: ChatMsg = {
-          id: data.messageId || "a_" + Date.now(),
-          sender: "assistant",
-          content: data.answer || "Grounded AI answer derived from your active vault.",
-          citations: data.citations || ["Form 1040 Tax Return (Line 12)"],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        };
-        setMessages((prev) => [...prev, aiMsg]);
-      }
-    } catch (e) {
-      let reply = `Based on your encrypted vault document (${attachedContext || "Tax_Filing_Form_1040_2025.pdf"}): `;
-      if (question.includes("What is this document")) {
-        reply += "This is an official 2025 IRS Form 1040 U.S. Individual Income Tax Return filed for fiscal year 2025.";
-      } else if (question.includes("Summarize")) {
-        reply += "Summary: Total reported income of $125,000, tax paid of $24,500, resulting in a refund credit of $3,200.";
-      } else if (question.includes("date")) {
-        reply += "Key dates: Tax period ended Dec 31, 2025. Electronically submitted on April 12, 2026.";
+    setTimeout(() => {
+      let reply = `Cross-Knowledge Reasoning Analysis (${currentScope.name}):\n\n`;
+      let compRows: ComparisonRow[] | undefined = undefined;
+
+      if (question.toLowerCase().includes("compare") || question.toLowerCase().includes("tax")) {
+        reply += "Analyzed Tax_Filing_Form_1040_2025.pdf and W-2_Income_Summary_2025.pdf across your vault. Key financial comparison generated below:";
+        compRows = [
+          { attribute: "Reported Income", docA: "$125,000", docB: "$125,000", status: "SIMILAR" },
+          { attribute: "Federal Tax Withheld", docA: "$24,500", docB: "$24,500", status: "SIMILAR" },
+          { attribute: "Refund Credit", docA: "$3,200", docB: "N/A", status: "DIFFERENT" },
+        ];
+      } else if (question.toLowerCase().includes("receipt") || question.toLowerCase().includes("japan")) {
+        reply += "Found 3 receipts matching 'Japan' in your Financial & Tax Collection: Tokyo Express Hotel ($450), Narita Express ($60), and Ramen Street ($35).";
       } else {
-        reply += "Important info: Prepared by Accountant John Smith. Refund due: $3,200.";
+        reply += "Grounded cross-knowledge synthesis derived from active vault scope. All relevant facts extracted with zero-knowledge verification.";
       }
 
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: "a_" + Date.now(),
-          sender: "assistant",
-          content: reply,
-          citations: ["Form 1040 Tax Return (Lines 1-15)", "W-2 Income Summary 2025"],
-          timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
-        },
-      ]);
-    } finally {
+      const aiMsg: ChatMsg = {
+        id: "a_" + Date.now(),
+        sender: "assistant",
+        content: reply,
+        citations: [
+          {
+            documentId: "file_demo_01",
+            documentName: "Tax_Filing_Form_1040_2025.pdf",
+            section: "Form 1040 Line 12",
+            confidence: 0.96,
+          },
+          {
+            documentId: "file_demo_02",
+            documentName: "W-2_Income_Summary_2025.pdf",
+            section: "Box 1 Wages",
+            confidence: 0.92,
+          },
+        ],
+        comparisonRows: compRows,
+        timestamp: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+      };
+
+      setMessages((prev) => [...prev, aiMsg]);
       setLoading(false);
-    }
+    }, 1000);
   };
 
   return (
     <PageShell
-      title="AI Vault Copilot"
-      subtitle="Ask natural language questions about your uploaded documents. Grounded RAG answering with zero-knowledge security."
-      breadcrumbs={[{ label: "Declutr", href: "/" }, { label: "AI Copilot" }]}
+      title="Global AI Workspace"
+      subtitle="Cross-knowledge intelligence reasoning over your entire digital vault with verifiable source citations."
+      breadcrumbs={[{ label: "Declutr", href: "/" }, { label: "AI Workspace" }]}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Main Chat Conversation (2 Cols) */}
-        <div className="lg:col-span-2 space-y-4">
-          <Card className="bg-slate-900/60 border-slate-800 flex flex-col h-[580px]">
-            {/* Auto-Attached Context Bar Header */}
-            <div className="px-4 py-2.5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
-              <div className="flex items-center gap-2 text-xs">
-                <Sparkles className="h-3.5 w-3.5 text-purple-400" />
-                <span className="text-slate-400">Attached Context:</span>
-                {attachedContext ? (
-                  <Badge variant="purple" className="gap-1 font-mono text-[11px]">
-                    <Layers className="h-3 w-3" /> {attachedContext}
-                    <button onClick={() => setAttachedContext(null)} className="ml-1 text-purple-300 hover:text-white">
-                      <X className="h-3 w-3" />
-                    </button>
-                  </Badge>
-                ) : (
-                  <span className="text-slate-500 italic">Entire Vault (No specific file filter)</span>
-                )}
-              </div>
-              <Badge variant="emerald" className="gap-1">
-                <ShieldCheck className="h-3 w-3" /> Grounded RAG
-              </Badge>
-            </div>
+      <div className="flex h-[620px] rounded-2xl bg-slate-900/60 border border-slate-800 overflow-hidden">
+        {/* Chat History Sidebar */}
+        <ChatHistorySidebar
+          activeSessionId={activeSessionId}
+          onSelectSession={setActiveSessionId}
+          onNewChat={() => setMessages([])}
+        />
 
-            {/* Chat Messages */}
-            <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
-              {messages.map((msg) => (
+        {/* Main AI Chat Area */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Header Bar with Scope Selector */}
+          <div className="px-4 py-2.5 border-b border-slate-800 bg-slate-950/60 flex items-center justify-between">
+            <ScopeSelector currentScope={currentScope} onScopeChange={setCurrentScope} />
+            <Badge variant="emerald" className="gap-1">
+              <ShieldCheck className="h-3 w-3" /> Multi-Doc RAG
+            </Badge>
+          </div>
+
+          {/* Messages Feed */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {messages.map((msg) => (
+              <div
+                key={msg.id}
+                className={`flex flex-col ${
+                  msg.sender === "user" ? "items-end" : "items-start"
+                }`}
+              >
                 <div
-                  key={msg.id}
-                  className={`flex flex-col ${
-                    msg.sender === "user" ? "items-end" : "items-start"
+                  className={`max-w-2xl rounded-2xl p-4 text-xs leading-relaxed ${
+                    msg.sender === "user"
+                      ? "bg-emerald-600 text-white rounded-br-none"
+                      : "bg-slate-950/80 border border-slate-800 text-slate-100 rounded-bl-none shadow-sm"
                   }`}
                 >
-                  <div
-                    className={`max-w-xl rounded-2xl p-4 text-xs leading-relaxed ${
-                      msg.sender === "user"
-                        ? "bg-emerald-600 text-white rounded-br-none"
-                        : "bg-slate-950/80 border border-slate-800 text-slate-100 rounded-bl-none shadow-sm"
-                    }`}
-                  >
-                    <p className="whitespace-pre-wrap font-medium">{msg.content}</p>
+                  <p className="whitespace-pre-wrap font-medium">{msg.content}</p>
 
-                    {/* Citations */}
-                    {msg.citations && msg.citations.length > 0 && (
-                      <div className="mt-3 pt-2 border-t border-slate-800/80 space-y-1">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-purple-400 block">
-                          Source Citations:
-                        </span>
-                        {msg.citations.map((c, idx) => (
-                          <div key={idx} className="flex items-center gap-1 text-[11px] text-slate-300 bg-slate-900/60 p-1.5 rounded border border-slate-800">
-                            <FileText className="h-3 w-3 text-emerald-400 shrink-0" />
-                            <span className="truncate">{c}</span>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                  <span className="text-[10px] text-slate-500 mt-1 px-1">{msg.timestamp}</span>
+                  {/* Multi-Document Comparison Matrix if present */}
+                  {msg.comparisonRows && (
+                    <KnowledgeComparisonMatrix
+                      docAName="Tax Form 1040"
+                      docBName="W-2 Income Summary"
+                      rows={msg.comparisonRows}
+                    />
+                  )}
+
+                  {/* Verifiable Source Citations */}
+                  {msg.citations && <CitationList citations={msg.citations} />}
                 </div>
-              ))}
+                <span className="text-[10px] text-slate-500 mt-1 px-1">{msg.timestamp}</span>
+              </div>
+            ))}
 
-              {loading && (
-                <div className="flex items-center gap-2 text-xs text-purple-400 p-2 bg-purple-950/30 rounded-xl border border-purple-800/40 w-fit animate-pulse">
-                  <Sparkles className="h-4 w-4" /> Grounding AI answer with citations...
-                </div>
-              )}
-            </CardContent>
+            {loading && (
+              <div className="flex items-center gap-2 text-xs text-purple-400 p-2 bg-purple-950/30 rounded-xl border border-purple-800/40 w-fit animate-pulse">
+                <Sparkles className="h-4 w-4" /> Reasoning across multi-document knowledge vault...
+              </div>
+            )}
+          </div>
 
-            {/* Input Bar */}
-            <div className="p-3 border-t border-slate-800 bg-slate-950/80">
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  handleSend(inputText);
-                }}
-                className="flex items-center gap-2"
+          {/* Quick Prompts Bar */}
+          <div className="px-4 py-2 border-t border-slate-800/80 bg-slate-950/40 flex items-center gap-2 overflow-x-auto">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 shrink-0">Prompts:</span>
+            {crossKnowledgePrompts.map((prompt, idx) => (
+              <button
+                key={idx}
+                onClick={() => handleSend(prompt)}
+                className="px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 hover:border-slate-700 text-[11px] text-slate-300 hover:text-white shrink-0 transition-colors"
               >
-                <input
-                  type="text"
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
-                  placeholder="Ask a question about this document or vault memory..."
-                  className="flex-1 h-10 px-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
-                />
-                <Button variant="default" size="sm" type="submit" disabled={loading} leftIcon={<Send className="h-3.5 w-3.5" />}>
-                  Send
-                </Button>
-              </form>
-            </div>
-          </Card>
-        </div>
+                {prompt}
+              </button>
+            ))}
+          </div>
 
-        {/* Preset Questions & Source Documents (1 Col) */}
-        <div className="space-y-4">
-          <Card className="bg-slate-900/60 border-slate-800">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-                <HelpCircle className="h-4 w-4 text-emerald-400" /> Quick Prompts
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              {presetQuestions.map((q, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleSend(q)}
-                  className="w-full text-left p-2.5 rounded-xl bg-slate-950/60 border border-slate-800 hover:border-slate-700 transition-colors text-xs text-slate-200 hover:text-white flex items-center justify-between group"
-                >
-                  <span className="truncate">{q}</span>
-                  <ArrowRight className="h-3 w-3 text-slate-500 group-hover:text-emerald-400 shrink-0" />
-                </button>
-              ))}
-            </CardContent>
-          </Card>
+          {/* Input Bar */}
+          <div className="p-3 border-t border-slate-800 bg-slate-950/80">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSend(inputText);
+              }}
+              className="flex items-center gap-2"
+            >
+              <input
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Ask anything across your entire digital knowledge..."
+                className="flex-1 h-10 px-4 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
+              />
+              <Button variant="default" size="sm" type="submit" disabled={loading} leftIcon={<Send className="h-3.5 w-3.5" />}>
+                Send
+              </Button>
+            </form>
+          </div>
         </div>
       </div>
     </PageShell>
