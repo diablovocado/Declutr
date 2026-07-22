@@ -29,7 +29,7 @@ Declutr lets you store every document, note, and file in an end-to-end encrypted
 |---|---|
 | Frontend | Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui |
 | Mobile | React Native + Expo |
-| Backend | Go (net/http), Clean Architecture |
+| Backend | Go (net/http), Clean Feature Architecture |
 | Database | PostgreSQL 16 |
 | Cache | Redis 7 |
 | AI | OpenAI / Gemini API (pluggable providers) |
@@ -41,16 +41,16 @@ Declutr lets you store every document, note, and file in an end-to-end encrypted
 ## Repository Structure
 
 ```
-declutr/
+Declutr/
 ├── backend/              # Go REST API server
-│   ├── cmd/server/       # Entry point (main.go)
-│   ├── modules/          # Feature modules (auth, vault, ai, search, lifeos, …)
-│   ├── shared/           # Config, middleware, DB helpers, observability
-│   └── tests/            # Integration & unit tests
-├── database/
-│   └── migrations/       # 10 grouped SQL migrations (001–010)
-├── docs/
-│   └── declutr_architecture_document.html  # Interactive architecture docs
+│   ├── cmd/              # Entry point (cmd/main.go)
+│   ├── internal/         # Feature-owned modules (auth, users, vault, files, ai, search, ...)
+│   ├── db/               # Database drivers & migrations runner
+│   ├── storage/          # Storage abstraction (Cloudflare R2 / S3)
+│   ├── middleware/       # Shared HTTP middleware
+│   ├── utils/            # Shared utilities & helpers
+│   ├── tests/            # Integration & unit test suites
+│   └── main.go           # Root server entry point
 ├── frontend/             # Next.js web app
 │   ├── app/              # App Router pages
 │   ├── features/         # Feature components (auth, vault, copilot, lifeos, …)
@@ -58,16 +58,30 @@ declutr/
 │   ├── hooks/            # Custom React hooks
 │   ├── services/         # API client functions
 │   ├── stores/           # Zustand state stores
+│   ├── types/            # TypeScript type definitions
 │   └── styles/           # Global styles
-├── frontend/declutr-mobile/  # React Native + Expo mobile app
+├── mobile/               # React Native + Expo mobile app
+│   ├── app/              # Navigation pages
+│   ├── components/       # Native UI components
+│   ├── features/         # Feature components
+│   ├── hooks/            # Custom hooks
+│   ├── services/         # API services
+│   ├── stores/           # Mobile state stores
+│   ├── types/            # Type definitions
+│   └── assets/           # App icons and media
+├── database/
+│   └── migrations/       # 10 grouped SQL migrations (001_auth.sql – 010_settings.sql)
+├── docs/
+│   └── declutr_architecture_document.html  # Interactive architecture docs
 ├── docker-compose.yml    # One-command local dev environment
 ├── .env.example          # All environment variables documented
+├── LICENSE               # MIT License
 └── README.md
 ```
 
 ---
 
-## Quick Start
+## Quick Start (10–15 Minutes Onboarding)
 
 ### Prerequisites
 
@@ -99,7 +113,7 @@ docker compose up -d db redis
 
 ```bash
 cd backend
-go run cmd/server/main.go
+go run main.go
 # API available at http://localhost:8080
 ```
 
@@ -115,7 +129,7 @@ npm run dev
 ### 6. Run mobile (optional)
 
 ```bash
-cd frontend/declutr-mobile
+cd mobile
 npm install
 npx expo start
 ```
@@ -150,20 +164,20 @@ Copy `.env.example` to `.env`. All variables are documented in [`docs/declutr_ar
 
 ## Database Migrations
 
-Migrations are in `database/migrations/` and run automatically in Docker. They are grouped into 10 logical domains:
+Migrations live in `database/migrations/` and run automatically in Docker. They are grouped into 10 logical domain files:
 
 | File | Domain |
 |---|---|
-| `001_users_and_auth.sql` | Users, SRP credentials |
-| `002_sessions_and_security.sql` | Sessions, audit events, trusted devices |
-| `003_vaults_and_assets.sql` | Vaults, assets, versions, recycle bin |
-| `004_processing_and_embeddings.sql` | OCR/extraction jobs, vector embeddings |
-| `005_ai_copilot_and_memory.sql` | AI conversations, episodic memory, persona |
-| `006_search_and_insights.sql` | Saved searches, search history, knowledge insights |
-| `007_workflows_and_notifications.sql` | Automations, workflow executions, notifications |
-| `008_organizations_and_sharing.sql` | Orgs, members, shared assets |
-| `009_developer_and_extensions.sql` | API keys, webhooks, marketplace extensions |
-| `010_intelligence_agents_predictive_lifeos.sql` | Agents, predictions, Life Areas, Projects, Goals |
+| `001_auth.sql` | Users, SRP credentials, sessions, security audit |
+| `002_users.sql` | User profiles, preferences, personal settings |
+| `003_vault.sql` | Encrypted vaults, keys, permissions |
+| `004_assets.sql` | Assets, asset versions, recycle bin |
+| `005_processing.sql` | Processing jobs, content extractions, OCR |
+| `006_ai.sql` | AI conversations, memory, persona, agents, predictive, LifeOS |
+| `007_search.sql` | Vector embeddings, saved searches, search history |
+| `008_workflows.sql` | Automations, workflow executions, notifications |
+| `009_organizations.sql` | Multi-tenant organizations, members, shared assets |
+| `010_settings.sql` | API keys, webhooks, extensions marketplace |
 
 ---
 
@@ -199,7 +213,7 @@ Create a Redis database and copy the URL into `REDIS_URL`.
 
 ---
 
-## API
+## API Overview
 
 The REST API is available at `http://localhost:8080/api/v1/`. Full documentation is in [`docs/declutr_architecture_document.html`](docs/declutr_architecture_document.html).
 
@@ -227,15 +241,11 @@ Key endpoint groups:
 4. Push: `git push origin feat/my-feature`
 5. Open a Pull Request
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
-
 ---
 
 ## Architecture
 
 Full interactive architecture documentation is available at [`docs/declutr_architecture_document.html`](docs/declutr_architecture_document.html).
-
-It covers: Architecture overview, folder structure, database schema, authentication flow, upload pipeline, AI pipeline, search pipeline, deployment guide, environment variables, roadmap, and current progress.
 
 ---
 

@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Repository Simplification & Architecture Rewrite (refactor)**:
+  - Simplified backend architecture into feature-owned packages under `backend/internal/` (`auth/`, `users/`, `vault/`, `files/`, `processing/`, `ai/`, `search/`, `workflow/`, `notification/`, `organization/`, `settings/`).
+  - Consolidated top-level backend shared modules into `backend/db/`, `backend/storage/`, `backend/middleware/`, `backend/utils/`, and `backend/tests/`.
+  - Moved mobile application folder from `frontend/declutr-mobile` to top-level `mobile/`.
+  - Standardized database migrations in `database/migrations/` into exact 10 files (`001_auth.sql` through `010_settings.sql`).
+  - Aligned frontend (`frontend/`) and mobile (`mobile/`) into clean feature-first layouts.
+  - Consolidated documentation into `docs/declutr_architecture_document.html` as the single interactive documentation website.
+  - Updated `README.md`, `docker-compose.yml`, `.env.example`, `current.md`, and `todo.md`.
+
 - **Repository Refactoring & Developer Experience (refactor)**:
   - Consolidated 34 database migrations into 10 domain-grouped files (`001_users_and_auth.sql` → `010_intelligence_agents_predictive_lifeos.sql`).
   - Removed enterprise over-engineering: `infrastructure/kubernetes/`, `infrastructure/helm/`, `infrastructure/terraform/`, `infrastructure/monitoring/`.

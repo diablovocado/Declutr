@@ -409,6 +409,18 @@ This document tracks the comprehensive roadmap and action items to complete the 
 - [x] Rewrote `.env.example` with inline documentation
 - [x] Updated `current.md` and `todo.md`
 
+---
+
+## 🧹 Phase 18: Repository Simplification & Architecture Rewrite (Complete)
+- [x] Simplified backend into `backend/internal/` (`auth/`, `users/`, `vault/`, `files/`, `processing/`, `ai/`, `search/`, `workflow/`, `notification/`, `organization/`, `settings/`)
+- [x] Extracted `backend/db/`, `backend/storage/`, `backend/middleware/`, `backend/utils/`, `backend/tests/`, `backend/main.go`, `backend/cmd/main.go`
+- [x] Moved mobile application to top-level `mobile/`
+- [x] Standardized migrations to 10 files (`001_auth.sql` – `010_settings.sql`)
+- [x] Aligned frontend and mobile into clean feature-first layouts
+- [x] Single HTML documentation website (`docs/declutr_architecture_document.html`)
+- [x] Updated `README.md` for 10-15 minute developer onboarding
+
+
 
 
 
