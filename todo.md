@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🎯 Issue #051 — Goals, Tasks & AI Action Center
+- [x] Dedicated AI Action Center (`app/actions/page.tsx`) transforming Declutr into an execution platform
+- [x] Proactive AI recommendations (`ai-suggestion-card.tsx`) emerging naturally from documents, AI insights, and timeline events
+- [x] Long-term goals hub (`goal-card.tsx`) linking tasks, files, and progress indicators
+- [x] Kanban task board (`kanban-board.tsx`) supporting To Do, In Progress, Review, and Completed columns
+- [x] Quick Task Capture dialog for instant task creation
+- [x] Mobile Action Sheet component (`mobile-actions-sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## ⏳ Issue #050 — Timeline & Memory Engine
 - [x] Dedicated Timeline & Memory Engine (`app/timeline/page.tsx`) organizing all user memories chronologically around time
 - [x] Vertical Timeline Stream (`vertical-timeline-stream.tsx`) listing events with sequential preceding/succeeding event links

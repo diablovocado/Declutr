@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## 🎯 Goals, Tasks & AI Action Center (Issue #051)
+
+Declutr transforms from a knowledge platform into an execution platform where tasks naturally emerge from documents, AI insights, and timeline events:
+
+| Component | Technical Implementation |
+|---|---|
+| 🤖 **Proactive AI Recommendations** | Recommendation cards ("Passport expires in 6 months", "3 Unpaid Invoices") with Accept and Dismiss controls (`ai-suggestion-card.tsx`) |
+| 🎯 **Long-Term Goals Hub** | Goal tracking ("Prepare 2025 Taxes", "Japan Trip 2025") linking tasks, files, and progress indicators (`goal-card.tsx`) |
+| 📋 **Kanban Task Board** | Task board supporting To Do, In Progress, Review, and Completed columns with linked file indicators (`kanban-board.tsx`) |
+| ⚡ **Quick Task Capture** | Instant task creation dialog accessible via Top Navigation, Command Palette, or Action Center |
+| 📱 **Mobile Action Sheet** | React Native Expo action sheet (`mobile-actions-sheet.tsx`) for Today's Tasks and quick capture |
+
+---
+
 ## ⏳ Timeline & Memory Engine (Issue #050)
 
 Declutr organizes memories around time, allowing users to effortlessly explore their digital life history:

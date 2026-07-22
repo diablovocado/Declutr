@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Goals, Tasks & AI Action Center (Issue #051)**:
+  - Built dedicated Action Center (`app/actions/page.tsx`) transforming Declutr into an execution platform where tasks emerge naturally from documents, AI insights, and timeline events.
+  - Implemented `AISuggestionCard` (`ai-suggestion-card.tsx`) displaying proactive AI action recommendations ("Passport expires in 6 months", "3 Unpaid Invoices") with Accept and Dismiss controls.
+  - Implemented `GoalCard` (`goal-card.tsx`) tracking long-term goals ("Prepare 2025 Taxes", "Japan Trip 2025") with progress bars and linked files.
+  - Implemented `KanbanBoard` (`kanban-board.tsx`) supporting To Do, In Progress, Under Review, and Completed columns.
+  - Built Quick Task Capture dialog for instant task creation.
+  - Created Mobile Action Sheet (`mobile-actions-sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Goals, Tasks & AI Action Center" section.
+
 - **Timeline & Memory Engine (Issue #050)**:
   - Built dedicated Timeline & Memory Engine (`app/timeline/page.tsx`) organizing all user memories and events chronologically around time.
   - Implemented `VerticalTimelineStream` (`vertical-timeline-stream.tsx`) listing chronological events (Upload, Import, AI Summary, Workflow, AI Chat) with sequential preceding/succeeding event links.
