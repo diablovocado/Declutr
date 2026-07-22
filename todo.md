@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## ⏳ Issue #050 — Timeline & Memory Engine
+- [x] Dedicated Timeline & Memory Engine (`app/timeline/page.tsx`) organizing all user memories chronologically around time
+- [x] Vertical Timeline Stream (`vertical-timeline-stream.tsx`) listing events with sequential preceding/succeeding event links
+- [x] Smart Memory Cards (`memory-card.tsx`) generated for trips, annual financials, medical records, and flashback memories
+- [x] 35-Day Activity Heatmap (`activity-heatmap.tsx`) tracking memory contribution intensity
+- [x] Time Scrubber supporting filters for Today, Yesterday, This Week, This Month, Custom Range, and natural text queries
+- [x] Mobile Timeline Feed component (`mobile-timeline-feed.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🏥 Issue #049 — Knowledge Management Center & Data Health
 - [x] Dedicated Knowledge Health Center (`app/health/page.tsx`) helping users maintain a clean, trustworthy digital vault
 - [x] Knowledge Health Score Calculator (92/100) evaluating Metadata Completeness, Organization Rate, Duplicate Rate, Processing Success, and Search Readiness

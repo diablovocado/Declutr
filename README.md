@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## ⏳ Timeline & Memory Engine (Issue #050)
+
+Declutr organizes memories around time, allowing users to effortlessly explore their digital life history:
+
+| Component | Technical Capability |
+|---|---|
+| ⏳ **Vertical Timeline Stream** | Chronological stream listing events (Upload, Import, AI Summary, Workflow, AI Chat) with sequential event links (`vertical-timeline-stream.tsx`) |
+| 🎴 **Smart Memory Cards** | Cards generated for trips, annual financials, medical records, and flashback memories (`memory-card.tsx`) |
+| 📊 **35-Day Activity Heatmap** | GitHub-style visual activity heatmap tracking memory upload and processing intensity (`activity-heatmap.tsx`) |
+| 🔍 **Time Scrubber & Search** | Scrubber filtering events by Today, This Week, This Month, Custom Range, and natural text queries |
+| 📱 **Mobile Timeline Feed** | React Native Expo timeline component (`mobile-timeline-feed.tsx`) displaying memory cards and event stream |
+
+---
+
 ## 🏥 Knowledge Management Center & Data Health (Issue #049)
 
 Declutr's Knowledge Health Center helps users maintain a clean, trustworthy, and well-organized digital vault as it scales:

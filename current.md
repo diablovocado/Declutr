@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Timeline & Memory Engine (Issue #050)**:
+  - Built dedicated Timeline & Memory Engine (`app/timeline/page.tsx`) organizing all user memories and events chronologically around time.
+  - Implemented `VerticalTimelineStream` (`vertical-timeline-stream.tsx`) listing chronological events (Upload, Import, AI Summary, Workflow, AI Chat) with sequential preceding/succeeding event links.
+  - Implemented `MemoryCard` (`memory-card.tsx`) generating smart cards for trips, annual financials, medical records, and flashback memories.
+  - Implemented 35-Day `ActivityHeatmap` (`activity-heatmap.tsx`) tracking memory contribution intensity over time.
+  - Built Time Scrubber supporting filters for Today, Yesterday, This Week, This Month, Custom Range, and natural text queries.
+  - Created Mobile Timeline Feed (`mobile-timeline-feed.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Timeline & Memory Engine" section.
+
 - **Knowledge Management Center & Data Health (Issue #049)**:
   - Built dedicated Knowledge Health Center (`app/health/page.tsx`) helping users maintain a clean, trustworthy, and well-organized digital vault.
   - Implemented Knowledge Health Score Calculator (92/100) evaluating Metadata Completeness (95%), Organization Rate (90%), Low Duplicate Rate (98%), Processing Success (99%), and Search Readiness (100%).
