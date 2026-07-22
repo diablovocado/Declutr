@@ -7,6 +7,9 @@ import (
 	"time"
 
 	adminTransport "github.com/diablovocado/declutr/modules/admin/transport"
+	agentApp "github.com/diablovocado/declutr/modules/agent/application"
+	agentRepository "github.com/diablovocado/declutr/modules/agent/repository"
+	agentTransport "github.com/diablovocado/declutr/modules/agent/transport"
 	"github.com/diablovocado/declutr/modules/auth/application"
 	"github.com/diablovocado/declutr/modules/auth/repository"
 	"github.com/diablovocado/declutr/modules/auth/transport"
@@ -76,7 +79,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	logger := observability.InitLogger("declutr-backend", nil)
-	logger.Info(context.Background(), "Starting Declutr Extension Ecosystem Backend Platform", map[string]interface{}{
+	logger.Info(context.Background(), "Starting Declutr v2 Autonomous Agent Platform Backend Engine", map[string]interface{}{
 		"env":  cfg.Env,
 		"port": cfg.Port,
 	})
@@ -94,6 +97,25 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+
+	// Autonomous Knowledge Agent Platform (Declutr Intelligence v2)
+	agentRepo := agentRepository.NewInMemoryAgentRepository()
+	agentSvc := agentApp.NewAgentService(agentRepo)
+	agentAPI := agentTransport.NewAgentAPI(agentSvc)
+
+	mux.HandleFunc("/api/v1/agents", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			agentAPI.CreateAgent(w, r)
+		} else {
+			agentAPI.ListAgents(w, r)
+		}
+	})
+	mux.HandleFunc("/api/v1/agents/toggle", agentAPI.ToggleState)
+	mux.HandleFunc("/api/v1/agents/goals", agentAPI.CreateGoal)
+	mux.HandleFunc("/api/v1/agents/plans", agentAPI.ListPlans)
+	mux.HandleFunc("/api/v1/agents/plans/approve", agentAPI.ApprovePlan)
+	mux.HandleFunc("/api/v1/agents/plans/reject", agentAPI.RejectPlan)
+	mux.HandleFunc("/api/v1/agents/memory", agentAPI.ListMemories)
 
 	// Extension Platform & Marketplace Engine Initialization
 	extRepo := extRepository.NewInMemoryExtensionRepository()
@@ -587,7 +609,7 @@ func main() {
 		IdleTimeout:  60 * time.Second,
 	}
 
-	log.Printf("Declutr Extension Ecosystem Backend Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
+	log.Printf("Declutr v2 Autonomous Agent Backend Platform Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
 
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server startup failed: %v", err)

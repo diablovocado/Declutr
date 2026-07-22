@@ -44,6 +44,18 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Autonomous Knowledge Agent Platform (Declutr Intelligence v2) (Issue #037)**:
+  - Implemented Autonomous Agent Core Domain models (`backend/modules/agent/domain/agent.go`) for `Agent`, `AgentGoal`, `AgentPlan`, `AgentTask`, `AgentMemory`, `AgentFeedback`, `AgentExecution`, `AgentPermission`, 8 Agent Types (`KNOWLEDGE`, `RESEARCH`, `ORGANIZATION`, `DOCUMENT`, `FINANCIAL`, `TRAVEL`, `LEARNING`, `COMPLIANCE`), and 5 Execution Modes (`MANUAL_APPROVAL`, `AUTOMATIC`, `SCHEDULED`, `EVENT_DRIVEN`, `GOAL_DRIVEN`).
+  - Built `PlanningEngine` (`backend/modules/agent/application/planner.go`) converting persistent goals into multi-step plan task graphs with dependencies, retries, and approval checkpoints.
+  - Built `ReasoningEngine` (`backend/modules/agent/application/reasoning.go`) evaluating tool selection, confidence scoring (0.0 to 1.0), evidence rationales, and human approval interceptors for destructive actions.
+  - Built `AgentService` (`backend/modules/agent/application/service.go`) managing agent registration, goal tracking, plan generation, human approval/rejection handling, operational memory persistence, and feedback learning.
+  - Added REST API endpoints (`/api/v1/agents`, `/pause`, `/resume`, `/goals`, `/plans/approve`, `/plans/reject`, `/executions`, `/memory`).
+  - Created PostgreSQL database migration `database/migrations/031_create_autonomous_agent_tables.sql` (`agents`, `agent_goals`, `agent_plans`, `agent_tasks`, `agent_memory`, `agent_feedback`, `agent_executions`, `agent_permissions`).
+  - Built Web Agent Portal (`frontend/app/agents/page.tsx`, `frontend/app/agents/goals/page.tsx`, `frontend/app/agents/plans/page.tsx`, `frontend/features/agent/components/`) featuring `AgentDashboardComponent`, `GoalManagerComponent`, `PlanViewerComponent`, `ApprovalCenterComponent`, and `AgentMemoryPanelComponent`.
+  - Built Mobile Agent components (`frontend/declutr-mobile/features/agent/components/`): `AgentOverview.tsx`, `GoalList.tsx`, `ApprovalList.tsx`, `AgentCard.tsx`.
+  - Created Go test suite (`backend/tests/agent_test.go`) validating goal decomposition, multi-step plan generation, human approval interceptors, memory persistence, and feedback learning.
+  - Created Agent Documentation suite (`docs/agent/`): `agent_architecture.md`, `planning_engine_guide.md`, `tool_framework_guide.md`, `approval_model.md`, `goal_lifecycle.md`.
+
 - **General Availability (v1.0.0) Launch & Operations (Issue #036)**:
   - Official General Availability (**v1.0.0**) production launch across all 36 engineering milestones.
   - Built Master Production GA Test Suite (`backend/tests/production_ga_test.go`).

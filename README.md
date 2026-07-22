@@ -1298,6 +1298,54 @@ Declutr **v1.0.0** is officially launched and live for General Availability acro
   - Extension Marketplace Storefront (`/marketplace`)
 - **Git Release Tag**: `v1.0.0`
 
+---
+
+## 🤖 Autonomous Knowledge Agent Platform (Declutr Intelligence v2)
+
+Declutr Intelligence v2 introduces autonomous collaborators that continuously execute persistent user goals within strict human-in-the-loop safety boundaries.
+
+### Platform Architecture & Pipeline
+
+```
+User Goals → Agent Registry → Planning Engine → Reasoning Engine → Tool Selection → Execution → Memory → Human Review
+```
+
+### Key Capabilities
+
+- **8 Agent Types Supported**: `KNOWLEDGE_AGENT`, `RESEARCH_AGENT`, `ORGANIZATION_AGENT`, `DOCUMENT_AGENT`, `FINANCIAL_AGENT`, `TRAVEL_AGENT`, `LEARNING_AGENT`, `COMPLIANCE_AGENT`.
+- **5 Execution Modes**: `MANUAL_APPROVAL`, `AUTOMATIC`, `SCHEDULED`, `EVENT_DRIVEN`, `GOAL_DRIVEN`.
+- **Planning & Reasoning Engines**: `PlanningEngine` (`backend/modules/agent/application/planner.go`) decomposes goals into multi-step execution plans with task dependency graphs; `ReasoningEngine` (`backend/modules/agent/application/reasoning.go`) evaluates tool selection, confidence scoring, evidence rationales, and intercepts sensitive actions for human approval.
+- **Human-in-the-Loop Interceptor**: Non-destructive read-only tasks execute automatically; sensitive/destructive tasks (deletion, moving data, bulk ops, external shares) require explicit user approval in the Approval Center.
+- **Operational Memory & Learning**: Agents maintain operational memory (`SUCCESS`, `FAILURE`, `PREFERENCE`, `FEEDBACK`) to refine future plan proposals.
+- **Web & Mobile Portals**: `/agents` (Dashboard & Registry), `/agents/goals` (Goal Manager), `/agents/plans` (Plan Viewer & Approval Center), and React Native mobile components.
+
+### Database Schema (Migration 031)
+
+| Table | Purpose |
+|---|---|
+| `agents` | Registered autonomous agent instances & permission scopes |
+| `agent_goals` | Persistent user goals and scheduling triggers |
+| `agent_plans` | Multi-step execution plans, confidence scores, and statuses |
+| `agent_tasks` | Individual tool invocation steps & human approval flags |
+| `agent_memory` | Operational memory & historical learnings |
+| `agent_feedback` | User approval/rejection feedback comments |
+| `agent_executions` | Execution audit log telemetry |
+| `agent_permissions` | Agent-scoped permission boundaries |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/agents` | List user autonomous agents |
+| `POST` | `/api/v1/agents` | Register new autonomous agent |
+| `POST` | `/api/v1/agents/toggle` | Pause or resume agent execution |
+| `POST` | `/api/v1/agents/goals` | Create persistent goal and generate plan |
+| `GET` | `/api/v1/agents/plans` | List agent execution plans |
+| `POST` | `/api/v1/agents/plans/approve` | Approve proposed plan step |
+| `POST` | `/api/v1/agents/plans/reject` | Reject proposed plan step |
+| `GET` | `/api/v1/agents/memory` | Retrieve operational agent memory |
+
+
 
 
 
