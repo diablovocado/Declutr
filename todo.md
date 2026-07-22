@@ -117,7 +117,15 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - Complete explainability (Why generated, evidence rationale, confidence)
   - 8 REST API endpoints (timeline, insights, milestones, dismiss, refresh, stats, preferences)
   - Web UI: TimelineView, InsightDashboard, MilestoneCards, ActivityFeed, `/insights` page route
-  - Mobile UI: TimelineView, InsightsDashboard, MilestoneCards, ActivityFeed
+- [x] Declutr AI Copilot (RAG & Personal Intelligence):
+  - Database migration `018_create_copilot_tables.sql` (6 tables: conversations, messages, conversation_context, conversation_feedback, prompt_versions, response_history)
+  - IntentParser classifying questions into SUMMARY, TIMELINE_QUERY, MEMORY_RECALL, ENTITY_EXPLORE, GENERAL_QA
+  - GroundedRAGEngine & CopilotService implementing zero-hallucination grounded RAG answer synthesis strictly using retrieved vault documents
+  - Full evidence citations (asset ID, title, type, snippet, confidence score, matched entities/contexts)
+  - Multi-turn conversation management & history carry-over
+  - 7 REST API endpoints (conversations, messages, feedback, SSE streaming)
+  - Web UI: AIWorkspace, ConversationSidebar, ChatInterface, CitationViewer, SuggestedQuestions, `/copilot` page route
+  - Mobile UI: ChatInterface, SourcePanel, ConversationHistory
   - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)

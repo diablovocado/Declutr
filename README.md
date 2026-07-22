@@ -688,6 +688,63 @@ Every proactive insight provides explicit rationale and supporting evidence:
 | `GET` | `/api/v1/insights/stats` | Vault insight and timeline metrics |
 | `GET` / `PUT` | `/api/v1/insights/preferences` | Get / update insight preferences |
 
+---
+
+## 🤖 Declutr AI Copilot (Grounded RAG & Personal Intelligence)
+
+Declutr AI Copilot is the personal intelligence layer built on top of the user's digital vault. Unlike generic chatbots, every AI response is strictly grounded in retrieved vault documents, memories, context, and timeline events.
+
+> **RAG Pipeline**: `User Question` → `Intent Parser` → `Hybrid Search Integration` → `Context Builder` → `Prompt Builder` → `LLM Synthesis` → `Grounded Response` → `Citations & Evidence`
+
+### Grounded Answer Synthesis & Zero-Hallucination Policy
+- Answers are synthesized **only** when supporting vault evidence is retrieved.
+- If evidence is absent, the AI explicitly states: *"I searched your vault for relevant records, but could not find sufficient grounded evidence..."*
+- Every assistant message is paired with verifiable document citations, snippets, confidence scores, and reasoning overviews.
+
+```json
+{
+  "messageId": "msg-asst-1",
+  "role": "ASSISTANT",
+  "content": "Based on your vault document 'Japanese Visa & Passport Scan' (PDF), your passport expires on September 25, 2025 (in 65 days).",
+  "confidence": 0.96,
+  "reasoningOverview": "Grounded via exact entity match (Tokyo, Japan, Passport) and semantic vector search over document asset-passport-001.",
+  "citations": [
+    {
+      "assetId": "asset-passport-001",
+      "title": "Japanese Visa & Passport Scan",
+      "assetType": "PDF",
+      "snippet": "Passport number A987654321. Expiration Date: 2025-09-25.",
+      "confidence": 0.98,
+      "matchedEntities": ["Tokyo", "Japan", "Passport"]
+    }
+  ]
+}
+```
+
+### Database Schema (Migration 018)
+
+| Table | Purpose |
+|---|---|
+| `conversations` | Multi-turn user RAG conversation session tracking |
+| `messages` | Grounded user and assistant messages with token usage & confidence |
+| `conversation_context` | Auditable RAG context snapshots passed into prompt builder |
+| `conversation_feedback` | User upvote/downvote ratings on response quality |
+| `prompt_versions` | Versioned system & context prompts |
+| `response_history` | Audit log of latency, model versions, and response metrics |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/v1/copilot/conversations` | Start a new RAG conversation session |
+| `GET` | `/api/v1/copilot/conversations` | List conversation history sessions for vault |
+| `DELETE` | `/api/v1/copilot/conversations` | Delete a conversation session |
+| `POST` | `/api/v1/copilot/messages` | Send message & receive grounded answer with citations |
+| `GET` | `/api/v1/copilot/messages` | Get message history for a conversation session |
+| `POST` | `/api/v1/copilot/feedback` | Submit user rating on AI grounding quality |
+| `GET` | `/api/v1/copilot/messages/stream` | Stream response via Server-Sent Events (SSE) |
+
+
 
 
 

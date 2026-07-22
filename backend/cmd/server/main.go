@@ -10,6 +10,9 @@ import (
 	contextApp "github.com/diablovocado/declutr/modules/context/application"
 	contextRepository "github.com/diablovocado/declutr/modules/context/repository"
 	contextTransport "github.com/diablovocado/declutr/modules/context/transport"
+	copilotApp "github.com/diablovocado/declutr/modules/copilot/application"
+	copilotRepository "github.com/diablovocado/declutr/modules/copilot/repository"
+	copilotTransport "github.com/diablovocado/declutr/modules/copilot/transport"
 	embeddingApp "github.com/diablovocado/declutr/modules/embedding/application"
 	embeddingRepository "github.com/diablovocado/declutr/modules/embedding/repository"
 	embeddingTransport "github.com/diablovocado/declutr/modules/embedding/transport"
@@ -198,6 +201,34 @@ func main() {
 			insightsAPI.GetPreferences(w, r)
 		}
 	})
+
+	// Declutr AI Copilot RAG Module initialization
+	// Pipeline: User Question → Intent Parser → Hybrid Search → Context Builder → Prompt Builder → Grounded RAG Answer → Citations
+	copilotRepo := copilotRepository.NewInMemoryCopilotRepository()
+	copilotSvc := copilotApp.NewCopilotService(copilotRepo, searchSvc)
+	copilotEngine := copilotApp.NewGroundedRAGEngine(copilotSvc)
+	_ = copilotEngine // available for direct RAG execution
+	copilotAPI := copilotTransport.NewCopilotAPI(copilotSvc)
+
+	http.HandleFunc("/api/v1/copilot/conversations", func(w http.ResponseWriter, r *http.Request) {
+		switch r.Method {
+		case http.MethodPost:
+			copilotAPI.StartConversation(w, r)
+		case http.MethodDelete:
+			copilotAPI.DeleteConversation(w, r)
+		default:
+			copilotAPI.ListConversations(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/copilot/messages", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			copilotAPI.SendMessage(w, r)
+		} else {
+			copilotAPI.GetMessages(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/copilot/feedback", copilotAPI.SaveFeedback)
+	http.HandleFunc("/api/v1/copilot/messages/stream", copilotAPI.StreamMessage)
 
 	log.Println("Declutr Backend Running on :8080")
 

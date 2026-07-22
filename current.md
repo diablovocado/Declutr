@@ -41,6 +41,17 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Declutr AI Copilot RAG & Personal Intelligence (Issue #022)**:
+  - Created PostgreSQL database migration `database/migrations/018_create_copilot_tables.sql` (`conversations`, `messages`, `conversation_context`, `conversation_feedback`, `prompt_versions`, `response_history`).
+  - Implemented domain models for `Conversation`, `Message`, `Citation`, `RAGContext`, `PromptVersion`, `SendMessageRequest`, `SendMessageResponse`, `FeedbackRequest`, `StreamChunk`.
+  - Built `IntentParser` classifying question intent into `SUMMARY`, `TIMELINE_QUERY`, `MEMORY_RECALL`, `ENTITY_EXPLORE`, and `GENERAL_QA`.
+  - Built `ContextBuilder` & `PromptBuilder` constructing structured versioned prompts with grounding rules, conversation history, and citations.
+  - Built `GroundedRAGEngine` & `CopilotService` implementing zero-hallucination grounded RAG answer synthesis strictly using retrieved vault documents, confidence scoring, and reasoning overviews.
+  - Added 7 REST API endpoints (`POST /copilot/conversations`, `GET /copilot/conversations`, `DELETE /copilot/conversations`, `POST /copilot/messages`, `GET /copilot/messages`, `POST /copilot/feedback`, `GET /copilot/messages/stream` SSE).
+  - Created Web UI module (`frontend/features/copilot/components/`) featuring `AIWorkspace`, `ConversationSidebar`, `ChatInterface`, `CitationViewer`, `SuggestedQuestions`, and Next.js page route (`/copilot`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/copilot/components/`): `ChatInterface.tsx`, `SourcePanel.tsx`, `ConversationHistory.tsx`.
+  - Added comprehensive Go test suite (`copilot_test.go`) — 6/6 tests passing: Intent Parsing, Grounded RAG Answering, Multi-Turn Context Carry-Over, Hallucination Prevention, Conversation History, Feedback Ratings.
+
 - **Knowledge Insights & Timeline Engine (Issue #021)**:
   - Created PostgreSQL database migration `database/migrations/017_create_timeline_and_insights_tables.sql` (`timeline_events`, `timeline_groups`, `knowledge_insights`, `insight_history`, `insight_preferences`, `milestones`).
   - Implemented domain models for `TimelineEvent`, `TimelineGroup`, `KnowledgeInsight`, `Milestone`, `InsightStats`, `InsightPreferences`, `TimelineFilter`.
