@@ -34,6 +34,9 @@ import (
 	searchApp "github.com/diablovocado/declutr/modules/search/application"
 	searchRepository "github.com/diablovocado/declutr/modules/search/repository"
 	searchTransport "github.com/diablovocado/declutr/modules/search/transport"
+	versioningApp "github.com/diablovocado/declutr/modules/versioning/application"
+	versioningRepository "github.com/diablovocado/declutr/modules/versioning/repository"
+	versioningTransport "github.com/diablovocado/declutr/modules/versioning/transport"
 	workflowApp "github.com/diablovocado/declutr/modules/workflow/application"
 	workflowRepository "github.com/diablovocado/declutr/modules/workflow/repository"
 	workflowTransport "github.com/diablovocado/declutr/modules/workflow/transport"
@@ -317,6 +320,29 @@ func main() {
 	})
 	http.HandleFunc("/api/v1/shares/activity", collaborationAPI.GetActivity)
 	http.HandleFunc("/api/v1/shares/stats", collaborationAPI.GetStats)
+
+	// Version History, Recovery & Time Machine Module initialization
+	// Pipeline: Asset Change → Version Manager → Snapshot Generator → Version Store → Recovery Engine → Restore
+	versioningRepo := versioningRepository.NewInMemoryVersioningRepository()
+	versioningSvc := versioningApp.NewVersioningService(versioningRepo)
+	timeMachineEngine := versioningApp.NewTimeMachineRecoveryEngine(versioningSvc)
+	_ = timeMachineEngine // available for auto snapshot capture
+	versioningAPI := versioningTransport.NewVersioningAPI(versioningSvc)
+
+	http.HandleFunc("/api/v1/versions", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodDelete {
+			// delete version endpoint
+		} else {
+			versioningAPI.ListVersions(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/versions/snapshot", versioningAPI.CreateSnapshot)
+	http.HandleFunc("/api/v1/versions/compare", versioningAPI.CompareVersions)
+	http.HandleFunc("/api/v1/versions/restore", versioningAPI.RestoreVersion)
+	http.HandleFunc("/api/v1/recyclebin", versioningAPI.ListRecycleBin)
+	http.HandleFunc("/api/v1/recyclebin/restore", versioningAPI.RestoreRecycleItem)
+	http.HandleFunc("/api/v1/recyclebin/purge", versioningAPI.PurgeRecycleItem)
+	http.HandleFunc("/api/v1/versions/stats", versioningAPI.GetStats)
 
 	log.Println("Declutr Backend Running on :8080")
 

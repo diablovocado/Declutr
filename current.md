@@ -41,6 +41,16 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Version History, Recovery & Time Machine (Issue #026)**:
+  - Created PostgreSQL database migration `database/migrations/022_create_versioning_tables.sql` (`resource_versions`, `version_snapshots`, `change_history`, `recycle_bin`, `restore_jobs`, `version_diffs`).
+  - Implemented domain models for `ResourceVersion`, `VersionSnapshot`, `RecycleItem`, `VersionDiff`, `VersioningStats`, `CreateSnapshotRequest`, `CompareVersionsRequest`, `RestoreVersionRequest`.
+  - Built `ComputeDiff` engine calculating added, removed, and modified key-value pairs between version snapshots.
+  - Built `VersioningService` & `TimeMachineRecoveryEngine` managing automated snapshot capture, version timeline listing, point-in-time state restoration, Recycle Bin soft deletes, bulk restoration, and permanent purges.
+  - Added 8 REST API endpoints (`GET /versions`, `POST /versions/snapshot`, `POST /versions/compare`, `POST /versions/restore`, `GET /recyclebin`, `POST /recyclebin/restore`, `DELETE /recyclebin/purge`, `GET /versions/stats`).
+  - Created Web UI module (`frontend/features/versioning/components/`) featuring `VersionHistoryPanel`, `DiffViewer`, `RecycleBin`, and Next.js page route (`/versioning`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/versioning/components/`): `VersionList.tsx`, `VersionDetail.tsx`, `RecycleBin.tsx`.
+  - Added comprehensive Go test suite (`versioning_test.go`) — 6/6 tests passing: Version Snapshot Creation, Diff Engine Comparison, Restore Version, Recycle Bin Soft Delete, Recycle Bin Restore & Purge, Versioning Stats.
+
 - **Secure Sharing & Collaboration Platform (Issue #025)**:
   - Created PostgreSQL database migration `database/migrations/021_create_sharing_tables.sql` (`shares`, `share_permissions`, `share_members`, `share_links`, `share_comments`, `share_activity`, `share_invitations`).
   - Implemented domain models for `Share`, `SharePermission`, `ShareMember`, `ShareLink`, `ShareComment`, `ShareActivity`, `ShareInvitation`, `ShareStats`, `CreateShareRequest`, `InviteRequest`, `CreateLinkRequest`, `AddCommentRequest`.

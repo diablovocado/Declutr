@@ -155,6 +155,15 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - 11 REST API endpoints (shares, invites, links, comments, activity, stats)
   - Web UI: ShareDialog, PermissionManager, CommentPanel, ActivityFeed, `/collaboration` page route
   - Mobile UI: ShareSheet, PermissionList, CommentThread
+- [x] Version History, Recovery & Time Machine:
+  - Database migration `022_create_versioning_tables.sql` (6 tables: resource_versions, version_snapshots, change_history, recycle_bin, restore_jobs, version_diffs)
+  - Granular Resource Types (ASSET, METADATA, AI_ANALYSIS, CONTEXT, RELATIONSHIP, COLLECTION, MEMORY, WORKFLOW, PREFERENCES)
+  - Snapshot Strategies (FULL, INCREMENTAL, DELTA, COMPRESSED, IMMUTABLE)
+  - Field-level Compare Diff Engine (added, removed, modified key-values)
+  - Recovery Engine with point-in-time restoration & Recycle Bin soft delete
+  - 8 REST API endpoints (versions, snapshot, compare, restore, recyclebin, restore, purge, stats)
+  - Web UI: VersionHistoryPanel, DiffViewer, RecycleBin, `/versioning` page route
+  - Mobile UI: VersionList, VersionDetail, RecycleBin
   - 6/6 Go tests passing
 - [x] Reverse Persona Engine:
   - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)

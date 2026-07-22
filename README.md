@@ -863,6 +863,46 @@ Declutr's Secure Sharing & Collaboration Platform enables privacy-first, granula
 | `GET` | `/api/v1/shares/activity` | Get audit activity history for share |
 | `GET` | `/api/v1/shares/stats` | Vault collaboration stats (active shares, members, comments) |
 
+---
+
+## 🕒 Version History, Recovery & Time Machine
+
+Declutr's Version History & Recovery System ("Time Machine") captures immutable and incremental snapshots of assets, metadata, AI analysis, contexts, relationships, collections, memories, workflows, and preferences, allowing safe field-level diff inspection, point-in-time restoration, and soft-delete recovery.
+
+> **Architecture**: `Asset Change` → `Version Manager` → `Snapshot Generator` → `Version Store` → `Recovery Engine` → `Restore`
+
+### Versioning & Snapshot Strategy
+
+- **Versioned Resources**: Assets, Metadata, AI Analysis, Entity Extraction, Relationships, Contexts, Collections, Workflows, Vault Settings, Preferences, Search Index Metadata.
+- **Snapshot Modes**: `FULL`, `INCREMENTAL`, `DELTA`, `COMPRESSED`, `IMMUTABLE`.
+- **Field Diff Engine**: Computes added, removed, and modified key-value pairs between any two version snapshots.
+- **Recycle Bin (Soft Delete)**: Manages soft-deleted vault items with retention expiration, bulk restoration, and permanent purge actions.
+
+### Database Schema (Migration 022)
+
+| Table | Purpose |
+|---|---|
+| `resource_versions` | Core version records, resource type, version numbers, checksums |
+| `version_snapshots` | Snapshot payloads (`FULL`, `DELTA`, `COMPRESSED`, `IMMUTABLE`) |
+| `change_history` | Audit log of field-level modifications and actors |
+| `recycle_bin` | Soft-deleted items, original path, retention expiration |
+| `restore_jobs` | Tracking restoration job executions and status |
+| `version_diffs` | Cached version comparison diff payloads |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/versions` | List version timeline for resource or vault |
+| `POST` | `/api/v1/versions/snapshot` | Capture a new version snapshot |
+| `POST` | `/api/v1/versions/compare` | Compare two version snapshots and generate field-level diff |
+| `POST` | `/api/v1/versions/restore` | Restore resource state to target version |
+| `GET` | `/api/v1/recyclebin` | List soft-deleted items in Recycle Bin |
+| `POST` | `/api/v1/recyclebin/restore` | Restore soft-deleted item(s) |
+| `DELETE` | `/api/v1/recyclebin/purge` | Permanently purge soft-deleted item(s) |
+| `GET` | `/api/v1/versions/stats` | Vault versioning & time machine metrics |
+
+
 
 
 
