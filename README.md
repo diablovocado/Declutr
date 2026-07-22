@@ -1201,6 +1201,52 @@ Declutr's Developer Platform turns Declutr into an extensible ecosystem where th
 | `POST` | `/api/v1/developer/oauth/token` | Exchange OAuth authorization code for token |
 | `GET` | `/api/v1/developer/openapi` | Serve OpenAPI 3.0 Specification JSON |
 
+---
+
+## 🧩 Extension Platform, Marketplace & Ecosystem
+
+Declutr's Extension Platform enables developers to safely extend every major capability of Declutr through isolated, versioned, sandboxed extensions.
+
+### Platform Architecture & Key Features
+
+- **Isolated Sandbox Runtime**: `ExtensionSandbox` enforces 5s execution timeouts, 128MB memory quotas, permission checks, and panic recovery crash isolation (`backend/modules/extension/application/sandbox.go`).
+- **20 Extension Types Supported**: `UI_PANEL`, `DASHBOARD_WIDGET`, `SETTINGS_PAGE`, `COMMAND`, `SEARCH_PROVIDER`, `METADATA_EXTRACTOR`, `AI_PROVIDER`, `EMBEDDING_PROVIDER`, `WORKFLOW_ACTION`, `WORKFLOW_TRIGGER`, `NOTIFICATION_PROVIDER`, `IMPORTER`, `EXPORTER`, `STORAGE_PROVIDER`, `AUTH_PROVIDER`, `CONNECTOR_PROVIDER`, `FILE_PREVIEWER`, `THEME`, `LANGUAGE_PACK`, `CLI_EXTENSION`.
+- **Extension Manifest**: Standardized JSON manifest schema (`ID`, `Name`, `Version`, `Author`, `License`, `Description`, `Category`, `Type`, `Capabilities`, `Permissions`, `Dependencies`, `MinDeclutrVersion`).
+- **Complete Lifecycle Management**: `Install`, `Enable`, `Disable`, `Update`, `Rollback`, `Repair`, `Uninstall`, `Verify`.
+- **User Permission Model**: Explicit user approval consent for 9 permission scopes (`vault.read`, `vault.write`, `workflow.execute`, `ai.generate`, `search.query`, `notification.send`, `storage.read`, `storage.write`, `admin.manage`).
+- **Official Extension SDK**: `@declutr/extension-sdk` (`sdks/extension-sdk/`) providing typed APIs for Vault, Search, AI, Workflows, Notifications, and UI integrations.
+- **Web Marketplace & Publisher Portal**:
+  - `/marketplace`: Storefront for browsing, searching, category filtering, and inspecting details.
+  - `/marketplace/manager`: Installed extension manager with lifecycle toggles and permission reviews.
+  - `/marketplace/publisher`: Publisher developer portal for publishing releases, uploading bundles, and viewing telemetry.
+- **Mobile Support**: React Native components (`MarketplaceBrowser`, `InstalledExtensionsList`, `ExtensionCard`).
+
+### Database Schema (Migration 030)
+
+| Table | Purpose |
+|---|---|
+| `extension_publishers` | Verified extension publisher accounts |
+| `extensions` | Published extension catalog, ratings, downloads, and manifests |
+| `extension_versions` | Release versions, release notes, and JavaScript bundle URLs |
+| `extension_installations` | User & organization installations, statuses, and approved permissions |
+| `extension_reviews` | User ratings (1-5 stars) and review comments |
+| `extension_permissions` | Master permission references and justifications |
+| `extension_statistics` | Installation counts, active users, crashes, and latency metrics |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/marketplace` | Browse & search marketplace extensions |
+| `GET` | `/api/v1/marketplace/detail` | Get extension details & reviews |
+| `POST` | `/api/v1/marketplace/publish` | Publish new extension version |
+| `POST` | `/api/v1/marketplace/review` | Submit user rating & review |
+| `GET` | `/api/v1/extensions/installed` | List user installed extensions |
+| `POST` | `/api/v1/extensions/install` | Install extension with approved permissions |
+| `POST` | `/api/v1/extensions/lifecycle` | Manage extension lifecycle (ENABLE, DISABLE, UNINSTALL) |
+| `POST` | `/api/v1/extensions/permissions/approve` | Approve requested permissions |
+
+
 
 
 

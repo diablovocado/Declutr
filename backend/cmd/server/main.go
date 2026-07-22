@@ -28,6 +28,9 @@ import (
 	embeddingApp "github.com/diablovocado/declutr/modules/embedding/application"
 	embeddingRepository "github.com/diablovocado/declutr/modules/embedding/repository"
 	embeddingTransport "github.com/diablovocado/declutr/modules/embedding/transport"
+	extApp "github.com/diablovocado/declutr/modules/extension/application"
+	extRepository "github.com/diablovocado/declutr/modules/extension/repository"
+	extTransport "github.com/diablovocado/declutr/modules/extension/transport"
 	insightsApp "github.com/diablovocado/declutr/modules/insights/application"
 	insightsRepository "github.com/diablovocado/declutr/modules/insights/repository"
 	insightsTransport "github.com/diablovocado/declutr/modules/insights/transport"
@@ -73,7 +76,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	logger := observability.InitLogger("declutr-backend", nil)
-	logger.Info(context.Background(), "Starting Declutr Developer Platform Backend Engine", map[string]interface{}{
+	logger.Info(context.Background(), "Starting Declutr Extension Ecosystem Backend Platform", map[string]interface{}{
 		"env":  cfg.Env,
 		"port": cfg.Port,
 	})
@@ -91,6 +94,25 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+
+	// Extension Platform & Marketplace Engine Initialization
+	extRepo := extRepository.NewInMemoryExtensionRepository()
+	sandbox := extApp.NewExtensionSandbox(extApp.SandboxConfig{
+		MaxExecutionTimeout: 5 * time.Second,
+		MaxMemoryMB:         128,
+	})
+	extSvc := extApp.NewExtensionService(extRepo, sandbox)
+	extAPI := extTransport.NewExtensionAPI(extSvc)
+
+	mux.HandleFunc("/api/v1/marketplace", extAPI.ListMarketplace)
+	mux.HandleFunc("/api/v1/marketplace/detail", extAPI.GetExtensionDetails)
+	mux.HandleFunc("/api/v1/marketplace/publish", extAPI.PublishExtension)
+	mux.HandleFunc("/api/v1/marketplace/review", extAPI.AddReview)
+
+	mux.HandleFunc("/api/v1/extensions/installed", extAPI.ListInstalled)
+	mux.HandleFunc("/api/v1/extensions/install", extAPI.InstallExtension)
+	mux.HandleFunc("/api/v1/extensions/lifecycle", extAPI.ManageLifecycle)
+	mux.HandleFunc("/api/v1/extensions/permissions/approve", extAPI.ApprovePermissions)
 
 	// Developer Platform Engine Initialization
 	devRepo := devRepository.NewInMemoryDeveloperRepository()
@@ -565,7 +587,7 @@ func main() {
 		IdleTimeout:  60 * time.Second,
 	}
 
-	log.Printf("Declutr Developer Platform Backend Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
+	log.Printf("Declutr Extension Ecosystem Backend Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
 
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server startup failed: %v", err)

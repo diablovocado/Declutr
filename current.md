@@ -41,6 +41,18 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Extension Platform, Marketplace & Ecosystem (Issue #034)**:
+  - Created PostgreSQL database migration `database/migrations/030_create_extension_tables.sql` (`extensions`, `extension_versions`, `extension_permissions`, `extension_installations`, `extension_reviews`, `extension_publishers`, `extension_statistics`).
+  - Implemented Domain models for `Extension`, `ExtensionManifest`, `ExtensionVersion`, `ExtensionInstallation`, `ExtensionReview`, `Publisher`, 20 Extension Types, 10 Categories, and 9 Permission Scopes (`backend/modules/extension/domain/extension.go`).
+  - Implemented `ExtensionSandbox` (`backend/modules/extension/application/sandbox.go`) enforcing execution timeouts (5s default), 128MB memory quotas, permission checks, and panic recovery crash isolation.
+  - Implemented `ExtensionService` managing lifecycle (`Install`, `Enable`, `Disable`, `Rollback`, `Uninstall`), Capability Registry, marketplace category indexing, reviews, ratings, and publisher releases.
+  - Added REST API endpoints (`/api/v1/marketplace`, `/detail`, `/publish`, `/review`, `/api/v1/extensions/installed`, `/install`, `/lifecycle`, `/permissions/approve`).
+  - Built Official Extension SDK `@declutr/extension-sdk` (`sdks/extension-sdk/`).
+  - Built Web Marketplace Portal & Storefront (`frontend/app/marketplace/page.tsx`, `frontend/app/marketplace/manager/page.tsx`, `frontend/app/marketplace/publisher/page.tsx`, `frontend/features/extension/components/`) featuring `MarketplaceBrowserComponent`, `ExtensionDetailsModal`, `InstalledExtensionsComponent`, `PermissionApprovalDialog`, and `PublisherPortalComponent`.
+  - Built Mobile Extension Manager components (`frontend/declutr-mobile/features/extension/components/`): `MarketplaceBrowser.tsx`, `InstalledExtensionsList.tsx`, `ExtensionCard.tsx`.
+  - Created Go test suite (`backend/tests/extension_test.go`) validating manifest validation, lifecycle transitions, sandbox quota & timeout enforcement, permission checks, marketplace category search, and reviews.
+  - Created Extension Documentation suite (`docs/extensions/`): `extension_sdk_guide.md`, `marketplace_guide.md`, `publishing_guide.md`, `security_guide.md`, `sandbox_guide.md`.
+
 - **Public API, Developer SDK & Developer Platform (Issue #033)**:
   - Created PostgreSQL database migration `database/migrations/029_create_developer_platform_tables.sql` (`developer_apps`, `api_keys`, `oauth_clients`, `oauth_tokens`, `webhooks`, `webhook_deliveries`, `webhook_dlq`).
   - Built Developer Domain models (`backend/modules/developer/domain/developer.go`) for `APIKey`, `OAuthClient`, `OAuthToken`, `WebhookEndpoint`, `WebhookDelivery`, `WebhookDLQItem`, `DeveloperApp`, API Scopes, and Webhook Event Types.
