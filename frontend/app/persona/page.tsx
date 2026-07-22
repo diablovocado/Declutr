@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { PersonaDashboard } from '../features/persona/components/persona-dashboard';
-import { RecommendationsPanel } from '../features/persona/components/recommendations-panel';
-import { LearningInsights } from '../features/persona/components/learning-insights';
-import { InterestOverview } from '../features/persona/components/interest-overview';
-import { SignalSettings } from '../features/persona/components/signal-settings';
-import { PrivacyControls } from '../features/persona/components/privacy-controls';
+import { PersonaDashboard } from '../../features/persona/components/persona-dashboard';
+import { RecommendationsPanel } from '../../features/persona/components/recommendations-panel';
+import { LearningInsights } from '../../features/persona/components/learning-insights';
+import { InterestOverview } from '../../features/persona/components/interest-overview';
+import { SignalSettings } from '../../features/persona/components/signal-settings';
+import { PrivacyControls } from '../../features/persona/components/privacy-controls';
 
 type Tab = 'dashboard' | 'recommendations' | 'insights' | 'interests' | 'signals' | 'privacy';
 

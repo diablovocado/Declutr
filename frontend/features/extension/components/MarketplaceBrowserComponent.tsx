@@ -101,7 +101,7 @@ export function MarketplaceBrowserComponent({
                 <div className="flex items-center gap-2">
                   <h4 className="font-bold text-sm text-foreground">{ext.manifest.name}</h4>
                   {ext.is_verified && (
-                    <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" title="Verified Publisher" />
+                    <ShieldCheck className="w-4 h-4 text-emerald-500 shrink-0" aria-label="Verified Publisher" />
                   )}
                 </div>
                 <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-secondary text-muted-foreground font-semibold">

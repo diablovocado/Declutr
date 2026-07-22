@@ -15,7 +15,7 @@ export interface AgentItem {
 
 interface AgentDashboardProps {
   agents: AgentItem[];
-  onToggleAgent: (agentId: string, pause: bool) => void;
+  onToggleAgent: (agentId: string, pause: boolean) => void;
   onSelectAgent: (agent: AgentItem) => void;
 }
 

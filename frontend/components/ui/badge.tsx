@@ -20,6 +20,10 @@ const badgeVariants = cva(
         blue:
           "border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400",
         outline: "text-slate-950 dark:text-slate-50 border-slate-300 dark:border-slate-800",
+        purple:
+          "border-purple-500/20 bg-purple-500/10 text-purple-600 dark:text-purple-400",
+        cyan:
+          "border-cyan-500/20 bg-cyan-500/10 text-cyan-600 dark:text-cyan-400",
       },
     },
     defaultVariants: {

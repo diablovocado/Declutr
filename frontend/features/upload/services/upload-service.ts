@@ -5,7 +5,7 @@ export interface UploadItem {
   sizeBytes: number;
   mimeType: string;
   progressPercentage: number;
-  status: "QUEUED" | "UPLOADING" | "VALIDATING" | "READY" | "FAILED";
+  status: "QUEUED" | "UPLOADING" | "VALIDATING" | "EXTRACTING_TEXT" | "METADATA_EXTRACTION" | "EMBEDDINGS_GENERATION" | "READY" | "FAILED";
   checksumSha256?: string;
   error?: string;
 }

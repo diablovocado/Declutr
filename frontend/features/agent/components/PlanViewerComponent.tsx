@@ -20,7 +20,7 @@ export interface AgentPlan {
   reasoning: string;
   confidence: number;
   status: string;
-  requires_review: bool;
+  requires_review: boolean;
   tasks: PlanTask[];
 }
 
