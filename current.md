@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Universal Import Hub & Connected Digital Life (Issue #048)**:
+  - Built dedicated Universal Import Center (`app/import/page.tsx`) bringing together cloud storage, workspace tools, repositories, and local archives.
+  - Implemented Connected Services Grid supporting Google Drive, Dropbox, OneDrive, iCloud, GitHub, Notion, Amazon S3, Gmail, Slack, and Local ZIP archives.
+  - Implemented Import Preview Modal displaying pre-import file counts, estimated storage size, duplicate filter rules (Skip, Merge, Rename), and conflict resolution.
+  - Built Active Import Queue Telemetry displaying live progress bars with pause, resume, and cancel controls.
+  - Built Import History Table logging historical import runs with Source, Timestamp, Duration, File Count, and Success/Failure status.
+  - Created Mobile Import Sheet (`mobile_import_sheet.tsx`) on React Native / Expo supporting Camera Document Scan, Gallery Import, and Cloud Files.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Universal Import Hub & Connected Digital Life" section.
+
 - **Cross-Knowledge Intelligence & Global AI Workspace (Issue #047)**:
   - Re-architected `/copilot` into a full Global AI Workspace enabling multi-document reasoning over the user's entire digital vault.
   - Built `ScopeSelector` (`scope-selector.tsx`) for scoping queries to Entire Vault, Collections, Projects, Search Results, or Selected Multi-Files.

@@ -81,6 +81,21 @@ Declutr/
 
 ---
 
+## 📁 Universal Import Hub & Connected Digital Life (Issue #048)
+
+Declutr's Universal Import Hub brings together all of a user's digital information across cloud services, repos, productivity tools, mail, and local files:
+
+| Feature | Technical Implementation |
+|---|---|
+| 🌐 **Connected Services Grid** | Service connectors for Google Drive, Dropbox, OneDrive, iCloud, GitHub, Notion, Amazon S3, Gmail, Slack, and Local ZIP |
+| 🛡️ **Import Preview Modal** | Pre-import file count, estimated storage size, duplicate filter rules (Skip, Merge, Rename), and conflict resolution |
+| 📊 **Import Queue Telemetry** | Active import progress bars with pause, resume, and cancel controls |
+| 📜 **Import History Table** | Historical import logs detailing Source, Timestamp, Duration, File Count, and Success/Failure status |
+| 💡 **Smart Suggestions** | Proactive import alerts ("Google Drive connected, but Financials folder un-synced") |
+| 📱 **Mobile Quick Import** | React Native Expo import sheet (`mobile_import_sheet.tsx`) for Camera Document Scan, Gallery, and Cloud Files |
+
+---
+
 ## 🤖 Cross-Knowledge Intelligence & Global AI Workspace (Issue #047)
 
 Declutr's Global AI Workspace transforms single-document AI into a multi-file cross-knowledge reasoning engine:

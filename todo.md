@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 📁 Issue #048 — Universal Import Hub & Connected Digital Life
+- [x] Dedicated Universal Import Center (`app/import/page.tsx`) connecting cloud services, repos, productivity tools, mail, and local files
+- [x] Connected Services Grid (Google Drive, Dropbox, OneDrive, iCloud, GitHub, Notion, Amazon S3, Gmail, Slack, ZIP Archive)
+- [x] Import Preview Modal with pre-import file count, estimated storage size, duplicate filter rules (Skip, Merge, Rename), and conflict resolution
+- [x] Active Import Queue Telemetry with live progress bars and pause/resume/cancel controls
+- [x] Import History Table logging historical import runs with Source, Timestamp, Duration, File Count, and Success/Failure status
+- [x] Mobile Import Sheet component (`mobile_import_sheet.tsx`) on React Native / Expo for Camera Scan, Gallery, and Cloud Files
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🤖 Issue #047 — Cross-Knowledge Intelligence & Global AI Workspace
 - [x] Multi-document scope selector (`scope-selector.tsx`) for scoping queries to Entire Vault, Collections, Projects, Search Results, or Selected Multi-Files
 - [x] Verifiable citation cards (`citation-list.tsx`) displaying Document Name, Page/Section, Confidence Match %, and direct clickable jump links
