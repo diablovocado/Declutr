@@ -41,6 +41,18 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Enterprise Organizations, Multi-Tenancy & Administration (Issue #032)**:
+  - Created PostgreSQL database migration `database/migrations/028_create_organization_tables.sql` (`organizations`, `organization_members`, `organization_roles`, `organization_permissions`, `organization_groups`, `organization_group_members`, `organization_policies`, `organization_domains`, `workspace_memberships`, `sso_configurations`).
+  - Implemented domain models for `Organization`, `Workspace`, `OrganizationMember`, `OrganizationRole`, `OrganizationPermission`, `OrganizationGroup`, `OrganizationPolicy`, `SSOConfig`, and `OrganizationDirectory` (`backend/modules/organization/domain/organization.go`).
+  - Built Tenant Middleware (`backend/shared/middleware/tenant.go`) extracting `X-Organization-ID` headers/claims and enforcing multi-tenant data isolation.
+  - Built `OrganizationService` managing organization lifecycle, settings, workspaces (`PERSONAL`, `ORGANIZATION`, `DEPARTMENT`, `SHARED`, `ARCHIVED`), invitations, status changes, ownership transfer, team/department groups, policy enforcement, directory search, and SSO framework abstractions.
+  - Built `PermissionEngine` evaluating granular roles (`OWNER`, `ADMINISTRATOR`, `MANAGER`, `EDITOR`, `CONTRIBUTOR`, `VIEWER`, `GUEST`) and 10 granular permissions (`MANAGE_ORG`, `MANAGE_BILLING`, `MANAGE_USERS`, `MANAGE_VAULTS`, `MANAGE_AI`, `MANAGE_WORKFLOWS`, `MANAGE_INTEGRATIONS`, `MANAGE_SECURITY`, `MANAGE_AUDIT`, `VIEW_ANALYTICS`).
+  - Added 12 REST API endpoints (`/api/v1/organizations`, `/settings`, `/invite`, `/members`, `/members/status`, `/ownership/transfer`, `/roles`, `/groups`, `/workspaces`, `/policies`, `/sso/config`, `/directory`).
+  - Created Web UI Portal (`frontend/app/organization/page.tsx`, `frontend/features/organization/components/`) featuring `OrganizationSwitcher`, `OrganizationDashboardComponent`, `MemberManagementComponent`, `RoleEditorComponent`, `GroupManagementComponent`, `WorkspaceManagerComponent`, and `PolicyManagerComponent`.
+  - Created Mobile UI components (`frontend/declutr-mobile/features/organization/components/`): `OrganizationSwitcher.tsx`, `MemberList.tsx`, `WorkspaceList.tsx`, `OrganizationSettings.tsx`.
+  - Added comprehensive Go test suite (`organization_test.go`) validating multi-tenancy, tenant isolation, member invitations, RBAC permission evaluation, group inheritance, workspace classification, policy enforcement, and directory search.
+  - Created Enterprise Documentation suite (`docs/enterprise/`): `multi_tenant_architecture.md`, `organization_model.md`, `workspace_hierarchy.md`, `rbac_model.md`, `policy_engine.md`.
+
 - **Production Hardening, Observability & Performance Platform (Issue #031)**:
   - Created PostgreSQL database migration `database/migrations/027_production_hardening.sql` (`system_metrics`, `health_checks`, `worker_status`, `rate_limit_events`, `cache_statistics`, composite performance indexes, table partitioning strategy).
   - Implemented structured JSON logger with context correlation (`RequestID`, `CorrelationID`, `UserID`, `VaultID`, `SessionID`, `TraceID`, `SpanID`, latency, error code) and automatic secret redaction (`backend/shared/observability/observability.go`).

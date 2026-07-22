@@ -37,6 +37,9 @@ import (
 	notificationApp "github.com/diablovocado/declutr/modules/notification/application"
 	notificationRepository "github.com/diablovocado/declutr/modules/notification/repository"
 	notificationTransport "github.com/diablovocado/declutr/modules/notification/transport"
+	orgApp "github.com/diablovocado/declutr/modules/organization/application"
+	orgRepository "github.com/diablovocado/declutr/modules/organization/repository"
+	orgTransport "github.com/diablovocado/declutr/modules/organization/transport"
 	personaApp "github.com/diablovocado/declutr/modules/persona/application"
 	personaRepository "github.com/diablovocado/declutr/modules/persona/repository"
 	personaTransport "github.com/diablovocado/declutr/modules/persona/transport"
@@ -67,7 +70,7 @@ import (
 func main() {
 	cfg := config.LoadConfig()
 	logger := observability.InitLogger("declutr-backend", nil)
-	logger.Info(context.Background(), "Starting Declutr Production Backend Platform", map[string]interface{}{
+	logger.Info(context.Background(), "Starting Declutr Enterprise Production Backend Platform", map[string]interface{}{
 		"env":  cfg.Env,
 		"port": cfg.Port,
 	})
@@ -85,6 +88,30 @@ func main() {
 	}
 
 	mux := http.NewServeMux()
+
+	// Enterprise Organizations & Multi-Tenancy Module Initialization
+	orgRepo := orgRepository.NewInMemoryOrganizationRepository()
+	orgSvc := orgApp.NewOrganizationService(orgRepo)
+	orgAPI := orgTransport.NewOrganizationAPI(orgSvc)
+
+	mux.HandleFunc("/api/v1/organizations", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPost {
+			orgAPI.CreateOrganization(w, r)
+		} else {
+			orgAPI.ListOrganizations(w, r)
+		}
+	})
+	mux.HandleFunc("/api/v1/organizations/settings", orgAPI.ManageSettings)
+	mux.HandleFunc("/api/v1/organizations/invite", orgAPI.InviteMember)
+	mux.HandleFunc("/api/v1/organizations/members", orgAPI.ListMembers)
+	mux.HandleFunc("/api/v1/organizations/members/status", orgAPI.UpdateMemberStatus)
+	mux.HandleFunc("/api/v1/organizations/ownership/transfer", orgAPI.TransferOwnership)
+	mux.HandleFunc("/api/v1/organizations/roles", orgAPI.ManageRoles)
+	mux.HandleFunc("/api/v1/organizations/groups", orgAPI.ManageGroups)
+	mux.HandleFunc("/api/v1/organizations/workspaces", orgAPI.ManageWorkspaces)
+	mux.HandleFunc("/api/v1/organizations/policies", orgAPI.ManagePolicies)
+	mux.HandleFunc("/api/v1/organizations/sso/config", orgAPI.ManageSSO)
+	mux.HandleFunc("/api/v1/organizations/directory", orgAPI.GetDirectory)
 
 	// Diagnostic Health, Metrics, Readiness, Liveness, and Version Endpoints
 	mux.HandleFunc("/health", health.Handler)
@@ -489,12 +516,14 @@ func main() {
 	_ = sup.StartWorker(context.Background(), "w-workflow-1")
 	_ = sup.StartWorker(context.Background(), "w-sync-1")
 
-	// Apply Middlewares: Security Headers → Rate Limiter → Request Observability (Tracing & Logging)
-	handler := middleware.SecurityHeaders(
-		ratelimit.RateLimitMiddleware(ratelimit.GlobalPolicy, func(r *http.Request) string {
-			return ratelimit.ExtractIP(r)
-		})(
-			middleware.RequestObservability(mux),
+	// Apply Middlewares: Tenant Isolation → Security Headers → Rate Limiter → Request Observability
+	handler := middleware.TenantMiddleware(
+		middleware.SecurityHeaders(
+			ratelimit.RateLimitMiddleware(ratelimit.GlobalPolicy, func(r *http.Request) string {
+				return ratelimit.ExtractIP(r)
+			})(
+				middleware.RequestObservability(mux),
+			),
 		),
 	)
 
@@ -506,7 +535,7 @@ func main() {
 		IdleTimeout:  60 * time.Second,
 	}
 
-	log.Printf("Declutr Backend Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
+	log.Printf("Declutr Enterprise Backend Running on :%s (Environment: %s)", cfg.Port, cfg.Env)
 
 	if err := server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 		log.Fatalf("Server startup failed: %v", err)

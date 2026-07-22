@@ -1105,6 +1105,57 @@ Declutr's Production Hardening & Observability Platform prepares the codebase fo
 | `GET` | `/api/v1/admin/cache` | Cache hit rate, items count, and driver stats |
 | `GET` | `/api/v1/admin/traces` | Distributed trace spans log |
 
+---
+
+## 🏢 Enterprise Organizations, Multi-Tenancy & Administration
+
+Declutr's Enterprise Organization Platform transforms Declutr into a multi-tenant enterprise solution while maintaining complete backward compatibility for personal single-user accounts.
+
+> **Multi-Tenant Hierarchy**: `Platform` → `Organization` → `Workspace / Vault` → `Collections` → `Assets`
+
+### Enterprise Features & Architecture
+
+- **Tenant Isolation**: `TenantMiddleware` extracts `X-Organization-ID` context headers and enforces multi-tenant row-level boundary isolation (`backend/shared/middleware/tenant.go`).
+- **Organization & Workspaces**: Support for Organization Creation, Settings, Branding, Domains, Time Zones, and Workspaces (`PERSONAL`, `ORGANIZATION`, `DEPARTMENT`, `SHARED`, `ARCHIVED`).
+- **Membership Lifecycle**: Member invitations, status tracking (`ACTIVE`, `INVITED`, `SUSPENDED`, `DEACTIVATED`), and ownership transfers.
+- **RBAC & Granular Permissions**: Default system roles (`OWNER`, `ADMINISTRATOR`, `MANAGER`, `EDITOR`, `CONTRIBUTOR`, `VIEWER`, `GUEST`) + custom roles with 10 granular permissions (`MANAGE_ORG`, `MANAGE_BILLING`, `MANAGE_USERS`, `MANAGE_VAULTS`, `MANAGE_AI`, `MANAGE_WORKFLOWS`, `MANAGE_INTEGRATIONS`, `MANAGE_SECURITY`, `MANAGE_AUDIT`, `VIEW_ANALYTICS`).
+- **Teams & Groups**: Group creation for teams and departments with group-level permission inheritance.
+- **Enterprise Policy Engine**: Organization policies for Password Strength, Session Inactivity Timeout, MFA Requirement, External Sharing, Data Retention, AI Usage, and Workflow Restrictions.
+- **SSO Framework Abstraction**: Provider framework supporting SAML 2.0, OIDC, Azure AD, Google Workspace, and Okta.
+- **Web Enterprise Portal**: Next.js App router page (`/organization`) featuring `OrganizationSwitcher`, `OrganizationDashboardComponent`, `MemberManagementComponent`, `RoleEditorComponent`, `GroupManagementComponent`, `WorkspaceManagerComponent`, and `PolicyManagerComponent`.
+- **Mobile Integration**: React Native components (`OrganizationSwitcher`, `MemberList`, `WorkspaceList`, `OrganizationSettings`).
+
+### Database Schema (Migration 028)
+
+| Table | Purpose |
+|---|---|
+| `organizations` | Enterprise tenant entities, branding, domains, timezone, metadata |
+| `organization_members` | Organization directory, member status, joined timestamp |
+| `organization_roles` | RBAC role definitions and permission arrays |
+| `organization_groups` | Teams and departments with group member assignments |
+| `workspace_memberships` | Workspace vault assignments, types, and department mapping |
+| `organization_policies` | Organization-wide security and governance policy rules |
+| `sso_configurations` | Single Sign-On provider abstraction settings |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `POST` | `/api/v1/organizations` | Create new enterprise organization |
+| `GET` | `/api/v1/organizations` | List user organizations |
+| `GET`/`PUT` | `/api/v1/organizations/settings` | Get / Update organization settings and branding |
+| `POST` | `/api/v1/organizations/invite` | Invite new member to organization |
+| `GET` | `/api/v1/organizations/members` | List organization directory members |
+| `POST` | `/api/v1/organizations/members/status` | Suspend, deactivate, or activate member |
+| `POST` | `/api/v1/organizations/ownership/transfer` | Transfer organization ownership |
+| `GET`/`POST` | `/api/v1/organizations/roles` | List / Create RBAC roles & permissions |
+| `GET`/`POST` | `/api/v1/organizations/groups` | List / Create team & department groups |
+| `GET`/`POST` | `/api/v1/organizations/workspaces` | List / Create organization workspaces |
+| `GET`/`PUT` | `/api/v1/organizations/policies` | List / Configure security policies |
+| `GET`/`POST` | `/api/v1/organizations/sso/config` | Get / Configure SSO provider settings |
+| `GET` | `/api/v1/organizations/directory` | Enterprise search directory for members, teams, workspaces |
+
+
 
 
 
