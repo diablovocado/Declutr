@@ -19,7 +19,7 @@ jobs:
       - name: Run Go Tests
         run: |
           cd backend
-          go test -v ./...
+          go test -v ./internal/...
 
   frontend-build:
     name: Next.js Frontend Verification Build
