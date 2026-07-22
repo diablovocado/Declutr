@@ -41,6 +41,17 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Memory Engine & Knowledge Memory Foundation (Issue #018)**:
+  - Created PostgreSQL database migration `database/migrations/014_create_memory_tables.sql` (`memories`, `memory_sources`, `memory_scores`, `memory_events`, `memory_history`, `memory_settings`, `memory_clusters`).
+  - Implemented domain models for `Memory`, `MemorySource`, `MemoryScore`, `MemoryEvent`, `MemoryHistory`, `MemorySettings`, `MemoryCluster`, `MemoryDetail`, `MemoryStats`, `MemoryFormationRequest`.
+  - Built `MemoryService` supporting: automatic memory formation from Context, Persona, Entities, and Assets; composite scoring (`0.4×Importance + 0.3×Recency + 0.2×LogFreq + 0.1×Confidence`); configurable exponential decay (`e^(−λ × days)`); soft auto-archiving/forgetting thresholds; incremental consolidation into topic clusters; duplicate merging; full lifecycle tracking.
+  - Built `MemoryEngine` orchestrating incremental vault processing (Decay → Consolidation → Promotion/Demotion) without full rebuilds.
+  - Registered `MemoryWorker` into processing pipeline: `Context Engine` ↓ `Persona Engine` ↓ `Memory Formation` ↓ `Knowledge Memory`.
+  - Added 10 REST API endpoints (`GET/DELETE /memory`, `/memory/timeline`, `/memory/detail`, `/memory/refresh`, `/memory/pin`, `/memory/archive`, `/memory/stats`, `/memory/reset`, `GET/PUT /memory/settings`).
+  - Created Web UI module (`frontend/features/memory/components/`) featuring `MemoryDashboard`, `TimelineView`, `PinnedMemories`, `MemoryExplorer`, and Next.js page route (`/memory`).
+  - Created Mobile UI components (`frontend/declutr-mobile/features/memory/components/`): `MemoryFeed.tsx`, `MemoryTimeline.tsx`, `PinnedMemories.tsx`, `MemoryDetails.tsx`.
+  - Added comprehensive Go test suite (`memory_test.go`) — 10/10 tests passing: Creation, Consolidation, Decay, Timeline, Pinning, Retrieval, Reset, Stats, Context Memory Formation, Persona Memory Formation.
+
 - **Reverse Persona Engine (Issue #017)**:
   - Created PostgreSQL database migration `database/migrations/013_create_persona_tables.sql` (`persona_profiles`, `persona_signals`, `persona_scores`, `persona_interests`, `persona_recommendations`, `persona_settings`, `persona_history`).
   - Implemented domain models for `PersonaProfile`, `PersonaSignal`, `PersonaScore`, `PersonaInterest`, `PersonaRecommendation`, `PersonaSettings`, `PersonaHistory`, `PersonaExport`, `PersonaKnowledgeModel`.

@@ -10,6 +10,9 @@ import (
 	contextApp "github.com/diablovocado/declutr/modules/context/application"
 	contextRepository "github.com/diablovocado/declutr/modules/context/repository"
 	contextTransport "github.com/diablovocado/declutr/modules/context/transport"
+	memoryApp "github.com/diablovocado/declutr/modules/memory/application"
+	memoryRepository "github.com/diablovocado/declutr/modules/memory/repository"
+	memoryTransport "github.com/diablovocado/declutr/modules/memory/transport"
 	personaApp "github.com/diablovocado/declutr/modules/persona/application"
 	personaRepository "github.com/diablovocado/declutr/modules/persona/repository"
 	personaTransport "github.com/diablovocado/declutr/modules/persona/transport"
@@ -89,6 +92,36 @@ func main() {
 	http.HandleFunc("/api/v1/persona/export", personaAPI.ExportPersona)
 	http.HandleFunc("/api/v1/persona/signal", personaAPI.RecordSignal)
 	http.HandleFunc("/api/v1/persona/history", personaAPI.GetHistory)
+
+	// Memory Engine Module initialization
+	// Pipeline: Context → Persona → Memory Formation → Knowledge Memory
+	memoryRepo := memoryRepository.NewInMemoryMemoryRepository()
+	memorySvc := memoryApp.NewMemoryService(memoryRepo)
+	memoryEngine := memoryApp.NewMemoryEngine(memorySvc)
+	_ = memoryEngine // available for worker dispatch
+	memoryAPI := memoryTransport.NewMemoryAPI(memorySvc)
+
+	http.HandleFunc("/api/v1/memory", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodDelete {
+			memoryAPI.DeleteMemory(w, r)
+		} else {
+			memoryAPI.GetMemories(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/memory/timeline", memoryAPI.GetTimeline)
+	http.HandleFunc("/api/v1/memory/detail", memoryAPI.GetMemoryDetail)
+	http.HandleFunc("/api/v1/memory/refresh", memoryAPI.RefreshMemory)
+	http.HandleFunc("/api/v1/memory/pin", memoryAPI.PinMemory)
+	http.HandleFunc("/api/v1/memory/archive", memoryAPI.ArchiveMemory)
+	http.HandleFunc("/api/v1/memory/stats", memoryAPI.GetStats)
+	http.HandleFunc("/api/v1/memory/reset", memoryAPI.ResetMemory)
+	http.HandleFunc("/api/v1/memory/settings", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut {
+			memoryAPI.UpdateSettings(w, r)
+		} else {
+			memoryAPI.GetSettings(w, r)
+		}
+	})
 
 	log.Println("Declutr Backend Running on :8080")
 

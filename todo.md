@@ -103,9 +103,20 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - [x] Privacy controls: pause, disable signal types, reset, export, full GDPR deletion
   - [x] Web UI: PersonaDashboard, LearningInsights, RecommendationsPanel, InterestOverview, SignalSettings, PrivacyControls, /persona page route
   - [x] Mobile UI: PersonaDashboard, RecommendationsCard, PrivacyControls, LearningInsights
-  - [x] 9/9 tests passing
+  - [x] Memory Engine & Knowledge Memory Foundation:
+  - [x] Database migration `014_create_memory_tables.sql` (7 tables: memories, memory_sources, memory_scores, memory_events, memory_history, memory_settings, memory_clusters)
+  - [x] 9 memory types (SHORT_TERM, WORKING, LONG_TERM, ARCHIVED, FORGOTTEN, PINNED, GENERATED, USER, AI)
+  - [x] Dynamic composite scoring (`0.4×Importance + 0.3×Recency + 0.2×LogFreq + 0.1×Confidence`)
+  - [x] Exponential recency decay (`e^(−λ × days)`) with configurable auto-archive and auto-forget thresholds
+  - [x] Incremental consolidation into topic clusters and duplicate merging
+  - [x] MemoryWorker pipeline registration (Context Engine → Persona Engine → Memory Formation → Knowledge Memory)
+  - [x] 10 REST API endpoints (memories, timeline, detail, refresh, pin, archive, stats, reset, delete, settings)
+  - [x] Web UI: MemoryDashboard, TimelineView, PinnedMemories, MemoryExplorer, `/memory` page route
+  - [x] Mobile UI: MemoryFeed, MemoryTimeline, PinnedMemories, MemoryDetails
+  - [x] 10/10 Go tests passing
 
 ---
+
 
 ## 🛡️ Phase 6: Behavioral Security, Hardening & Audit
 - [ ] Behavioral Authentication Engine:

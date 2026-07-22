@@ -404,3 +404,69 @@ The engine infers:
 - ✅ All data is vault-scoped — never shared, never sold
 - ✅ Every decision is fully explainable
 - ✅ No third-party analytics
+
+---
+
+## 🧠 Memory Engine & Knowledge Memory Foundation
+
+The Memory Engine is the heart of Declutr. It transforms isolated assets into persistent knowledge. Unlike a simple vector database, knowledge memory **evolves over time** — remembering what matters, strengthening recurring patterns, and fading stale data.
+
+> **Pipeline position**: `Upload` → `Metadata` → `Content Extraction` → `AI Understanding` → `Entities` → `Relationships` → `Context` → `Reverse Persona` → **Memory Engine** → `Knowledge Memory`
+
+### Memory Types
+
+- `SHORT_TERM` — Recently formed memories with low frequency
+- `WORKING` — Active memories being accessed or updated
+- `LONG_TERM` — High-strength, consolidated persistent knowledge
+- `PINNED` — User-flagged permanent memories (immune to decay)
+- `ARCHIVED` — Faded memories below the archive threshold
+- `FORGOTTEN` — Stale memories below the forget threshold
+- `GENERATED` / `USER` / `AI` — Source attribution types
+
+### Composite Scoring & Configurable Decay
+
+Memory strength is computed dynamically:
+
+```
+MemoryStrength = 0.4 × Importance + 0.3 × Recency + 0.2 × log(1 + Frequency)/5 + 0.1 × Confidence
+Recency = e^(−decayRate × daysSinceLastSeen)
+```
+
+- **Exponential decay**: Stale memories fade naturally unless accessed or pinned.
+- **Auto-Archiving**: Memories with strength < `autoArchiveThreshold` (0.10) become `ARCHIVED`.
+- **Auto-Forgetting**: Memories with strength < `autoForgetThreshold` (0.01) become `FORGOTTEN`.
+- **Never permanently deleted automatically**: Soft transition only; users retain full control.
+
+### Incremental Memory Consolidation
+
+- Automatically groups memories into topic clusters.
+- Merges duplicates when matching memories are re-encountered.
+- Incremental updates only — never rebuilds the entire memory graph.
+
+### Database Schema (Migration 014)
+
+| Table | Purpose |
+|---|---|
+| `memories` | Core memory object (type, strength, decay, pin status) |
+| `memory_sources` | Contributing assets, entities, contexts, persona signals |
+| `memory_scores` | Point-in-time strength audit snapshots |
+| `memory_events` | Immutable lifecycle events (formed, strengthened, decayed, pinned, archived) |
+| `memory_history` | Audit snapshots for state changes |
+| `memory_settings` | Per-vault memory configuration & thresholds |
+| `memory_clusters` | Groupings of related memories by topic |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/memory` | Retrieve strongest or filtered memories |
+| `GET` | `/api/v1/memory/timeline` | Get memories in chronological order |
+| `GET` | `/api/v1/memory/detail` | Get full memory detail (sources, scores, events) |
+| `POST` | `/api/v1/memory/refresh` | Trigger decay & consolidation cycle |
+| `POST` | `/api/v1/memory/pin` | Pin memory (immune to decay) |
+| `POST` | `/api/v1/memory/archive` | Archive a memory |
+| `GET` | `/api/v1/memory/stats` | Vault memory statistics & clusters |
+| `POST` | `/api/v1/memory/reset` | Reset memory model for vault |
+| `DELETE` | `/api/v1/memory` | Permanently delete a memory |
+| `GET` / `PUT` | `/api/v1/memory/settings` | Get / update memory settings |
+
