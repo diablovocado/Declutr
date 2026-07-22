@@ -6,6 +6,7 @@ import { Container } from "./layout-primitives";
 import { CommandPalette } from "../command-palette/command-palette";
 import { ShortcutsModal } from "../command-palette/shortcuts-modal";
 import { WorkspaceContextProvider } from "../../shared/providers/workspace-context-provider";
+import { RealtimeProvider } from "../../shared/providers/realtime-provider";
 import { ContextBar } from "./context-bar";
 import { SmartSidebar } from "./smart-sidebar";
 import { ContextSwitcherModal } from "./context-switcher-modal";
@@ -102,8 +103,10 @@ function InnerPageShell({
 
 export function PageShell(props: PageShellProps) {
   return (
-    <WorkspaceContextProvider>
-      <InnerPageShell {...props} />
-    </WorkspaceContextProvider>
+    <RealtimeProvider>
+      <WorkspaceContextProvider>
+        <InnerPageShell {...props} />
+      </WorkspaceContextProvider>
+    </RealtimeProvider>
   );
 }

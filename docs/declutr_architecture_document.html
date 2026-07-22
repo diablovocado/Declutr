@@ -106,6 +106,7 @@
   </div>
   <div class="section-label">Overview</div>
   <a href="#overview">Introduction</a>
+  <a href="#realtime-platform">Real-Time Platform & Presence</a>
   <a href="#context-workspace">Context-Aware Workspace</a>
   <a href="#command-palette">Command Palette & Hotkeys</a>
   <a href="#dashboard-hub">Dashboard & Intelligence Hub</a>
@@ -163,6 +164,27 @@
       <tr><td>Storage</td><td>Cloudflare R2 / S3-compatible</td></tr>
       <tr><td>Auth</td><td>SRP (Secure Remote Password) — zero-knowledge</td></tr>
     </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════ REALTIME PLATFORM -->
+  <section id="realtime-platform">
+    <h2>Real-Time Platform, Live Updates & Presence</h2>
+    <p class="subtitle">Unified real-time event layer, WebSocket/SSE transport fallback, presence tracking engine, and accessible ARIA live regions.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="card-title">📡 Real-Time Event Engine</div>
+        <div class="card-desc"><code>RealtimeService</code> handling connection status, heartbeat, exponential reconnect backoff, and event broadcasting.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🟢 Presence Framework</div>
+        <div class="card-desc"><code>PresenceService</code> tracking online/idle status, device info, active session heartbeat, and vault sandbox state.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔊 Accessible ARIA Live Regions</div>
+        <div class="card-desc">Hidden ARIA live region (<code>aria-live="polite"</code>) delivering screen-reader announcements for background jobs.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ═══════════════════════════════════════════════ CONTEXT WORKSPACE -->

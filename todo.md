@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 📡 Issue #046 — Real-Time Platform, Live Updates & Presence
+- [x] Unified real-time event layer (`realtime-service.ts`) with WebSocket/SSE transport fallback, exponential backoff reconnection, heartbeat pinging, and typed event emitter
+- [x] Presence tracking framework (`presence-service.ts`) managing online/idle/offline user status, active device info, and session heartbeat telemetry
+- [x] Global `RealtimeProvider` (`realtime-provider.tsx`) exposing `useRealtime()` hook and ARIA live region (`<div aria-live="polite">`) for accessible live announcements
+- [x] Live updates on Dashboard (`/dashboard`), Upload Progress (`upload-modal.tsx`), and Natural Search (`/search`)
+- [x] AI Copilot Chat token streaming responses (`/copilot`) with typing indicators and cancellation
+- [x] Mobile Real-Time client (`mobile_realtime_service.ts`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🧭 Issue #045 — Context-Aware Workspace & Intelligent Navigation
 - [x] Global Workspace Context Provider (`workspace-context-provider.tsx`) tracking active vault, collection, project, document, chat, search, and recent contexts stack
 - [x] Persistent Context Bar (`context-bar.tsx`) displaying interactive breadcrumb path (`Home > Vault > Collection > Project > Document`), active AI context badge, Quick Smart Actions dropdown, and Context Switcher trigger (`⌘J`)

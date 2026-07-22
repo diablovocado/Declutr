@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Real-Time Platform, Live Updates & Presence (Issue #046)**:
+  - Built a unified real-time event layer (`realtime-service.ts`) with WebSocket and SSE transport fallback, exponential backoff reconnection, heartbeat pinging, and typed event emitter.
+  - Implemented presence tracking framework (`presence-service.ts`) managing online/idle/offline user status, active device info, and session heartbeat telemetry.
+  - Created `RealtimeProvider` (`realtime-provider.tsx`) exposing `useRealtime()` hook and ARIA live region (`<div aria-live="polite">`) for accessible live announcements.
+  - Connected real-time updates to Dashboard (`/dashboard`), Upload Modal (`upload-modal.tsx`), and Natural Search (`/search`).
+  - Added simulated token-by-token streaming responses in AI Copilot Chat (`/copilot`) with active typing indicators and cancellation handlers.
+  - Built Mobile Real-Time client (`mobile_realtime_service.ts`) for React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Real-Time Platform, Live Updates & Presence" section.
+
 - **Context-Aware Workspace & Intelligent Navigation (Issue #045)**:
   - Transformed Declutr into a context-aware workspace inspired by Cursor IDE, Arc Browser, Notion, Linear, Raycast, and Apple Photos.
   - Implemented `WorkspaceContextProvider` (`workspace-context-provider.tsx`) managing `activeVault`, `activeCollection`, `activeProject`, `activeDocument`, `activeChat`, `activeSearch`, and `recentContexts` stack with one-click return.

@@ -81,6 +81,21 @@ Declutr/
 
 ---
 
+## 📡 Real-Time Platform, Live Updates & Presence (Issue #046)
+
+Declutr's unified real-time event layer eliminates page refreshes and delivers zero-latency state synchronization:
+
+| Capability | Technical Implementation |
+|---|---|
+| ⚡ **Real-Time Event Engine** | `RealtimeService` managing WebSocket/SSE transport fallback, exponential backoff reconnection, heartbeat pinging, and typed event emitter |
+| 🟢 **Presence Framework** | `PresenceService` tracking online/idle/offline status, active device info, session heartbeat, and vault sandbox telemetry |
+| 🔊 **Accessible ARIA Regions** | Hidden ARIA live region (`<div aria-live="polite">`) announcing critical processing events to screen readers |
+| 📊 **Live Dashboard Updates** | Auto-updates processing queue progress, storage telemetry, and daily activity timeline without page refreshes |
+| 💬 **AI Token Streaming** | Simulated token-by-token streaming response in AI Copilot Chat with active typing indicator and cancellation |
+| 📱 **Mobile Real-Time** | `mobileRealtimeService` handling connection state and live processing updates on React Native Expo |
+
+---
+
 ## 🧭 Context-Aware Workspace & Intelligent Navigation (Issue #045)
 
 Declutr automatically tracks, surfs, and adapts to your active working context across every page:
