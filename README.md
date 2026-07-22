@@ -81,6 +81,24 @@ Declutr/
 
 ---
 
+## 🌟 Dashboard & Personal Intelligence Hub (Issue #043)
+
+Declutr's Home Dashboard (`/dashboard`) is a living Personal Intelligence Hub designed for daily user retention and calm clarity:
+
+| Widget Component | Capability & Purpose |
+|---|---|
+| 🌅 **Greeting Header** | Time-of-day greeting, active date banner, zero-knowledge vault status badge, and onboarding walkthrough launcher |
+| ⚡ **Quick Actions Bar** | One-tap pills for Upload File, Scan Document, Ask AI, Search Everything, Create Collection, New Folder, Import Files, Create Workflow |
+| 🔍 **Smart Search Hero** | Prominent natural language search bar with autocomplete suggestions, recent search chips, and `⌘K` keyboard shortcut |
+| 💡 **AI Intelligence Insights** | Explainable proactive recommendations for documents needing review, expiring passports/IDs, missing metadata tags, and search recommendations |
+| 📂 **Continue Working** | Unified feed of recently opened assets, recent AI copilot conversations, and active collections |
+| 📌 **Pinned Content & Favorites** | User-pinned folders, collections, projects, files, AI chats, and saved searches with drag/pin management |
+| 🕒 **Daily Activity Timeline** | Chronological timeline tracking file uploads, AI processing completion, vector indexing, search queries, and copilot sessions |
+| 🎛️ **Dashboard Customizer** | Interactive layout customizer allowing users to reorder, pin, hide, or reset home widgets with persistent local preferences |
+| 📱 **Mobile Mirror** | React Native Expo home screen (`mobile/app/(tabs)/index.tsx`) mirroring exact dashboard features |
+
+---
+
 ## 🎨 Unified Design System & Product Experience (Issue #042)
 
 Declutr adheres to a unified design language inspired by Linear, Raycast, Arc Browser, and Vercel:

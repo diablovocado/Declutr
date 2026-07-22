@@ -29,6 +29,21 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Home Dashboard, Daily Feed & Personal Intelligence Hub (Issue #043)**:
+  - Transformed the home dashboard (`/dashboard`) into a calm, high-retention Personal Intelligence Hub inspired by Linear, Notion Home, Arc Browser, Apple Photos, Readwise, and Raycast.
+  - Built a modular widget system in `frontend/features/dashboard/components/`:
+    - `greeting-header.tsx`: Time-of-day greeting, active date banner, zero-knowledge vault status badge, and walkthrough launcher.
+    - `quick-actions-bar.tsx`: Quick action pills for Upload File, Scan Document, Ask AI, Search Everything, Create Collection, New Folder, Import Files, Create Workflow.
+    - `smart-search-hero.tsx`: Prominent natural language search bar with autocomplete suggestions, recent search chips, and `⌘K` keyboard shortcut.
+    - `ai-insights-widget.tsx`: Explainable proactive recommendations for documents needing review, expiring passports/IDs, missing metadata tags, and search recommendations.
+    - `continue-working-widget.tsx`: Unified feed of recently opened assets, recent AI copilot conversations, and active collections.
+    - `daily-activity-feed.tsx`: Chronological timeline tracking file uploads, AI processing completion, vector indexing, search queries, and copilot sessions.
+    - `pinned-content-widget.tsx`: User-pinned folders, collections, projects, files, AI chats, and saved searches with drag/pin management.
+    - `dashboard-customizer.tsx`: Interactive layout customizer allowing users to reorder, pin, hide, or reset home widgets with persistent local preferences.
+    - `onboarding-walkthrough.tsx`: Interactive first-time user tour with sample AI prompts and upload guidance.
+  - Mirrored Personal Intelligence Hub on React Native / Expo mobile app (`mobile/app/(tabs)/index.tsx`).
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Dashboard & Personal Intelligence Hub" section.
+
 - **Unified Design System & Premium Product Experience (Issue #042)**:
   - Transformed Declutr into a world-class, premium product experience inspired by Linear, Raycast, Arc Browser, Notion, Vercel, and Apple.
   - Established centralized design tokens in `frontend/app/globals.css` and `mobile/shared/constants/theme.ts` defining color palettes (Slate neutral `#090d16`, Emerald brand `#10b981`, Indigo secondary `#6366f1`), typography scale, border radii, drop shadows, focus ring outlines, and accessibility reduced-motion rules.
