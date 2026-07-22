@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## 📜 Version History, Snapshots & Recovery Center (Issue #053)
+
+Declutr ensures platform reliability and data trustworthiness through transparent revision tracking, visual diffs, manual snapshots, and soft-delete recovery:
+
+| Component | Technical Implementation |
+|---|---|
+| 🗑️ **Recycle Bin (Soft Delete)** | Soft-deleted files retained for 30 days before auto-purge with instant Restore and Permanent Delete controls |
+| 📷 **Vault Snapshots Manager** | Create manual restore points ("Pre-AI Tagging", "Pre-Import State") with one-click rollback (`snapshot-manager.tsx`) |
+| 🔍 **Visual Diff Viewer** | Side-by-side comparison for text additions/deletions, metadata edits, and AI summary revisions (`version-diff-viewer.tsx`) |
+| 📜 **Revision History Stream** | Complete audit trail of resource revisions (v1 ➔ v2 ➔ v3) with change rationale (`version-history-stream.tsx`) |
+| 📱 **Mobile Recovery Sheet** | React Native Expo sheet (`mobile-versioning-sheet.tsx`) for Recycle Bin management and file restoration |
+
+---
+
 ## 🔒 Secure Collaboration & Shared Workspaces (Issue #052)
 
 Declutr enables safe knowledge sharing, role-based access controls, inline document review, and lightweight signoffs while maintaining zero-trust privacy:

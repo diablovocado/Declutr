@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 📜 Issue #053 — Version History, Snapshots & Recovery Center
+- [x] Dedicated Recovery Center (`app/versioning/page.tsx`) ensuring platform reliability and transparent change tracking
+- [x] Recycle Bin managing soft-deleted items with 30-day auto purge timers, instant Restore, and Permanent Delete controls
+- [x] Snapshot Manager (`snapshot-manager.tsx`) for creating manual restore points ("Pre-AI Tagging", "Pre-Import State") with one-click rollback
+- [x] Visual Diff Viewer (`version-diff-viewer.tsx`) for side-by-side comparison of text, metadata, and AI summary edits
+- [x] Revision History Stream (`version-history-stream.tsx`) tracking resource revisions (v1 ➔ v2 ➔ v3) with change rationale
+- [x] Mobile Versioning Sheet component (`mobile-versioning-sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🔒 Issue #052 — Secure Collaboration & Shared Workspaces
 - [x] Dedicated Collaboration Hub (`app/collaboration/page.tsx`) enabling safe knowledge sharing around files, projects, and AI conversations
 - [x] Share Access Control Modal (`share-access-modal.tsx`) for inviting collaborators, setting roles (Owner, Editor, Commenter, Viewer), link passwords, and revoking access

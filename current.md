@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Version History, Snapshots & Recovery Center (Issue #053)**:
+  - Built dedicated Recovery Center (`app/versioning/page.tsx`) ensuring complete platform reliability and transparent change tracking.
+  - Implemented Recycle Bin managing soft-deleted items with 30-day auto purge timers, instant Restore, and Permanent Delete controls.
+  - Implemented `SnapshotManager` (`snapshot-manager.tsx`) for creating manual restore points ("Pre-AI Tagging", "Pre-Import State") with one-click rollback.
+  - Implemented `VersionDiffViewer` (`version-diff-viewer.tsx`) for visual side-by-side comparison of text, metadata, and AI summary edits.
+  - Implemented `VersionHistoryStream` (`version-history-stream.tsx`) tracking resource revisions (v1 ➔ v2 ➔ v3) with change rationale.
+  - Created Mobile Versioning Sheet (`mobile-versioning-sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Version History, Snapshots & Recovery Center" section.
+
 - **Secure Collaboration & Shared Workspaces (Issue #052)**:
   - Built dedicated Collaboration Hub (`app/collaboration/page.tsx`) enabling safe knowledge sharing, role-based access control, document discussions, and signoff workflows.
   - Implemented `ShareAccessModal` (`share-access-modal.tsx`) inviting collaborators by email/username, setting roles (Owner, Editor, Commenter, Viewer), generating password-protected links, and revoking access.
