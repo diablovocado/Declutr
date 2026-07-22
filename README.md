@@ -81,6 +81,21 @@ Declutr/
 
 ---
 
+## 🏥 Knowledge Management Center & Data Health (Issue #049)
+
+Declutr's Knowledge Health Center helps users maintain a clean, trustworthy, and well-organized digital vault as it scales:
+
+| Feature | Technical Implementation |
+|---|---|
+| 📊 **Knowledge Health Score (92/100)** | Health score calculator evaluating Metadata Completeness (95%), Organization Rate (90%), Low Duplicate Rate (98%), Processing Success (99%), and Search Readiness (100%) |
+| 👯 **Duplicate File Manager** | Detection of exact duplicates, near duplicates, and versioned files with Merge, Keep Both, or Delete controls |
+| 🏷️ **AI Metadata Review** | Suggestion cards displaying AI confidence % (94%) with Accept, Edit, and Reject actions |
+| 📂 **Uncategorized Item Manager** | Identifies files lacking tags/collections with one-click smart organization recommendations |
+| 🧹 **Bulk Cleanup Tools** | Bulk Tagging Engine and Bulk Archive/Purge for temporary documents older than 90 days |
+| 📱 **Mobile Health Summary** | React Native Expo health sheet (`mobile_health_sheet.tsx`) displaying score and duplicate review |
+
+---
+
 ## 📁 Universal Import Hub & Connected Digital Life (Issue #048)
 
 Declutr's Universal Import Hub brings together all of a user's digital information across cloud services, repos, productivity tools, mail, and local files:

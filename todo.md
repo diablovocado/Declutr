@@ -5,6 +5,18 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🏥 Issue #049 — Knowledge Management Center & Data Health
+- [x] Dedicated Knowledge Health Center (`app/health/page.tsx`) helping users maintain a clean, trustworthy digital vault
+- [x] Knowledge Health Score Calculator (92/100) evaluating Metadata Completeness, Organization Rate, Duplicate Rate, Processing Success, and Search Readiness
+- [x] Duplicate File Manager listing exact, near, and versioned duplicate file pairs with Merge, Keep Both, or Delete controls
+- [x] AI Metadata Review Flow displaying suggestion cards with AI confidence % (94%) with Accept, Edit, or Reject actions
+- [x] Uncategorized Item Manager identifying files lacking tags/collections with one-click smart organization suggestions
+- [x] Bulk Cleanup Tools (Bulk Tagging Engine and Bulk Archive/Purge for temporary files)
+- [x] Mobile Health Summary (`mobile_health_sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 📁 Issue #048 — Universal Import Hub & Connected Digital Life
 - [x] Dedicated Universal Import Center (`app/import/page.tsx`) connecting cloud services, repos, productivity tools, mail, and local files
 - [x] Connected Services Grid (Google Drive, Dropbox, OneDrive, iCloud, GitHub, Notion, Amazon S3, Gmail, Slack, ZIP Archive)
