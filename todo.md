@@ -5,6 +5,16 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🔒 Issue #052 — Secure Collaboration & Shared Workspaces
+- [x] Dedicated Collaboration Hub (`app/collaboration/page.tsx`) enabling safe knowledge sharing around files, projects, and AI conversations
+- [x] Share Access Control Modal (`share-access-modal.tsx`) for inviting collaborators, setting roles (Owner, Editor, Commenter, Viewer), link passwords, and revoking access
+- [x] Inline Comment & Discussion Panel (`comment-review-panel.tsx`) with @mentions and resolved toggles
+- [x] Approval Workflow Tracker (`approval-tracker.tsx`) for document signoff requests with Approve and Request Revision controls
+- [x] Mobile Collaboration Sheet component (`mobile-collaboration-sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🎯 Issue #051 — Goals, Tasks & AI Action Center
 - [x] Dedicated AI Action Center (`app/actions/page.tsx`) transforming Declutr into an execution platform
 - [x] Proactive AI recommendations (`ai-suggestion-card.tsx`) emerging naturally from documents, AI insights, and timeline events

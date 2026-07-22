@@ -29,6 +29,14 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Secure Collaboration & Shared Workspaces (Issue #052)**:
+  - Built dedicated Collaboration Hub (`app/collaboration/page.tsx`) enabling safe knowledge sharing, role-based access control, document discussions, and signoff workflows.
+  - Implemented `ShareAccessModal` (`share-access-modal.tsx`) inviting collaborators by email/username, setting roles (Owner, Editor, Commenter, Viewer), generating password-protected links, and revoking access.
+  - Implemented `CommentReviewPanel` (`comment-review-panel.tsx`) supporting inline comment threads for files, AI responses, and tasks with @mentions and resolved toggles.
+  - Implemented `ApprovalTracker` (`approval-tracker.tsx`) tracking document signoffs ("Approve Tax Contract 2025") with Approve and Request Revision controls.
+  - Created Mobile Collaboration Sheet (`mobile-collaboration-sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Secure Collaboration & Shared Workspaces" section.
+
 - **Goals, Tasks & AI Action Center (Issue #051)**:
   - Built dedicated Action Center (`app/actions/page.tsx`) transforming Declutr into an execution platform where tasks emerge naturally from documents, AI insights, and timeline events.
   - Implemented `AISuggestionCard` (`ai-suggestion-card.tsx`) displaying proactive AI action recommendations ("Passport expires in 6 months", "3 Unpaid Invoices") with Accept and Dismiss controls.

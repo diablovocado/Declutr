@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## 🔒 Secure Collaboration & Shared Workspaces (Issue #052)
+
+Declutr enables safe knowledge sharing, role-based access controls, inline document review, and lightweight signoffs while maintaining zero-trust privacy:
+
+| Component | Technical Implementation |
+|---|---|
+| 🔑 **Share Access Control Modal** | Invite collaborators by email/username, grant roles (Owner, Editor, Commenter, Viewer), configure expiration dates, generate password-protected links (`share-access-modal.tsx`) |
+| 💬 **Comment & Discussion Panel** | Inline comment threads for files, AI responses, and tasks with @mentions and resolved toggles (`comment-review-panel.tsx`) |
+| 🛡️ **Approval Workflow Tracker** | Document signoff requests ("Approve Tax Contract 2025", "Invoice Approval") with Approve and Request Revision controls (`approval-tracker.tsx`) |
+| 👥 **Shared Workspaces Hub** | Shared With Me & Shared By Me views for Projects, Collections, and Vault Documents |
+| 📱 **Mobile Collaboration Sheet** | React Native Expo collaboration sheet (`mobile-collaboration-sheet.tsx`) for shared items and comments |
+
+---
+
 ## 🎯 Goals, Tasks & AI Action Center (Issue #051)
 
 Declutr transforms from a knowledge platform into an execution platform where tasks naturally emerge from documents, AI insights, and timeline events:
