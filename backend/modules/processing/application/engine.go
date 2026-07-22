@@ -95,6 +95,10 @@ func (e *DefaultProcessingEngine) pollAndDispatch(ctx context.Context) {
 	jobTypes := []domain.JobType{
 		domain.TypeMetadataExtraction, 
 		domain.TypeOCR,
+		domain.TypeEntityExtraction,
+		domain.TypeRelationship,
+		domain.TypeContextDetection,
+		domain.TypeIntentAnalysis,
 		domain.TypeEmbeddingGen,
 	}
 

@@ -102,6 +102,40 @@ Declutr shifts digital storage from plain folder trees to an **Intelligent Perso
 
 ---
 
+## 🧭 Context & Intent Engine
+
+Declutr's **Context & Intent Engine** is a core differentiator that understands **WHY** assets exist together without requiring users to manually organize or create folders.
+
+### 1. Processing Pipeline
+```
+Upload ➔ Metadata ➔ Content Extraction ➔ AI Understanding ➔ Entities ➔ Relationships ➔ Context & Intent Engine ➔ Context Graph
+```
+
+### 2. Context Model
+Dynamic, zero-manual creation contexts scoped to the user's Vault:
+- **Travel / Vacations** (*Japan Vacation*, *European Tour*)
+- **Financial & Property** (*Buying a Car*, *Home Purchase*, *Tax Filing 2025*)
+- **Health & Medical** (*Medical Treatment*, *Cardiology Consultation*)
+- **Education & Growth** (*University Admission*, *Stanford Application*)
+- **Legal & Administrative** (*Visa Application*, *Lease Agreement*)
+
+### 3. Intent Model
+Distinguishes the real-world utility of assets across 12 canonical intent dimensions:
+`Travel`, `Finance`, `Health`, `Legal`, `Identity`, `Education`, `Business`, `Shopping`, `Personal`, `Entertainment`, `Research`, `Knowledge`.
+
+### 4. Automatic Event Detection
+Identifies key events within context timelines:
+`Trip`, `Meeting`, `Purchase`, `Hospital Visit`, `Flight`, `Conference`, `Contract Signing`, `Birthday`, `Anniversary`, `Interview`.
+
+### 5. Structured AI Prediction & Audit
+Every prediction output includes:
+- **Confidence Score** (probabilistic thresholding)
+- **Evidence** (extracted document text snippets & entity overlap)
+- **Reasoning** (LLM inference rationale)
+- **Prompt Versioning** (engine version audit logs)
+
+---
+
 ## 📂 Monorepo Repository Structure
 
 ```

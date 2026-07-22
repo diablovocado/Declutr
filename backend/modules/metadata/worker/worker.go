@@ -3,6 +3,7 @@ package worker
 import (
 	"context"
 	"log"
+	"strings"
 
 	"github.com/diablovocado/declutr/modules/metadata/application"
 	processingDomain "github.com/diablovocado/declutr/modules/processing/domain"
@@ -57,6 +58,3 @@ func (w *MetadataExtractionWorker) ProcessJob(ctx context.Context, job *processi
 	log.Printf("Successfully extracted metadata for asset %s", job.AssetID)
 	return nil
 }
-
-// Dummy strings package for the stub above
-import "strings"

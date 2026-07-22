@@ -72,10 +72,16 @@ This document tracks the comprehensive roadmap and action items to complete the 
 ## 🔗 Phase 4: AI Context, Intent & Relationships
 - [x] AI Analysis & Understanding Engine (Provider Abstraction, Prompt Manager, Structured JSON Output)
 - [x] Database Schema: Relational tables
-  - Add tables for `relationships`
+  - Add tables for `relationships`, `contexts`, `context_assets`, `context_events`, `intent_types`, `intent_predictions`, `context_versions`
 - [x] Entity Extraction: Parser targeting dates, locations, merchants, transaction values, and names
 - [x] Relationship Discovery Engine:
   - Direct relationship modeling: `RELATED_TO`, `PART_OF`, `MENTIONS`, `SAME_EVENT`, `SAME_LOCATION`
+- [x] Context & Intent Engine:
+  - Dynamic real-world context auto-discovery (*Japan Vacation*, *Buying a Car*, *Tax Filing*, *Medical Treatment*, *Stanford Admission*)
+  - 12 Intent dimensions (*Travel*, *Finance*, *Health*, *Legal*, *Identity*, *Education*, *Business*, *Shopping*, *Personal*, *Entertainment*, *Research*, *Knowledge*)
+  - Automatic event extraction (*Trips*, *Meetings*, *Purchases*, *Hospital Visits*, *Flights*, *Contract Signings*)
+  - Multi-context asset membership scoring & version auditing
+  - Web & Mobile Context Dashboard, Timeline, Intent Card, Suggested Contexts, and Detail View
 - [ ] User Feedback loop:
   - API endpoint `POST /v1/feedback/verify` to confirm or correct AI-generated metadata/tags
 

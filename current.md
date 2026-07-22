@@ -41,6 +41,15 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Context & Intent Engine (Issue #016)**:
+  - Created PostgreSQL database migration `database/migrations/012_create_context_and_intent_tables.sql` (`contexts`, `context_assets`, `context_events`, `intent_types`, `intent_predictions`, `context_versions`).
+  - Implemented Domain models for `Context`, `ContextAsset`, `ContextEvent`, `IntentType`, `IntentPrediction`, `ContextVersion`, and `ContextStats`.
+  - Built `ContextService` & `ContextEngine` performing LLM-backed dynamic context resolution, deduplication, multi-context asset membership scoring, and event extraction (*Trips*, *Meetings*, *Purchases*, *Hospital Visits*, *Flights*, *Interviews*).
+  - Registered `ContextWorker` into the processing pipeline (`Relationship Discovery` ↓ `Context Detection` ↓ `Intent Prediction` ↓ `Context Graph`).
+  - Added REST API endpoints (`/api/v1/context`, `/api/v1/context/details`, `/api/v1/context/refresh`, `/api/v1/context/intent`, `/api/v1/context/stats`).
+  - Created Web UI module (`frontend/features/context/components/`) featuring `ContextDashboard`, `ContextTimeline`, `IntentCard`, `SuggestedContexts`, `ContextDetailView`, and Next.js page route (`/context`).
+  - Created Mobile UI components (`ContextsScreen.tsx`, `ContextTimeline.tsx`, `IntentSummaryCard.tsx`).
+  - Added comprehensive Go unit and integration test suite (`context_test.go`) validating Travel, Medical, Invoices, Receipts, Education, Legal, Projects, and Notes domain scenarios.
 - **Relationship Discovery Engine (Issue #015)**:
   - Created PostgreSQL database migration `database/migrations/011_create_knowledge_graph_tables.sql` (`graph_nodes`, `graph_edges`, `graph_edge_evidence`, `graph_versions`).
   - Implemented Domain models for `GraphNode`, `GraphEdge`, `EdgeEvidence`, `RelationshipType` (`MENTIONS`, `RELATED_TO`, `LOCATED_AT`, etc.).

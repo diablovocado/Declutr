@@ -3,8 +3,10 @@ package domain
 import "time"
 
 type UserSession struct {
+	ID               string    `json:"id,omitempty"`
 	SessionID        string    `json:"sessionId"`
 	UserID           string    `json:"userId"`
+	AccessToken      string    `json:"accessToken,omitempty"`
 	RefreshTokenHash string    `json:"refreshTokenHash"`
 	DeviceName       string    `json:"deviceName"`
 	IPAddress        string    `json:"ipAddress"`
@@ -21,3 +23,5 @@ func (s *UserSession) IsActive() bool {
 	}
 	return time.Now().Before(s.ExpiresAt)
 }
+
+type Session = UserSession

@@ -15,7 +15,7 @@ func TestChallengeStoreSaveAndGet(t *testing.T) {
 		EmailHash: "hash_abc",
 		Salt:      "salt_123",
 		B:         "pub_B",
-		b:         "sec_b",
+		ServerSecret: "sec_b",
 		ExpiresAt: time.Now().Add(5 * time.Minute),
 	}
 

@@ -27,11 +27,15 @@ const (
 	TypeAudioTranscription JobType = "AUDIO_TRANSCRIPTION"
 	TypeVideoProcessing    JobType = "VIDEO_PROCESSING"
 	TypeEmbeddingGen       JobType = "EMBEDDING_GENERATION"
-	TypeEntityExtraction   JobType = "ENTITY_EXTRACTION"
-	TypeIntentAnalysis     JobType = "INTENT_ANALYSIS"
-	TypeRelationship       JobType = "RELATIONSHIP_DISCOVERY"
-	TypeSearchIndexing     JobType = "SEARCH_INDEXING"
-	TypeVirusScan          JobType = "VIRUS_SCAN"
+	TypeEntityExtraction       JobType = "ENTITY_EXTRACTION"
+	TypeIntentAnalysis         JobType = "INTENT_ANALYSIS"
+	TypeRelationship           JobType = "RELATIONSHIP_DISCOVERY"
+	TypeRelationshipDiscovery  JobType = "RELATIONSHIP_DISCOVERY"
+	TypeContextDetection       JobType = "CONTEXT_DETECTION"
+	TypeAIAnalysis             JobType = "AI_ANALYSIS"
+	TypeContentExtraction      JobType = "TEXT_EXTRACTION"
+	TypeSearchIndexing         JobType = "SEARCH_INDEXING"
+	TypeVirusScan              JobType = "VIRUS_SCAN"
 )
 
 type Job struct {
