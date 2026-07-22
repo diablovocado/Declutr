@@ -1,45 +1,175 @@
 # Project Status - Declutr
 
+**Status**: 🎉 **Production Ready**
+**Version**: `v2.0.0`
+
 This document provides a summary of the current status of the Declutr codebase, its architecture, and its git history.
 
 ## 🛠️ Codebase Overview
 
-Declutr is structured as a production-grade modular monorepo:
+Declutr is a clean, modular monorepo optimized for developer experience.
 
-1. **Backend ([/backend](file:///f:/Github/Declutr/backend))**
-   - Written in Go.
-   - Refactored into a Domain-Oriented Modular Monolith:
-     - `cmd/server/`: Main application entrypoint (`main.go`).
-     - `modules/`: Feature modules (`auth`, `vault`, `file`, `search`, `persona`, `behavior`) each owning their `domain`, `application`, `repository`, `transport`, and `validators` layers.
-     - `shared/`: Cross-cutting concerns (`crypto`, `database`, `middleware`, `config`, `logger`, `errors`, `constants`, `utils`, `types`).
-     - `platform/`: Platform drivers (`postgres`, `redis`, `storage`).
-     - `pkg/`: Public utility packages (`health`).
-2. **Web Frontend ([/frontend](file:///f:/Github/Declutr/frontend))**
-   - Next.js application using TypeScript.
-   - Restructured into feature-first architecture:
-     - `app/`: Next.js App router pages.
-     - `features/`: Web feature modules (`auth`, `vault`, `search`).
-     - `shared/`: Shared components (`ui`, `layout`, `feedback`, `forms`), `hooks`, `lib`, `providers`, `services`, `api`, `types`, `constants`.
-     - `styles/`: Global CSS styling.
-3. **Mobile Frontend ([/frontend/declutr-mobile](file:///f:/Github/Declutr/frontend/declutr-mobile))**
-   - React Native application managed via **Expo** (with TypeScript).
-   - Core directories:
-     - `app/`: Expo Router pages (`(tabs)`, `login`, `register`, `vault`, `modal`).
-     - `features/`: Mobile feature modules.
-     - `shared/`: Native components, constants, hooks, providers, services, api, and utils.
-     - `navigation/`: Router navigation helpers.
-4. **Database ([/database](file:///f:/Github/Declutr/database))**
-   - Database project containing `migrations/`, `seeds/`, and `scripts/`.
-5. **Docs & Supporting Infrastructure**
-   - Categorized into `docs/architecture/`, `docs/api/`, `docs/development/`, `docs/references/`, `docs/adr/`, and `docs/images/`.
-   - Infrastructure configurations under `infrastructure/` (`docker`, `compose`, `github`, `monitoring`, `deployment`, `terraform`, `kubernetes`).
-   - Helper scripts under `scripts/` (`setup`, `dev`, `build`, `release`, `database`, `maintenance`).
-   - Testing suites under `tests/` (`unit`, `integration`, `e2e`, `fixtures`, `helpers`).
-   - Security documentation under `security/` (`policies`, `audits`, `documentation`).
+1. **Backend ([/backend](file:///f:/Github/Declutr/backend))** — Go REST API
+   - `cmd/server/main.go` — Entry point, wires all 25+ modules and HTTP routes.
+   - `modules/` — One directory per feature (auth, vault, ai, search, lifeos, agents, …). Each module contains `domain/`, `application/`, `repository/`, `transport/`.
+   - `shared/` — Config, middleware, database helpers, observability.
+   - `pkg/health/` — Liveness, readiness, metrics handlers.
+   - `tests/` — Integration test suites.
+2. **Web Frontend ([/frontend](file:///f:/Github/Declutr/frontend))** — Next.js 14 (App Router)
+   - `app/` — Page routes.
+   - `features/` — Feature-level UI components.
+   - `shared/` — Shared components, hooks, services.
+   - `styles/` — Global CSS.
+3. **Mobile ([/frontend/declutr-mobile](file:///f:/Github/Declutr/frontend/declutr-mobile))** — React Native + Expo
+4. **Database ([/database/migrations](file:///f:/Github/Declutr/database/migrations))** — 10 consolidated SQL migration files (001–010).
+5. **Docs ([/docs/declutr_architecture_document.html](file:///f:/Github/Declutr/docs/declutr_architecture_document.html))** — Single interactive HTML source of truth.
+6. **Deployment** — `docker-compose.yml` for one-command local dev. Cloud: Railway/Vercel/Supabase/Cloudflare R2/Upstash.
 
 ---
 
 ## 📜 Dev History (Commit Log Summary)
+
+- **Repository Simplification & Architecture Rewrite (refactor)**:
+  - Simplified backend architecture into feature-owned packages under `backend/internal/` (`auth/`, `users/`, `vault/`, `files/`, `processing/`, `ai/`, `search/`, `workflow/`, `notification/`, `organization/`, `settings/`).
+  - Consolidated top-level backend shared modules into `backend/db/`, `backend/storage/`, `backend/middleware/`, `backend/utils/`, and `backend/tests/`.
+  - Moved mobile application folder from `frontend/declutr-mobile` to top-level `mobile/`.
+  - Standardized database migrations in `database/migrations/` into exact 10 files (`001_auth.sql` through `010_settings.sql`).
+  - Aligned frontend (`frontend/`) and mobile (`mobile/`) into clean feature-first layouts.
+  - Consolidated documentation into `docs/declutr_architecture_document.html` as the single interactive documentation website.
+  - Updated `README.md`, `docker-compose.yml`, `.env.example`, `current.md`, and `todo.md`.
+
+- **Repository Refactoring & Developer Experience (refactor)**:
+  - Consolidated 34 database migrations into 10 domain-grouped files (`001_users_and_auth.sql` → `010_intelligence_agents_predictive_lifeos.sql`).
+  - Removed enterprise over-engineering: `infrastructure/kubernetes/`, `infrastructure/helm/`, `infrastructure/terraform/`, `infrastructure/monitoring/`.
+  - Removed 18 redundant markdown documentation subdirectories under `docs/`; consolidated all documentation into `docs/declutr_architecture_document.html` as single interactive source of truth.
+  - Removed root-level `security/`, `tests/`, `sdks/ruby`, `sdks/python`, `sdks/go` directories.
+  - Rewrote `README.md` for clean 30-minute developer onboarding (overview, tech stack, directory map, quick start, env setup, deployment guide, contributing).
+  - Wrote `docs/declutr_architecture_document.html` — modern interactive dark-mode docs site with sidebar navigation, architecture diagrams, pipeline visualizations, DB schema, API reference, env vars, deployment guide, and roadmap.
+  - Created clean `docker-compose.yml` for one-command local dev (Postgres + Redis + Backend + Frontend).
+  - Rewrote `.env.example` with all variables documented inline.
+
+- **Life Operating System (LifeOS) (Issue #040)**:
+  - Transformed Declutr into an operating system for digital life structured around Life Areas, Projects, and Goals instead of raw directory folders.
+  - Implemented LifeOS Domain models (`backend/modules/lifeos/domain/lifeos.go`) for `LifeArea`, `Project`, `ProjectGoal`, `GoalProgress`, `LifeDashboard`, `LifeTimelineEvent`, `LifeMetric`, 12 Default Life Areas (`Personal`, `Work`, `Business`, `Education`, `Finance`, `Health`, `Travel`, `Legal`, `Home`, `Family`, `Research`, `Hobbies`), Project Statuses, and Goal Priorities.
+  - Built `ProjectEngine` (`backend/modules/lifeos/application/project_engine.go`) managing first-class project hubs ("Launch Startup", "Japan Trip", "Semester 6", "Tax Filing 2027").
+  - Built `GoalEngine` (`backend/modules/lifeos/application/goal_engine.go`) tracking project milestone goals ("Renew Passport", "Submit Assignment") with progress %, missing asset detection, and AI suggestions.
+  - Built `LifeGraphEngine` (`backend/modules/lifeos/application/graph.go`) linking Life Areas → Projects → Goals → Contexts → Entities → Knowledge → Assets.
+  - Built `LifeOSService` (`backend/modules/lifeos/application/service.go`) aggregating unified Life Dashboard, project hub, goal tracker, priorities, timeline, and life balance telemetry.
+  - Added REST API endpoints (`/api/v1/lifeos/dashboard`, `/areas`, `/projects`, `/goals`, `/timeline`, `/priorities`, `/metrics`).
+  - Created PostgreSQL database migration `database/migrations/034_create_lifeos_tables.sql` (`life_areas`, `projects`, `project_goals`, `goal_progress`, `life_dashboard`, `life_metrics`).
+  - Built Web LifeOS Portal (`frontend/app/lifeos/page.tsx`, `frontend/features/lifeos/components/`) featuring `LifeOSDashboardComponent`, `LifeAreaGridComponent`, `ProjectHubComponent`, `GoalTrackerComponent`, and `LifeTimelineComponent`.
+  - Built Mobile LifeOS components (`frontend/declutr-mobile/features/lifeos/components/`): `LifeOSDashboard.tsx`, `ProjectList.tsx`, `GoalProgressCard.tsx`.
+  - Created Go test suite (`backend/tests/lifeos_test.go`) validating life area management, project hub operations, goal progress calculation, missing asset detection, unified timeline aggregation, and life metrics.
+  - Created LifeOS Documentation suite (`docs/lifeos/`): `lifeos_architecture.md`, `life_area_model.md`, `project_engine_guide.md`, `goal_tracker_guide.md`, `life_timeline.md`.
+
+- **Predictive Intelligence & Life Intelligence Engine (Issue #039)**:
+  - Implemented Predictive Domain models (`backend/modules/predictive/domain/predictive.go`) for `Prediction`, `PredictionEvidence`, `PredictionSettings`, `PredictionFeedback`, `PredictionStats`, and 16 Prediction Types (`UPCOMING_DEADLINE`, `EXPIRING_DOCUMENT`, `UPCOMING_TRIP`, `UPCOMING_MEETING`, `MISSING_DOCUMENT`, `SUGGESTED_UPLOAD`, `SUGGESTED_ORGANIZATION`, `SUGGESTED_ARCHIVE`, `SUGGESTED_DELETION`, `SUGGESTED_WORKFLOW`, `SUGGESTED_COLLECTION`, `SUGGESTED_SUMMARY`, `RECURRING_TASK`, `RECURRING_EXPENSE`, `KNOWLEDGE_GAP`, `OPPORTUNITY_DETECTION`).
+  - Built `PredictiveEngine` (`backend/modules/predictive/application/engine.go`) analyzing Knowledge Graph, Memory Engine, Timeline, and Reverse Persona signals to detect patterns and generate proactive predictions.
+  - Built `RecommendationPlanner` (`backend/modules/predictive/application/planner.go`) formatting explainable recommendations with evidence rationales and confidence ratings.
+  - Built `PredictiveService` (`backend/modules/predictive/application/service.go`) managing prediction generation, acceptance/dismissal feedback learning, category controls, and stats tracking.
+  - Added REST API endpoints (`/api/v1/predictive/predictions`, `/dismiss`, `/accept`, `/history`, `/settings`, `/stats`).
+  - Created PostgreSQL database migration `database/migrations/033_create_predictive_tables.sql` (`predictions`, `prediction_history`, `prediction_feedback`, `prediction_models`, `prediction_scores`).
+  - Built Web Life Intelligence Portal (`frontend/app/predictive/page.tsx`, `frontend/features/predictive/components/`) featuring `LifeIntelligenceDashboardComponent`, `PredictionFeedComponent`, `UpcomingTimelineComponent`, `OpportunityDetectionComponent`, and `PredictionSettingsComponent`.
+  - Built Mobile Predictive components (`frontend/declutr-mobile/features/predictive/components/`): `PredictionFeed.tsx`, `UpcomingEventsList.tsx`, `RecommendationCard.tsx`.
+  - Created Go test suite (`backend/tests/predictive_test.go`) validating pattern analysis, recommendation planning, confidence scoring, dismissal/acceptance feedback learning, and category threshold controls.
+  - Created Predictive Documentation suite (`docs/predictive/`): `predictive_engine_guide.md`, `recommendation_planner.md`, `goal_tracking_guide.md`, `opportunity_detection.md`, `privacy_and_control.md`.
+
+- **Multi-Agent Intelligence Platform (Issue #038)**:
+  - Implemented Multi-Agent Domain models (`backend/modules/multiagent/domain/multiagent.go`) for `AgentRegistration`, `CoordinatorTask`, `AgentMessage`, `TaskGraph`, `SharedMemoryItem`, `AgentHealthMetric`, `ConsensusResult`, 13 Specialist Agent Roles (`COORDINATOR`, `KNOWLEDGE`, `MEMORY`, `RESEARCH`, `ORGANIZATION`, `WORKFLOW`, `SEARCH`, `SECURITY`, `INTEGRATION`, `TIMELINE`, `FINANCIAL`, `TRAVEL`, `LEARNING`).
+  - Built Event-Driven `MessageBus` (`backend/modules/multiagent/application/bus.go`) routing structured messages with correlation ID tracking and audit logging.
+  - Built `MultiAgentTaskPlanner` (`backend/modules/multiagent/application/planner.go`) constructing DAG task execution graphs with parallel & sequential execution nodes.
+  - Built `CoordinatorAgent` (`backend/modules/multiagent/application/coordinator.go`) orchestrating goal decomposition, specialist agent dispatch, progress tracking, parallel response merging, retries, and consensus evaluation.
+  - Added REST API endpoints (`/api/v1/multiagent/goals`, `/agents`, `/register`, `/disable`, `/tasks`, `/messages`, `/health`).
+  - Created PostgreSQL database migration `database/migrations/032_create_multi_agent_tables.sql` (`agent_registry`, `agent_tasks`, `agent_messages`, `agent_executions`, `agent_memory`, `agent_health`, `agent_capabilities`).
+  - Built Web Multi-Agent Portal (`frontend/app/multiagent/page.tsx`, `frontend/features/multiagent/components/`) featuring `MultiAgentDashboardComponent`, `CoordinatorViewComponent`, `TaskGraphVisualizerComponent`, `MessageBusMonitorComponent`, and `AgentHealthGridComponent`.
+  - Built Mobile Multi-Agent components (`frontend/declutr-mobile/features/multiagent/components/`): `MultiAgentOverview.tsx`, `TaskGraphList.tsx`, `MessageLogList.tsx`.
+  - Created Go test suite (`backend/tests/multiagent_test.go`) validating coordinator goal orchestration, parallel specialist execution, structured message routing, shared memory read/write, and consensus conflict resolution.
+  - Created Multi-Agent Documentation suite (`docs/multiagent/`): `coordinator_guide.md`, `communication_protocol.md`, `task_planner_guide.md`, `consensus_resolution.md`, `shared_memory_guide.md`.
+
+- **Autonomous Knowledge Agent Platform (Declutr Intelligence v2) (Issue #037)**:
+  - Implemented Autonomous Agent Core Domain models (`backend/modules/agent/domain/agent.go`) for `Agent`, `AgentGoal`, `AgentPlan`, `AgentTask`, `AgentMemory`, `AgentFeedback`, `AgentExecution`, `AgentPermission`, 8 Agent Types (`KNOWLEDGE`, `RESEARCH`, `ORGANIZATION`, `DOCUMENT`, `FINANCIAL`, `TRAVEL`, `LEARNING`, `COMPLIANCE`), and 5 Execution Modes (`MANUAL_APPROVAL`, `AUTOMATIC`, `SCHEDULED`, `EVENT_DRIVEN`, `GOAL_DRIVEN`).
+  - Built `PlanningEngine` (`backend/modules/agent/application/planner.go`) converting persistent goals into multi-step plan task graphs with dependencies, retries, and approval checkpoints.
+  - Built `ReasoningEngine` (`backend/modules/agent/application/reasoning.go`) evaluating tool selection, confidence scoring (0.0 to 1.0), evidence rationales, and human approval interceptors for destructive actions.
+  - Built `AgentService` (`backend/modules/agent/application/service.go`) managing agent registration, goal tracking, plan generation, human approval/rejection handling, operational memory persistence, and feedback learning.
+  - Added REST API endpoints (`/api/v1/agents`, `/pause`, `/resume`, `/goals`, `/plans/approve`, `/plans/reject`, `/executions`, `/memory`).
+  - Created PostgreSQL database migration `database/migrations/031_create_autonomous_agent_tables.sql` (`agents`, `agent_goals`, `agent_plans`, `agent_tasks`, `agent_memory`, `agent_feedback`, `agent_executions`, `agent_permissions`).
+  - Built Web Agent Portal (`frontend/app/agents/page.tsx`, `frontend/app/agents/goals/page.tsx`, `frontend/app/agents/plans/page.tsx`, `frontend/features/agent/components/`) featuring `AgentDashboardComponent`, `GoalManagerComponent`, `PlanViewerComponent`, `ApprovalCenterComponent`, and `AgentMemoryPanelComponent`.
+  - Built Mobile Agent components (`frontend/declutr-mobile/features/agent/components/`): `AgentOverview.tsx`, `GoalList.tsx`, `ApprovalList.tsx`, `AgentCard.tsx`.
+  - Created Go test suite (`backend/tests/agent_test.go`) validating goal decomposition, multi-step plan generation, human approval interceptors, memory persistence, and feedback learning.
+  - Created Agent Documentation suite (`docs/agent/`): `agent_architecture.md`, `planning_engine_guide.md`, `tool_framework_guide.md`, `approval_model.md`, `goal_lifecycle.md`.
+
+- **General Availability (v1.0.0) Launch & Operations (Issue #036)**:
+  - Official General Availability (**v1.0.0**) production launch across all 36 engineering milestones.
+  - Built Master Production GA Test Suite (`backend/tests/production_ga_test.go`).
+  - Created Operations & On-Call Runbook suite (`docs/operations/`): `incident_response_runbook.md`, `oncall_rotation.md`, `hotfix_process.md`, `maintenance_schedule.md`.
+  - Created Legal & Compliance document suite (`docs/legal/`): `terms_of_service.md`, `privacy_policy.md`, `cookie_policy.md`, `pricing_and_plans.md`, `license.md`.
+  - Created Official GA Release documentation (`docs/v1.0.0/`): `v1.0.0_release_notes.md`, `production_deployment_report.md`, `community_and_support_guide.md`.
+  - Built Public Status Page route (`frontend/app/status/page.tsx`, `frontend/features/status/components/`) featuring `StatusOverviewComponent` and `IncidentHistoryComponent`.
+  - Built Support & Help Center route (`frontend/app/support/page.tsx`, `frontend/features/support/components/`) featuring `HelpCenterComponent` and `SupportPortalComponent`.
+  - Declared **Project Status: Production Ready**, **Version: v1.0.0**.
+  - Committed `chore(release): launch Declutr v1.0.0`, pushed directly to `main`, and created Git release tag `v1.0.0`.
+
+- **Release Candidate (RC1), Quality Assurance & Launch Readiness (Issue #035)**:
+  - Validated full system integration across all 35 completed GitHub Issues (#001–#035).
+  - Built Master Release Integration Test Suite (`backend/tests/release_rc1_test.go`) covering Zero-Knowledge Auth, Multi-Tenant Isolation, Vault Ingestion, Vector & BM25 Search, RAG AI Copilot, Workflows, Notifications, Security Risk Engine, Sync, Integrations, Developer API Keys, Webhooks, and Extension Sandbox.
+  - Created Full Release Documentation Suite (`docs/release/`): `release_notes_v1.0.0_rc1.md`, `security_audit_report.md`, `performance_benchmark_report.md`, `accessibility_report.md`, `migration_guide.md`, `known_issues.md`, `upgrade_guide.md`, `configuration_guide.md`, `administrator_guide.md`, `troubleshooting_guide.md`.
+  - Created Web Release Portal (`frontend/app/release/page.tsx`, `frontend/features/release/components/`) featuring `ReleaseOverviewComponent`, `SystemAuditMatrixComponent`, and `BenchmarkSummaryComponent`.
+  - Conducted full security audit (SRP-6a, RBAC, AES-256-GCM, TLS 1.3, XSS, CSRF, SQLi, SSRF, Prompt Injection, Sandbox Quotas).
+  - Verified WCAG 2.2 AA accessibility compliance (keyboard navigation, screen readers, 4.5:1+ contrast, focus states, reduced motion).
+  - Verified 30 PostgreSQL database migration scripts (`001` through `030`).
+  - Prepped git release commit `chore(release): prepare release candidate RC1` and tagged `v1.0.0-rc1`.
+
+- **Extension Platform, Marketplace & Ecosystem (Issue #034)**:
+  - Created PostgreSQL database migration `database/migrations/030_create_extension_tables.sql` (`extensions`, `extension_versions`, `extension_permissions`, `extension_installations`, `extension_reviews`, `extension_publishers`, `extension_statistics`).
+  - Implemented Domain models for `Extension`, `ExtensionManifest`, `ExtensionVersion`, `ExtensionInstallation`, `ExtensionReview`, `Publisher`, 20 Extension Types, 10 Categories, and 9 Permission Scopes (`backend/modules/extension/domain/extension.go`).
+  - Implemented `ExtensionSandbox` (`backend/modules/extension/application/sandbox.go`) enforcing execution timeouts (5s default), 128MB memory quotas, permission checks, and panic recovery crash isolation.
+  - Implemented `ExtensionService` managing lifecycle (`Install`, `Enable`, `Disable`, `Rollback`, `Uninstall`), Capability Registry, marketplace category indexing, reviews, ratings, and publisher releases.
+  - Added REST API endpoints (`/api/v1/marketplace`, `/detail`, `/publish`, `/review`, `/api/v1/extensions/installed`, `/install`, `/lifecycle`, `/permissions/approve`).
+  - Built Official Extension SDK `@declutr/extension-sdk` (`sdks/extension-sdk/`).
+  - Built Web Marketplace Portal & Storefront (`frontend/app/marketplace/page.tsx`, `frontend/app/marketplace/manager/page.tsx`, `frontend/app/marketplace/publisher/page.tsx`, `frontend/features/extension/components/`) featuring `MarketplaceBrowserComponent`, `ExtensionDetailsModal`, `InstalledExtensionsComponent`, `PermissionApprovalDialog`, and `PublisherPortalComponent`.
+  - Built Mobile Extension Manager components (`frontend/declutr-mobile/features/extension/components/`): `MarketplaceBrowser.tsx`, `InstalledExtensionsList.tsx`, `ExtensionCard.tsx`.
+  - Created Go test suite (`backend/tests/extension_test.go`) validating manifest validation, lifecycle transitions, sandbox quota & timeout enforcement, permission checks, marketplace category search, and reviews.
+  - Created Extension Documentation suite (`docs/extensions/`): `extension_sdk_guide.md`, `marketplace_guide.md`, `publishing_guide.md`, `security_guide.md`, `sandbox_guide.md`.
+
+- **Public API, Developer SDK & Developer Platform (Issue #033)**:
+  - Created PostgreSQL database migration `database/migrations/029_create_developer_platform_tables.sql` (`developer_apps`, `api_keys`, `oauth_clients`, `oauth_tokens`, `webhooks`, `webhook_deliveries`, `webhook_dlq`).
+  - Built Developer Domain models (`backend/modules/developer/domain/developer.go`) for `APIKey`, `OAuthClient`, `OAuthToken`, `WebhookEndpoint`, `WebhookDelivery`, `WebhookDLQItem`, `DeveloperApp`, API Scopes, and Webhook Event Types.
+  - Built `DeveloperService` managing scoped API key generation with SHA-256 secret hashing, key validation, OAuth 2.1 code exchange / token issuance, webhook registration, HMAC-SHA256 signature computation, and Webhook Dispatcher with automated exponential backoff retries and Dead Letter Queue (`webhooks_dlq`).
+  - Added REST API endpoints (`/api/v1/developer/keys`, `/webhooks`, `/webhooks/deliveries`, `/oauth/apps`, `/oauth/token`, `/openapi`).
+  - Built Official Developer SDKs: **TypeScript SDK** (`sdks/typescript/`), **Go SDK** (`sdks/go/`), and **Python SDK** (`sdks/python/`).
+  - Built Official **Declutr CLI** tool binary (`cli/cmd/declutr/main.go`) supporting `auth`, `vault`, `search`, `upload`, `workflow`, `backup`, `diagnostics`.
+  - Created Web Developer Portal (`frontend/app/developer/page.tsx`, `frontend/features/developer/components/`) featuring `DeveloperDashboardComponent`, `APIKeyManagerComponent`, `WebhookManagerComponent`, `OAuthClientManagerComponent`, `APIExplorerComponent`, and `SDKDownloadComponent`.
+  - Created Go test suite (`backend/tests/developer_test.go`) validating API key generation, scope validation, OAuth 2.1 exchange, Webhook HMAC signing & DLQ, and Go SDK client execution.
+  - Created Developer Documentation suite (`docs/developer/`): `openapi.json`, `developer_guide.md`, `sdk_guide.md`, `webhook_guide.md`, `cli_guide.md`.
+
+- **Enterprise Organizations, Multi-Tenancy & Administration (Issue #032)**:
+  - Created PostgreSQL database migration `database/migrations/028_create_organization_tables.sql` (`organizations`, `organization_members`, `organization_roles`, `organization_permissions`, `organization_groups`, `organization_group_members`, `organization_policies`, `organization_domains`, `workspace_memberships`, `sso_configurations`).
+  - Implemented domain models for `Organization`, `Workspace`, `OrganizationMember`, `OrganizationRole`, `OrganizationPermission`, `OrganizationGroup`, `OrganizationPolicy`, `SSOConfig`, and `OrganizationDirectory` (`backend/modules/organization/domain/organization.go`).
+  - Built Tenant Middleware (`backend/shared/middleware/tenant.go`) extracting `X-Organization-ID` headers/claims and enforcing multi-tenant data isolation.
+  - Built `OrganizationService` managing organization lifecycle, settings, workspaces (`PERSONAL`, `ORGANIZATION`, `DEPARTMENT`, `SHARED`, `ARCHIVED`), invitations, status changes, ownership transfer, team/department groups, policy enforcement, directory search, and SSO framework abstractions.
+  - Built `PermissionEngine` evaluating granular roles (`OWNER`, `ADMINISTRATOR`, `MANAGER`, `EDITOR`, `CONTRIBUTOR`, `VIEWER`, `GUEST`) and 10 granular permissions (`MANAGE_ORG`, `MANAGE_BILLING`, `MANAGE_USERS`, `MANAGE_VAULTS`, `MANAGE_AI`, `MANAGE_WORKFLOWS`, `MANAGE_INTEGRATIONS`, `MANAGE_SECURITY`, `MANAGE_AUDIT`, `VIEW_ANALYTICS`).
+  - Added 12 REST API endpoints (`/api/v1/organizations`, `/settings`, `/invite`, `/members`, `/members/status`, `/ownership/transfer`, `/roles`, `/groups`, `/workspaces`, `/policies`, `/sso/config`, `/directory`).
+  - Created Web UI Portal (`frontend/app/organization/page.tsx`, `frontend/features/organization/components/`) featuring `OrganizationSwitcher`, `OrganizationDashboardComponent`, `MemberManagementComponent`, `RoleEditorComponent`, `GroupManagementComponent`, `WorkspaceManagerComponent`, and `PolicyManagerComponent`.
+  - Created Mobile UI components (`frontend/declutr-mobile/features/organization/components/`): `OrganizationSwitcher.tsx`, `MemberList.tsx`, `WorkspaceList.tsx`, `OrganizationSettings.tsx`.
+  - Added comprehensive Go test suite (`organization_test.go`) validating multi-tenancy, tenant isolation, member invitations, RBAC permission evaluation, group inheritance, workspace classification, policy enforcement, and directory search.
+  - Created Enterprise Documentation suite (`docs/enterprise/`): `multi_tenant_architecture.md`, `organization_model.md`, `workspace_hierarchy.md`, `rbac_model.md`, `policy_engine.md`.
+
+- **Production Hardening, Observability & Performance Platform (Issue #031)**:
+  - Created PostgreSQL database migration `database/migrations/027_production_hardening.sql` (`system_metrics`, `health_checks`, `worker_status`, `rate_limit_events`, `cache_statistics`, composite performance indexes, table partitioning strategy).
+  - Implemented structured JSON logger with context correlation (`RequestID`, `CorrelationID`, `UserID`, `VaultID`, `SessionID`, `TraceID`, `SpanID`, latency, error code) and automatic secret redaction (`backend/shared/observability/observability.go`).
+  - Implemented distributed tracing span context propagator and Prometheus/OpenTelemetry metrics engine (`declutr_http_requests_total`, `declutr_http_latency_average_ms`, `declutr_cache_hit_rate`, `declutr_storage_usage_bytes`, `declutr_queue_depth`).
+  - Built unified Cache Abstraction Layer (`backend/shared/cache/cache.go`) supporting thread-safe InMemory with TTL eviction and Redis Cluster driver fallback, plus specialized typed cache managers for Search, Metadata, and Contexts.
+  - Built token bucket rate limiter (`backend/shared/ratelimit/ratelimit.go`) enforcing Global, Per-User, Per-IP, AI, Upload, and API limits.
+  - Built background worker Supervisor (`backend/shared/supervisor/supervisor.go`) monitoring Queue, Workflow, Sync, AI, and Connector worker pools with panic recovery and auto-restarts.
+  - Built Fault Resilience system (`backend/shared/resilience/resilience.go`) with Circuit Breakers, Retry policies with exponential backoff, and HTTP graceful shutdown handling OS signals (`SIGINT`, `SIGTERM`).
+  - Built Centralized Configuration manager (`backend/shared/config/config.go`) supporting environment variables, secrets management, and dynamic feature flags.
+  - Built Security Middleware (`backend/shared/middleware/security.go`) attaching HSTS, CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, CORS, and request tracing headers.
+  - Built Diagnostic Probes (`backend/pkg/health/handler.go`) exposing `/health`, `/ready`, `/live`, `/version`, `/metrics`, and internal Admin API endpoints (`/api/v1/admin/*`).
+  - Created Web Admin Console (`frontend/app/admin/page.tsx`, `frontend/features/admin/components/`) featuring `SystemStatusComponent`, `PerformanceDashboardComponent`, `QueueOverviewComponent`, and `ErrorLogViewerComponent`.
+  - Created Mobile UI component (`frontend/declutr-mobile/features/admin/components/SystemStatusCard.tsx`).
+  - Created Production Infrastructure & CI/CD Assets: Multi-stage `Dockerfile.backend` and `Dockerfile.frontend`, `docker-compose.yml`, Kubernetes manifests (`deployment.yaml`, `service.yaml`, `configmap.yaml`, `ingress.yaml`, `hpa.yaml`), Helm chart (`infrastructure/helm/declutr/`), GitHub Actions CI pipeline (`.github/workflows/ci.yml`), `.env.production.example`, and Prometheus monitoring config (`infrastructure/monitoring/prometheus.yml`).
+  - Added comprehensive Go test suite (`backend/tests/platform_test.go`) covering logger, metrics, tracing, cache, rate limiter, supervisor, circuit breaker, health probes, and security headers.
+  - Created Production Documentation suite (`docs/production/`): `production_architecture.md`, `deployment_guide.md`, `scaling_strategy.md`, `monitoring_guide.md`, `disaster_recovery.md`, `performance_tuning.md`.
 
 - **Integration Platform & Connector Framework (Issue #030)**:
   - Created PostgreSQL database migration `database/migrations/026_create_integration_tables.sql` (`connectors`, `connector_configs`, `connector_credentials`, `connector_sync_jobs`, `connector_webhooks`, `connector_logs`, `connector_health`).
