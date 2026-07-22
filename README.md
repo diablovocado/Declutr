@@ -81,6 +81,22 @@ Declutr/
 
 ---
 
+## 🎨 Unified Design System & Product Experience (Issue #042)
+
+Declutr adheres to a unified design language inspired by Linear, Raycast, Arc Browser, and Vercel:
+
+| Primitive | Design Token Standard |
+|---|---|
+| 🎨 **Color Palette** | Dark Mode (`#090d16` App BG, `#0f172a` Surface, `#141c2e` Card, `#1e293b` Border), Emerald primary accent (`#10b981`), Indigo secondary (`#6366f1`) |
+| 🔤 **Typography** | Inter system font stack, hierarchical font sizing (`text-xs` to `text-6xl`), line heights |
+| 🔳 **Border Radii** | `rounded-md` (8px), `rounded-lg` (12px), `rounded-xl` (16px), `rounded-full` |
+| 💫 **Micro-Animations** | Subtle 150-200ms ease transitions, skeleton loader pulse, focus ring indicators |
+| 🛡️ **Accessibility** | WCAG AA compliance, ARIA labels, keyboard focus rings (`ring-2 ring-emerald-500/50`), `@media (prefers-reduced-motion)` support |
+| 🧩 **Primitives** | Built with `shadcn/ui`, Radix UI primitives, Tailwind CSS v4, Lucide Icons |
+| 📱 **Mobile Consistency** | React Native Expo app mirrors exact web design tokens, colors, and typography |
+
+---
+
 ## 🚀 Getting Started — Complete End-to-End User Journey
 
 A new user can experience the complete Declutr workflow in under 2 minutes:

@@ -1,19 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import { Shield, Sparkles, FolderKey, Search, Lock, RefreshCw, CheckCircle2, Info } from "lucide-react";
-import { ThemeProvider, useTheme } from "../../shared/providers/theme-provider";
-import { Button } from "../../shared/components/ui/button";
-import { Input, PasswordInput, SearchInput, Textarea } from "../../shared/components/ui/input";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../../shared/components/ui/card";
-import { Badge } from "../../shared/components/ui/badge";
-import { Avatar, AvatarFallback } from "../../shared/components/ui/avatar";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../shared/components/ui/tabs";
-import { Alert } from "../../shared/components/feedback/alert";
-import { Spinner } from "../../shared/components/feedback/spinner";
-import { Skeleton } from "../../shared/components/feedback/skeleton";
-import { EmptyState } from "../../shared/components/feedback/empty-state";
-import { ErrorState } from "../../shared/components/feedback/error-state";
+import { Shield, Sparkles, FolderKey, Search, Lock, RefreshCw, CheckCircle2, Info, Table as TableIcon } from "lucide-react";
+import { ThemeProvider, useTheme } from "../../providers/theme-provider";
+import { Button } from "../../components/ui/button";
+import { Input, PasswordInput, SearchInput, Textarea } from "../../components/ui/input";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../../components/ui/card";
+import { Badge } from "../../components/ui/badge";
+import { Avatar, AvatarFallback } from "../../components/ui/avatar";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../../components/ui/tabs";
+import { Alert } from "../../components/feedback/alert";
+import { Spinner } from "../../components/feedback/spinner";
+import { Skeleton } from "../../components/feedback/skeleton";
+import { EmptyState } from "../../components/feedback/empty-state";
+import { ErrorState } from "../../components/feedback/error-state";
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "../../components/ui/table";
+import { Tooltip } from "../../components/ui/tooltip";
 import {
   Dialog,
   DialogTrigger,
@@ -23,9 +25,9 @@ import {
   DialogDescription,
   DialogFooter,
   DialogClose,
-} from "../../shared/components/overlay/dialog";
-import { Container, Grid, Stack, Section } from "../../shared/components/layout/layout-primitives";
-import { TopNavigation, Breadcrumb } from "../../shared/components/layout/top-navigation";
+} from "../../components/overlay/dialog";
+import { Container, Grid, Section } from "../../components/layout/layout-primitives";
+import { TopNavigation, Breadcrumb } from "../../components/layout/top-navigation";
 
 function DesignSystemContent() {
   const { theme, toggleTheme } = useTheme();
@@ -41,14 +43,14 @@ function DesignSystemContent() {
         <div className="flex items-center justify-between mb-8 pb-6 border-b border-slate-800">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Badge variant="emerald">Issue #001</Badge>
-              <Badge variant="outline">shadcn/ui + Radix</Badge>
+              <Badge variant="emerald">Issue #042</Badge>
+              <Badge variant="outline">shadcn/ui + Radix + Tokens</Badge>
             </div>
             <h1 className="text-3xl font-extrabold tracking-tight text-white">
-              Declutr Shared Design System
+              Declutr Unified Design System
             </h1>
             <p className="text-sm text-slate-400 mt-1">
-              Reusable UI primitives, theme tokens, and components built on shadcn/ui and Radix UI.
+              Centralized design tokens, accessible component primitives, and responsive dark/light mode standards.
             </p>
           </div>
           <Button variant="secondary" onClick={toggleTheme}>
@@ -59,10 +61,10 @@ function DesignSystemContent() {
         {/* Component Showcase Tabs */}
         <Tabs defaultValue="buttons" className="w-full">
           <TabsList className="mb-8">
-            <TabsTrigger value="buttons">Buttons & Action</TabsTrigger>
-            <TabsTrigger value="inputs">Form Inputs</TabsTrigger>
-            <TabsTrigger value="display">Cards & Badges</TabsTrigger>
-            <TabsTrigger value="feedback">Feedback & Alerts</TabsTrigger>
+            <TabsTrigger value="buttons">Buttons & Actions</TabsTrigger>
+            <TabsTrigger value="inputs">Form Controls</TabsTrigger>
+            <TabsTrigger value="display">Cards & Tables</TabsTrigger>
+            <TabsTrigger value="feedback">Feedback & States</TabsTrigger>
             <TabsTrigger value="overlay">Modals & Overlays</TabsTrigger>
           </TabsList>
 
@@ -84,7 +86,7 @@ function DesignSystemContent() {
                 </Button>
               </div>
             </Section>
-            <Section>
+            <Section className="mt-6">
               <h2 className="text-lg font-semibold mb-4 text-emerald-400">Button Sizes</h2>
               <div className="flex flex-wrap items-center gap-4">
                 <Button size="sm">Small (sm)</Button>
@@ -98,154 +100,119 @@ function DesignSystemContent() {
           <TabsContent value="inputs">
             <Section>
               <h2 className="text-lg font-semibold mb-4 text-emerald-400">Form Inputs</h2>
-              <Grid cols={2}>
-                <Input label="Email Address" placeholder="user@declutr.vault" />
-                <PasswordInput label="Master Encryption Passphrase" placeholder="••••••••••••" />
-                <SearchInput label="Search Engine" />
-                <Textarea label="Vault Notes" placeholder="Enter secure item description..." />
-              </Grid>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                <Input label="Email Address" placeholder="user@declutr.app" helperText="Your email remains private." />
+                <PasswordInput label="Master Passphrase" placeholder="Enter password" />
+                <SearchInput placeholder="Search within active vault..." />
+                <Textarea label="Notes & Description" placeholder="Add contextual notes..." />
+              </div>
             </Section>
           </TabsContent>
 
           {/* DISPLAY TAB */}
           <TabsContent value="display">
             <Section>
-              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Cards & Badges</h2>
-              <Grid cols={3}>
+              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Cards & Data Tables</h2>
+              <Grid cols={3} className="gap-4 mb-6">
                 <Card>
                   <CardHeader>
-                    <div className="flex justify-between items-center mb-1">
-                      <Badge variant="emerald">Encrypted</Badge>
-                      <Avatar>
-                        <AvatarFallback className="bg-emerald-500/20 text-emerald-400">VK</AvatarFallback>
-                      </Avatar>
-                    </div>
-                    <CardTitle>Personal Vault</CardTitle>
-                    <CardDescription>Zero-knowledge AES-256 encrypted space</CardDescription>
+                    <CardTitle>Storage Utilization</CardTitle>
+                    <CardDescription>Encrypted Object Storage</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs text-slate-400">Contains 42 stored digital items.</p>
+                    <span className="text-2xl font-bold text-white">4.2 MB</span>
                   </CardContent>
-                  <CardFooter>
-                    <Button size="sm" variant="outline" className="w-full">
-                      Open Vault
-                    </Button>
-                  </CardFooter>
                 </Card>
-
                 <Card>
                   <CardHeader>
-                    <Badge variant="blue" className="w-fit mb-1">AI Pipeline</Badge>
-                    <CardTitle>Content Intelligence</CardTitle>
-                    <CardDescription>OCR & 512-dim Vector Search</CardDescription>
+                    <CardTitle>Vector Embeddings</CardTitle>
+                    <CardDescription>512-dim pgvector HNSW</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs text-slate-400">Automatic topic extraction and intent tagging.</p>
+                    <Badge variant="emerald">Ready</Badge>
                   </CardContent>
-                  <CardFooter>
-                    <Button size="sm" variant="secondary" className="w-full">
-                      View Status
-                    </Button>
-                  </CardFooter>
                 </Card>
-
                 <Card>
                   <CardHeader>
-                    <Badge variant="amber" className="w-fit mb-1">Security</Badge>
-                    <CardTitle>Behavioral Risk Score</CardTitle>
-                    <CardDescription>Passive Anomaly Detection</CardDescription>
+                    <CardTitle>Security Status</CardTitle>
+                    <CardDescription>SRP-6a Protocol</CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-xs font-semibold text-emerald-400">0.05 (Trusted Access)</p>
+                    <Badge variant="outline">Verified</Badge>
                   </CardContent>
-                  <CardFooter>
-                    <Button size="sm" variant="ghost" className="w-full">
-                      View Logs
-                    </Button>
-                  </CardFooter>
                 </Card>
               </Grid>
-            </Section>
-            <Section>
-              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Badge Variants</h2>
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="default">Default</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="emerald">Emerald</Badge>
-                <Badge variant="blue">Blue</Badge>
-                <Badge variant="amber">Amber</Badge>
-                <Badge variant="rose">Rose</Badge>
-                <Badge variant="outline">Outline</Badge>
-              </div>
+
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>File Name</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Size</TableHead>
+                    <TableHead>Category</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  <TableRow>
+                    <TableCell className="font-semibold text-white">Tax_Form_1040_2025.pdf</TableCell>
+                    <TableCell><Badge variant="emerald">READY 100%</Badge></TableCell>
+                    <TableCell>4.2 MB</TableCell>
+                    <TableCell>Financial</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell className="font-semibold text-white">Prescription_Cardiology.pdf</TableCell>
+                    <TableCell><Badge variant="emerald">READY 100%</Badge></TableCell>
+                    <TableCell>1.8 MB</TableCell>
+                    <TableCell>Medical</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
             </Section>
           </TabsContent>
 
           {/* FEEDBACK TAB */}
           <TabsContent value="feedback">
-            <Section>
-              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Alerts & Spinners</h2>
-              <Stack gap={4}>
-                <Alert variant="info" title="Zero-Knowledge Protection Active">
-                  Encryption keys are derived locally on your device.
-                </Alert>
-                <Alert variant="success" title="Vault Backup Verified">
-                  Master Vault Key (MVK) passphrase backed up successfully.
-                </Alert>
-                <Alert variant="warning" title="Session Renewal Needed">
-                  Access token expires in 2 minutes.
-                </Alert>
-                <Alert variant="danger" title="Access Denied">
-                  Invalid challenge proof M1 response.
-                </Alert>
-              </Stack>
-            </Section>
-            <Section>
-              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Skeletons & States</h2>
-              <Grid cols={2}>
-                <EmptyState
-                  title="No Vault Items Stored"
-                  description="Upload receipts, documents, or photos to get started."
-                  actionLabel="Upload Item"
-                  onAction={() => alert("Upload clicked")}
-                />
-                <ErrorState
-                  title="Failed to Load Search Index"
-                  message="Could not reach vector search service."
-                  onRetry={() => alert("Retrying")}
-                />
-              </Grid>
-              <div className="mt-6 flex items-center gap-4">
-                <span className="text-xs text-slate-400">Skeleton Loaders:</span>
-                <Skeleton className="h-6 w-24" />
-                <Skeleton className="h-6 w-36" />
-                <Skeleton className="h-10 w-10 rounded-full" />
+            <Section className="space-y-6">
+              <h2 className="text-lg font-semibold text-emerald-400">Feedback & Empty States</h2>
+              <div className="space-y-3 max-w-xl">
+                <Alert variant="info">Zero-knowledge SRP verifier active.</Alert>
+                <Alert variant="success">File successfully uploaded and indexed.</Alert>
+                <Alert variant="danger">Network connection lost. Retrying...</Alert>
               </div>
+
+              <EmptyState
+                icon={<FolderKey className="h-8 w-8 text-emerald-400" />}
+                title="Vault Workspace Ready"
+                description="Upload your first document or audio file to begin zero-knowledge ingestion."
+                actionLabel="Upload Memory"
+                onAction={() => {}}
+              />
             </Section>
           </TabsContent>
 
           {/* OVERLAY TAB */}
           <TabsContent value="overlay">
             <Section>
-              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Dialog & Modal Overlays</h2>
+              <h2 className="text-lg font-semibold mb-4 text-emerald-400">Dialog Modals</h2>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="default">Open Confirmation Dialog</Button>
+                  <Button variant="default">Open Modal Dialog</Button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-md bg-slate-900 border-slate-800 text-white">
                   <DialogHeader>
-                    <DialogTitle>Unlock Cryptographic Vault?</DialogTitle>
+                    <DialogTitle>Create New Vault</DialogTitle>
                     <DialogDescription>
-                      This action will decrypt your Master Vault Key (MVK) using your derived passphrase.
+                      Initialize an AES-256 encrypted workspace container.
                     </DialogDescription>
                   </DialogHeader>
                   <div className="py-4">
-                    <PasswordInput label="Passphrase" placeholder="Enter passphrase..." />
+                    <Input label="Vault Name" placeholder="e.g. Work & Research Vault" />
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
                       <Button variant="outline">Cancel</Button>
                     </DialogClose>
-                    <Button variant="default">Unlock Vault</Button>
+                    <Button variant="default">Create Vault</Button>
                   </DialogFooter>
                 </DialogContent>
               </Dialog>
