@@ -1246,6 +1246,30 @@ Declutr's Extension Platform enables developers to safely extend every major cap
 | `POST` | `/api/v1/extensions/lifecycle` | Manage extension lifecycle (ENABLE, DISABLE, UNINSTALL) |
 | `POST` | `/api/v1/extensions/permissions/approve` | Approve requested permissions |
 
+---
+
+## 🎉 Release Candidate (RC1), Quality Assurance & Launch Readiness
+
+Declutr Release Candidate 1 (**v1.0.0-rc1**) marks full production stabilization and QA readiness of the Declutr Platform.
+
+### RC1 Release Assets & Verification
+
+- **System Audit**: Full security audit covering Zero-Knowledge Auth (SRP-6a, Passkeys), Multi-Tenant Data Isolation, RBAC, Scoped API Keys, Webhook Signatures, XSS, CSRF, SQLi, SSRF, Prompt Injection, and Sandbox Quotas (`docs/release/security_audit_report.md`).
+- **Load & Performance Benchmarks**: High-scale benchmarks for 100K Vault Assets, 1M Embeddings, <50ms Hybrid Search (p95), 1,250 uploads/sec throughput (`docs/release/performance_benchmark_report.md`).
+- **WCAG 2.2 AA Accessibility**: Verified keyboard navigation, screen reader accessibility, 4.5:1+ contrast ratios, and reduced motion support (`docs/release/accessibility_report.md`).
+- **Complete Release Documentation**:
+  - `docs/release/release_notes_v1.0.0_rc1.md`
+  - `docs/release/migration_guide.md` (30 PostgreSQL migrations audit)
+  - `docs/release/known_issues.md`
+  - `docs/release/upgrade_guide.md`
+  - `docs/release/configuration_guide.md`
+  - `docs/release/administrator_guide.md`
+  - `docs/release/troubleshooting_guide.md`
+- **Web Release Portal**: Next.js App router page (`/release`) featuring `ReleaseOverviewComponent`, `SystemAuditMatrixComponent`, and `BenchmarkSummaryComponent`.
+- **Master Release Test Suite**: Comprehensive integration test suite (`backend/tests/release_rc1_test.go`).
+- **Git Tag**: Tagged `v1.0.0-rc1`.
+
+
 
 
 

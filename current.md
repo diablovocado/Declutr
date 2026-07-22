@@ -41,6 +41,16 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Release Candidate (RC1), Quality Assurance & Launch Readiness (Issue #035)**:
+  - Validated full system integration across all 35 completed GitHub Issues (#001–#035).
+  - Built Master Release Integration Test Suite (`backend/tests/release_rc1_test.go`) covering Zero-Knowledge Auth, Multi-Tenant Isolation, Vault Ingestion, Vector & BM25 Search, RAG AI Copilot, Workflows, Notifications, Security Risk Engine, Sync, Integrations, Developer API Keys, Webhooks, and Extension Sandbox.
+  - Created Full Release Documentation Suite (`docs/release/`): `release_notes_v1.0.0_rc1.md`, `security_audit_report.md`, `performance_benchmark_report.md`, `accessibility_report.md`, `migration_guide.md`, `known_issues.md`, `upgrade_guide.md`, `configuration_guide.md`, `administrator_guide.md`, `troubleshooting_guide.md`.
+  - Created Web Release Portal (`frontend/app/release/page.tsx`, `frontend/features/release/components/`) featuring `ReleaseOverviewComponent`, `SystemAuditMatrixComponent`, and `BenchmarkSummaryComponent`.
+  - Conducted full security audit (SRP-6a, RBAC, AES-256-GCM, TLS 1.3, XSS, CSRF, SQLi, SSRF, Prompt Injection, Sandbox Quotas).
+  - Verified WCAG 2.2 AA accessibility compliance (keyboard navigation, screen readers, 4.5:1+ contrast, focus states, reduced motion).
+  - Verified 30 PostgreSQL database migration scripts (`001` through `030`).
+  - Prepped git release commit `chore(release): prepare release candidate RC1` and tagged `v1.0.0-rc1`.
+
 - **Extension Platform, Marketplace & Ecosystem (Issue #034)**:
   - Created PostgreSQL database migration `database/migrations/030_create_extension_tables.sql` (`extensions`, `extension_versions`, `extension_permissions`, `extension_installations`, `extension_reviews`, `extension_publishers`, `extension_statistics`).
   - Implemented Domain models for `Extension`, `ExtensionManifest`, `ExtensionVersion`, `ExtensionInstallation`, `ExtensionReview`, `Publisher`, 20 Extension Types, 10 Categories, and 9 Permission Scopes (`backend/modules/extension/domain/extension.go`).
