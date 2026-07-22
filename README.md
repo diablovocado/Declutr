@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## 🔍 Universal Spotlight & System Integration (Issue #054)
+
+Declutr integrates deeply with desktop and mobile operating systems, making vault memory, AI prompts, and quick actions instantly accessible:
+
+| Component | Technical Implementation |
+|---|---|
+| ⌘ **Universal Spotlight Modal** | Raycast/Apple Spotlight-inspired floating launcher (`⌘+Space` / `Ctrl+Space`) with sub-100ms global search (`spotlight-modal.tsx`) |
+| 📁 **Drag & Drop Upload Zone** | Drop files directly onto the launcher modal for zero-knowledge upload and automatic AI indexing |
+| 📋 **Instant Clipboard Capture** | Quick save text, URLs, and images directly from system clipboard into vault notes or tasks |
+| 💻 **PWA & System Telemetry** | Desktop PWA service worker caching, system tray readiness, and hotkey configurator (`system-integration-card.tsx`) |
+| 📱 **Mobile Spotlight Sheet** | React Native Expo quick launch sheet (`mobile-spotlight-sheet.tsx`) supporting Camera Scan and Share Sheet |
+
+---
+
 ## 📜 Version History, Snapshots & Recovery Center (Issue #053)
 
 Declutr ensures platform reliability and data trustworthiness through transparent revision tracking, visual diffs, manual snapshots, and soft-delete recovery:

@@ -5,6 +5,16 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## 🔍 Issue #054 — Universal Spotlight & System Integration
+- [x] Dedicated Universal Spotlight Center (`app/spotlight/page.tsx`) bringing Declutr closer to the OS
+- [x] Universal Spotlight Modal (`spotlight-modal.tsx`) floating launcher (`⌘+Space` / `Ctrl+Space`) with drag & drop upload zone and sub-100ms search
+- [x] Instant Clipboard Capture for text, URLs, and image uploads
+- [x] System Integration & PWA Telemetry (`system-integration-card.tsx`) monitoring offline service worker caching
+- [x] Mobile Spotlight Sheet component (`mobile-spotlight-sheet.tsx`) on React Native / Expo for Camera Scan and Share Sheet
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 📜 Issue #053 — Version History, Snapshots & Recovery Center
 - [x] Dedicated Recovery Center (`app/versioning/page.tsx`) ensuring platform reliability and transparent change tracking
 - [x] Recycle Bin managing soft-deleted items with 30-day auto purge timers, instant Restore, and Permanent Delete controls

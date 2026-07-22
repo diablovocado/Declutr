@@ -29,6 +29,13 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Universal Spotlight & System Integration (Issue #054)**:
+  - Built dedicated Universal Spotlight Center (`app/spotlight/page.tsx`) bringing Declutr closer to the operating system.
+  - Implemented `SpotlightModal` (`spotlight-modal.tsx`) floating launcher (`⌘+Space` / `Ctrl+Space`) with drag & drop file upload zone, instant AI prompt bar, clipboard quick capture, and sub-100ms global search.
+  - Implemented `SystemIntegrationCard` (`system-integration-card.tsx`) monitoring PWA offline caching and system tray readiness.
+  - Created Mobile Spotlight Sheet (`mobile-spotlight-sheet.tsx`) on React Native / Expo supporting Camera Scan and Share Sheet integration.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Universal Spotlight & System Integration" section.
+
 - **Version History, Snapshots & Recovery Center (Issue #053)**:
   - Built dedicated Recovery Center (`app/versioning/page.tsx`) ensuring complete platform reliability and transparent change tracking.
   - Implemented Recycle Bin managing soft-deleted items with 30-day auto purge timers, instant Restore, and Permanent Delete controls.
