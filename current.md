@@ -29,6 +29,15 @@ Declutr is a clean, modular monorepo optimized for developer experience.
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Automation Studio & Intelligent Workflows (Issue #055)**:
+  - Built dedicated Automation Studio (`app/workflows/page.tsx`) enabling no-code knowledge management workflows for personal organization and document processing.
+  - Implemented `AIWorkflowBuilder` (`ai-workflow-builder.tsx`) converting natural language prompts ("When I upload receipts, extract merchant and add to Financials") into draft workflows.
+  - Implemented `WorkflowBuilderModal` (`workflow-builder-modal.tsx`) visual node editor setting Trigger, Condition, and Action blocks with test execution preview.
+  - Implemented `WorkflowTemplates` (`workflow-templates.tsx`) providing pre-built templates for Receipt Organizer, Contract Expiration Alert, and Tax Preparation.
+  - Implemented `ExecutionTelemetry` (`execution-telemetry.tsx`) logging real-time workflow runs with duration and status controls.
+  - Created Mobile Workflows Sheet (`mobile-workflows-sheet.tsx`) on React Native / Expo.
+  - Updated documentation (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`) with a dedicated "Automation Studio & Intelligent Workflows" section.
+
 - **Universal Spotlight & System Integration (Issue #054)**:
   - Built dedicated Universal Spotlight Center (`app/spotlight/page.tsx`) bringing Declutr closer to the operating system.
   - Implemented `SpotlightModal` (`spotlight-modal.tsx`) floating launcher (`⌘+Space` / `Ctrl+Space`) with drag & drop file upload zone, instant AI prompt bar, clipboard quick capture, and sub-100ms global search.

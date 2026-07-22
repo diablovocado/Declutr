@@ -81,6 +81,20 @@ Declutr/
 
 ---
 
+## ⚡ Automation Studio & Intelligent Workflows (Issue #055)
+
+Declutr's Automation Studio allows users to build powerful, no-code workflows for personal knowledge management, OCR extraction, AI tagging, and collection organization:
+
+| Component | Technical Implementation |
+|---|---|
+| 🤖 **Natural Language AI Builder** | Input natural prompts ("When I upload receipts, extract merchant and add to Financials") to generate draft workflows (`ai-workflow-builder.tsx`) |
+| ⚡ **Visual Workflow Builder** | Visual editor setting Trigger (Upload, Import, OCR), Condition (File type, Tag), and Action (Move, Tag, Task, Summary) blocks (`workflow-builder-modal.tsx`) |
+| 🧩 **Workflow Templates Library** | Pre-built templates for Receipt Organizer, Contract Expiration Alert, and Tax Preparation (`workflow-templates.tsx`) |
+| 📊 **Live Execution Telemetry** | Real-time execution logs displaying Trigger Source, Duration, Status (SUCCESS / FAILED), and retry controls (`execution-telemetry.tsx`) |
+| 📱 **Mobile Workflows Sheet** | React Native Expo workflows sheet (`mobile-workflows-sheet.tsx`) supporting manual triggers and execution logs |
+
+---
+
 ## 🔍 Universal Spotlight & System Integration (Issue #054)
 
 Declutr integrates deeply with desktop and mobile operating systems, making vault memory, AI prompts, and quick actions instantly accessible:

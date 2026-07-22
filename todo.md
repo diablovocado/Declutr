@@ -5,6 +5,17 @@
 
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
+## ⚡ Issue #055 — Automation Studio & Intelligent Workflows
+- [x] Dedicated Automation Studio (`app/workflows/page.tsx`) for building no-code knowledge management workflows
+- [x] Natural language AI workflow generator (`ai-workflow-builder.tsx`) converting text to draft workflows
+- [x] Visual workflow builder modal (`workflow-builder-modal.tsx`) configuring Trigger, Condition, and Action blocks
+- [x] Pre-built templates library (`workflow-templates.tsx`) for Receipt Organizer, Contract Expiration Alert, and Tax Prep
+- [x] Live execution telemetry (`execution-telemetry.tsx`) logging workflow runs with duration and status
+- [x] Mobile Workflows Sheet component (`mobile-workflows-sheet.tsx`) on React Native / Expo
+- [x] Documentation updated (`README.md`, `current.md`, `todo.md`, `docs/declutr_architecture_document.html`)
+
+---
+
 ## 🔍 Issue #054 — Universal Spotlight & System Integration
 - [x] Dedicated Universal Spotlight Center (`app/spotlight/page.tsx`) bringing Declutr closer to the OS
 - [x] Universal Spotlight Modal (`spotlight-modal.tsx`) floating launcher (`⌘+Space` / `Ctrl+Space`) with drag & drop upload zone and sub-100ms search
