@@ -36,6 +36,7 @@ const (
 	TypeContentExtraction      JobType = "TEXT_EXTRACTION"
 	TypeSearchIndexing         JobType = "SEARCH_INDEXING"
 	TypeVirusScan              JobType = "VIRUS_SCAN"
+	TypePersonaLearning        JobType = "PERSONA_LEARNING"
 )
 
 type Job struct {

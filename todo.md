@@ -94,10 +94,16 @@ This document tracks the comprehensive roadmap and action items to complete the 
   - Connect text chunks to vector models (e.g. local ONNX embeddings or cloud APIs)
 - [ ] Hybrid Search query processor (`POST /v1/search/query`):
   - Combine traditional PostgreSQL full-text search (keyword) and pgvector semantic distance
-- [ ] Reverse Persona Engine:
-  - Collect user interaction signals (clicks, search terms, category usage)
-  - Build personalization profile with time-based recency decay
-  - Utilize persona parameters to rank search results contextually
+- [x] Reverse Persona Engine:
+  - [x] Collect user interaction signals (ASSET_OPEN, SEARCH, PIN, UPLOAD, EDIT, CONTEXT_SWITCH, RELATIONSHIP_EXPLORE, COLLECTION_USE, TIME_OF_DAY, SEARCH_REFINEMENT, DASHBOARD_USAGE, FAVOURITE)
+  - [x] Build personalization profile with time-based recency decay (exponential: `e^(−λ × days)`)
+  - [x] Persona type inference: Traveller, Developer, Researcher, Healthcare Professional, Student, Entrepreneur, Designer, Photographer, Project Manager, Content Creator, Writer, Finance Professional
+  - [x] Recommendation engine with full explainability (reason, confidence, evidence, contributing signals)
+  - [x] Personal knowledge model: entities, locations, projects, interests, contacts, workflows
+  - [x] Privacy controls: pause, disable signal types, reset, export, full GDPR deletion
+  - [x] Web UI: PersonaDashboard, LearningInsights, RecommendationsPanel, InterestOverview, SignalSettings, PrivacyControls, /persona page route
+  - [x] Mobile UI: PersonaDashboard, RecommendationsCard, PrivacyControls, LearningInsights
+  - [x] 9/9 tests passing
 
 ---
 

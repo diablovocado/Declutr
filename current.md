@@ -41,6 +41,18 @@ Declutr is structured as a production-grade modular monorepo:
 
 ## 📜 Dev History (Commit Log Summary)
 
+- **Reverse Persona Engine (Issue #017)**:
+  - Created PostgreSQL database migration `database/migrations/013_create_persona_tables.sql` (`persona_profiles`, `persona_signals`, `persona_scores`, `persona_interests`, `persona_recommendations`, `persona_settings`, `persona_history`).
+  - Implemented domain models for `PersonaProfile`, `PersonaSignal`, `PersonaScore`, `PersonaInterest`, `PersonaRecommendation`, `PersonaSettings`, `PersonaHistory`, `PersonaExport`, `PersonaKnowledgeModel`.
+  - Built `PersonaService` implementing: signal collection (privacy-aware), exponential recency decay scoring (`Recency = e^(−λ × days)`), persona type inference (12 types), recommendation generation with full explainability (reason, confidence, evidence, contributing signals), interest tracking, knowledge model builder.
+  - Built `PersonaEngine` orchestrating incremental vault processing (Score → Profile → Recommendations) without full rebuilds.
+  - Registered `PersonaWorker` into the processing pipeline: `Context Detection` ↓ `Behaviour Signals` ↓ `Persona Learning` ↓ `Recommendation Generation`.
+  - Added 9 REST API endpoints (`GET /persona`, `/persona/recommendations`, `/persona/settings`, `PUT /persona/settings`, `POST /persona/signal`, `POST /persona/reset`, `GET /persona/export`, `DELETE /persona`, `GET /persona/history`).
+  - Created Web UI module (`frontend/features/persona/components/`) featuring `PersonaDashboard`, `LearningInsights`, `RecommendationsPanel`, `InterestOverview`, `SignalSettings`, `PrivacyControls`, and Next.js page route (`/persona`).
+  - Created Mobile UI components: `PersonaDashboard.tsx`, `RecommendationsCard.tsx`, `PrivacyControls.tsx`, `LearningInsights.tsx`.
+  - Full privacy model: pause learning, disable individual signal types, reset persona, export (JSON), full GDPR deletion — all via UI and API.
+  - Added comprehensive Go test suite (`persona_test.go`) — 9/9 tests passing: Privacy-Aware Signals, Developer Persona, Traveller Persona, Recommendation Explainability, Interest Tracking, Reset, GDPR Delete, Export Bundle, Signal Type Disabling.
+
 - **Context & Intent Engine (Issue #016)**:
   - Created PostgreSQL database migration `database/migrations/012_create_context_and_intent_tables.sql` (`contexts`, `context_assets`, `context_events`, `intent_types`, `intent_predictions`, `context_versions`).
   - Implemented Domain models for `Context`, `ContextAsset`, `ContextEvent`, `IntentType`, `IntentPrediction`, `ContextVersion`, and `ContextStats`.

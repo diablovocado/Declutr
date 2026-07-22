@@ -299,3 +299,108 @@ Every single edge must include a corresponding entry in the `graph_edge_evidence
 
 ### Graph Incremental Updates
 The background `GraphDiscoveryWorker` builds edges incrementally as new entities are detected or metadata changes, avoiding expensive full-graph rebuilds. All operations are strictly bound by the `vault_id` boundary.
+
+---
+
+## 🧬 Reverse Persona Engine
+
+The Reverse Persona Engine is one of Declutr's core differentiators. It understands **how you naturally organise and interact with your own digital life** — without ever leaving your vault.
+
+> **This is NOT advertising. It is NOT tracking. It is personal intelligence.**
+
+### What It Does
+
+The engine observes your natural interaction patterns and builds a dynamic, private profile of who you are digitally:
+
+| Persona Type | Inferred From |
+|---|---|
+| Traveller | Flight docs, hotel bookings, itineraries, visa paperwork |
+| Developer | Code files, technical search terms, debug notes |
+| Researcher | Academic papers, citation notes, research journals |
+| Healthcare Professional | Medical records, prescriptions, clinical notes |
+| Student | Study materials, exam notes, university correspondence |
+| Entrepreneur | Business plans, pitch decks, revenue spreadsheets |
+| Designer | Figma files, mood boards, typography references |
+| Photographer | RAW files, Lightroom presets, shoot briefs |
+
+### Behaviour Signals
+
+The engine collects signals with user consent and control:
+
+```
+ASSET_OPEN  ·  SEARCH  ·  PIN  ·  UPLOAD  ·  EDIT
+CONTEXT_SWITCH  ·  RELATIONSHIP_EXPLORE  ·  COLLECTION_USE
+TIME_OF_DAY  ·  SEARCH_REFINEMENT  ·  DASHBOARD_USAGE  ·  FAVOURITE
+```
+
+### Scoring Engine with Recency Decay
+
+Every dimension is scored using an exponential decay model:
+
+```
+Recency  = e^(−decayRate × daysSinceLastSeen) × totalWeight
+Importance = log(1 + frequency) × totalWeight
+Confidence = min((Recency + Importance) / 10, 1.0)
+```
+
+Scores **decay naturally** — if you stop using a topic, it fades without requiring explicit action.
+
+### Recommendation Engine
+
+Every recommendation includes full explainability:
+
+```json
+{
+  "title": "Continue Thesis Chapter 4",
+  "reason": "You have 14 research interactions this month. Research is RISING.",
+  "confidence": 0.87,
+  "evidence": ["14 research interactions", "Trend: RISING"],
+  "contributingSignals": ["Research frequency: 14", "Importance: 8.40"]
+}
+```
+
+Recommendation types: `CONTINUE_PROJECT` · `RESUME_READING` · `RELATED_DOCUMENT` · `SUGGESTED_CONTEXT` · `SUGGESTED_COLLECTION` · `SUGGESTED_ARCHIVE` · `SUGGESTED_RELATIONSHIP`
+
+### Personal Knowledge Model
+
+The engine infers:
+- Frequent entities, favourite locations, recurring projects
+- Long-term interests, recurring contacts
+- Common workflows, frequently accessed vault areas
+
+### Database Schema (Migration 013)
+
+| Table | Purpose |
+|---|---|
+| `persona_profiles` | Dynamic persona type + confidence + knowledge model |
+| `persona_signals` | Raw behaviour events with weight and source |
+| `persona_scores` | Scored dimensions with decay, trend, importance, recency |
+| `persona_interests` | Long-term inferred interests with personal relevance |
+| `persona_recommendations` | Explainable recommendations |
+| `persona_settings` | Per-vault privacy controls |
+| `persona_history` | Immutable audit snapshots |
+
+### REST API
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/v1/persona` | Current persona profile + scores + interests |
+| `GET` | `/api/v1/persona/recommendations` | Personalised recommendations |
+| `GET` | `/api/v1/persona/settings` | Privacy settings |
+| `PUT` | `/api/v1/persona/settings` | Update privacy settings |
+| `POST` | `/api/v1/persona/signal` | Record a behaviour signal |
+| `POST` | `/api/v1/persona/reset` | Reset all learned data |
+| `GET` | `/api/v1/persona/export` | Export persona as JSON |
+| `DELETE` | `/api/v1/persona` | Full GDPR deletion |
+| `GET` | `/api/v1/persona/history` | Audit history snapshots |
+
+### Privacy Guarantees
+
+- ✅ User can pause learning at any time
+- ✅ User can disable individual signal types
+- ✅ User can reset the entire persona
+- ✅ User can export all data as JSON
+- ✅ Full GDPR-style deletion supported
+- ✅ All data is vault-scoped — never shared, never sold
+- ✅ Every decision is fully explainable
+- ✅ No third-party analytics

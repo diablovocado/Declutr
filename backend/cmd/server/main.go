@@ -10,6 +10,9 @@ import (
 	contextApp "github.com/diablovocado/declutr/modules/context/application"
 	contextRepository "github.com/diablovocado/declutr/modules/context/repository"
 	contextTransport "github.com/diablovocado/declutr/modules/context/transport"
+	personaApp "github.com/diablovocado/declutr/modules/persona/application"
+	personaRepository "github.com/diablovocado/declutr/modules/persona/repository"
+	personaTransport "github.com/diablovocado/declutr/modules/persona/transport"
 	"github.com/diablovocado/declutr/pkg/health"
 	"github.com/diablovocado/declutr/shared/database"
 	"github.com/diablovocado/declutr/shared/middleware"
@@ -59,6 +62,33 @@ func main() {
 	http.HandleFunc("/api/v1/context/refresh", contextAPI.RefreshContextHandler)
 	http.HandleFunc("/api/v1/context/intent", contextAPI.GetIntentHandler)
 	http.HandleFunc("/api/v1/context/stats", contextAPI.GetStatsHandler)
+
+	// Reverse Persona Engine Module initialization
+	personaRepo := personaRepository.NewInMemoryPersonaRepository()
+	personaSvc := personaApp.NewPersonaService(personaRepo)
+	personaEngine := personaApp.NewPersonaEngine(personaSvc)
+	_ = personaEngine // available for worker dispatch
+	personaAPI := personaTransport.NewPersonaAPI(personaSvc)
+
+	http.HandleFunc("/api/v1/persona", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodDelete {
+			personaAPI.DeletePersona(w, r)
+		} else {
+			personaAPI.GetPersona(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/persona/recommendations", personaAPI.GetRecommendations)
+	http.HandleFunc("/api/v1/persona/settings", func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodPut {
+			personaAPI.UpdateSettings(w, r)
+		} else {
+			personaAPI.GetSettings(w, r)
+		}
+	})
+	http.HandleFunc("/api/v1/persona/reset", personaAPI.ResetPersona)
+	http.HandleFunc("/api/v1/persona/export", personaAPI.ExportPersona)
+	http.HandleFunc("/api/v1/persona/signal", personaAPI.RecordSignal)
+	http.HandleFunc("/api/v1/persona/history", personaAPI.GetHistory)
 
 	log.Println("Declutr Backend Running on :8080")
 
