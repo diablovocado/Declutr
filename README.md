@@ -3,6 +3,8 @@
   # 🛡️ Declutr
   ### **AI-Powered Intelligent Digital Life Vault**
 
+  [![Status](https://img.shields.io/badge/Status-Production_Ready-10B981?style=for-the-badge&logo=rocket&logoColor=white)](file:///f:/Github/Declutr/todo.md)
+  [![Version](https://img.shields.io/badge/Version-v1.0.0-6366F1?style=for-the-badge&logo=tag&logoColor=white)](file:///f:/Github/Declutr/docs/v1.0.0/v1.0.0_release_notes.md)
   [![Go Version](https://img.shields.io/badge/Go-1.26+-00ADD8?style=for-the-badge&logo=go&logoColor=white)](file:///f:/Github/Declutr/backend)
   [![Next.js](https://img.shields.io/badge/Next.js-15.2-000000?style=for-the-badge&logo=nextdotjs&logoColor=white)](file:///f:/Github/Declutr/frontend)
   [![React Native](https://img.shields.io/badge/React_Native-Expo_54-61DAFB?style=for-the-badge&logo=react&logoColor=black)](file:///f:/Github/Declutr/frontend/declutr-mobile)
@@ -1267,7 +1269,35 @@ Declutr Release Candidate 1 (**v1.0.0-rc1**) marks full production stabilization
   - `docs/release/troubleshooting_guide.md`
 - **Web Release Portal**: Next.js App router page (`/release`) featuring `ReleaseOverviewComponent`, `SystemAuditMatrixComponent`, and `BenchmarkSummaryComponent`.
 - **Master Release Test Suite**: Comprehensive integration test suite (`backend/tests/release_rc1_test.go`).
-- **Git Tag**: Tagged `v1.0.0-rc1`.
+- [x] Git Tag `v1.0.0-rc1`
+
+---
+
+## 🚀 General Availability (v1.0.0) Launch & Operations
+
+Declutr **v1.0.0** is officially launched and live for General Availability across personal, developer, and enterprise cloud deployments.
+
+### GA Platform Scope & Operations
+
+- **Master Production GA Smoke Suite**: `backend/tests/production_ga_test.go`
+- **Operations & On-Call Runbooks**:
+  - Incident Response Runbook (`docs/operations/incident_response_runbook.md`)
+  - On-Call Schedule & Escalations (`docs/operations/oncall_rotation.md`)
+  - Emergency Hotfix & Patch Release Process (`docs/operations/hotfix_process.md`)
+  - Maintenance Schedule (`docs/operations/maintenance_schedule.md`)
+- **Legal & Compliance Documentation**:
+  - Terms of Service (`docs/legal/terms_of_service.md`)
+  - Privacy Policy (`docs/legal/privacy_policy.md`)
+  - Cookie Policy (`docs/legal/cookie_policy.md`)
+  - Pricing & Subscription Tiers (`docs/legal/pricing_and_plans.md`)
+  - Software Licensing (`docs/legal/license.md`)
+- **Public Operations Interfaces**:
+  - Live Public Status Page (`/status`)
+  - Customer Support & Help Center (`/support`)
+  - Developer Portal (`/developer`)
+  - Extension Marketplace Storefront (`/marketplace`)
+- **Git Release Tag**: `v1.0.0`
+
 
 
 

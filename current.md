@@ -1,5 +1,8 @@
 # Project Status - Declutr
 
+**Status**: 🎉 **Production Ready**
+**Version**: `v1.0.0` (General Availability)
+
 This document provides a summary of the current status of the Declutr codebase, its architecture, and its git history.
 
 ## 🛠️ Codebase Overview
@@ -40,6 +43,17 @@ Declutr is structured as a production-grade modular monorepo:
 ---
 
 ## 📜 Dev History (Commit Log Summary)
+
+- **General Availability (v1.0.0) Launch & Operations (Issue #036)**:
+  - Official General Availability (**v1.0.0**) production launch across all 36 engineering milestones.
+  - Built Master Production GA Test Suite (`backend/tests/production_ga_test.go`).
+  - Created Operations & On-Call Runbook suite (`docs/operations/`): `incident_response_runbook.md`, `oncall_rotation.md`, `hotfix_process.md`, `maintenance_schedule.md`.
+  - Created Legal & Compliance document suite (`docs/legal/`): `terms_of_service.md`, `privacy_policy.md`, `cookie_policy.md`, `pricing_and_plans.md`, `license.md`.
+  - Created Official GA Release documentation (`docs/v1.0.0/`): `v1.0.0_release_notes.md`, `production_deployment_report.md`, `community_and_support_guide.md`.
+  - Built Public Status Page route (`frontend/app/status/page.tsx`, `frontend/features/status/components/`) featuring `StatusOverviewComponent` and `IncidentHistoryComponent`.
+  - Built Support & Help Center route (`frontend/app/support/page.tsx`, `frontend/features/support/components/`) featuring `HelpCenterComponent` and `SupportPortalComponent`.
+  - Declared **Project Status: Production Ready**, **Version: v1.0.0**.
+  - Committed `chore(release): launch Declutr v1.0.0`, pushed directly to `main`, and created Git release tag `v1.0.0`.
 
 - **Release Candidate (RC1), Quality Assurance & Launch Readiness (Issue #035)**:
   - Validated full system integration across all 35 completed GitHub Issues (#001–#035).

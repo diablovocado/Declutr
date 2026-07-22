@@ -1,5 +1,8 @@
 # Declutr Project To-Do List
 
+**Project Status**: 🎉 **Production Ready**
+**Current Version**: `v1.0.0` (General Availability)
+
 This document tracks the comprehensive roadmap and action items to complete the Declutr project, including the Go backend, Next.js web application, and React Native/Expo mobile application.
 
 ---
@@ -323,6 +326,19 @@ This document tracks the comprehensive roadmap and action items to complete the 
 - [x] Web Release Candidate Portal (`frontend/app/release/page.tsx`, `frontend/features/release/components/`)
 - [x] Database Migration Safety Audit (Migrations 001–030)
 - [x] Git Commit `chore(release): prepare release candidate RC1` & Tag `v1.0.0-rc1`
+
+---
+
+## 🚀 Phase 12: General Availability (v1.0.0) Launch & Operations (Issue #036 Complete)
+- [x] Master Production GA Test Suite (`backend/tests/production_ga_test.go`)
+- [x] Operational Runbooks Suite (`docs/operations/`): `incident_response_runbook.md`, `oncall_rotation.md`, `hotfix_process.md`, `maintenance_schedule.md`
+- [x] Legal & Business Compliance Suite (`docs/legal/`): `terms_of_service.md`, `privacy_policy.md`, `cookie_policy.md`, `pricing_and_plans.md`, `license.md`
+- [x] Official GA Release Documentation (`docs/v1.0.0/`): `v1.0.0_release_notes.md`, `production_deployment_report.md`, `community_and_support_guide.md`
+- [x] Web Public Status Page (`frontend/app/status/page.tsx`, `frontend/features/status/components/`)
+- [x] Web Support & Help Center (`frontend/app/support/page.tsx`, `frontend/features/support/components/`)
+- [x] Project Status Declaration: **Production Ready**, **Version v1.0.0**
+- [x] Git Commit `chore(release): launch Declutr v1.0.0` & Tag `v1.0.0`
+
 
 
 
